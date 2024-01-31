@@ -1,2 +1,0 @@
-172.25.0.1 - - [31/Jan/2024:14:04:47 +0000] "GET /api HTTP/1.1" 500 206969 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-172.25.0.1 - - [31/Jan/2024:14:09:04 +0000] "GET /api HTTP/1.1" 500 2031598 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
