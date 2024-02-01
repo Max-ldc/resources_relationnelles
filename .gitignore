@@ -10,6 +10,14 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
+###> Ignored PHPStorm folders ###
+.idea/
+###< Ignored PHPStorm folders ###
+
+###> Ignored vscode folders ###
+.vscode
+###< Ignored vscode folders ###
+
 ###> friendsofphp/php-cs-fixer ###
 /.php-cs-fixer.php
 /.php-cs-fixer.cache
