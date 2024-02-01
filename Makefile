@@ -3,14 +3,14 @@ EXEC_PHP = $(DOCKER_COMPOSE) exec -u www-data php
 BASH_PHP = $(DOCKER_COMPOSE) exec -u www-data php bash
 EXEC_SYMFONY = $(EXEC_PHP) bin/console
 
+#################################
+Docker:
+
 ## Install project
-install: build up
+install: build up composer-install db-reload
 
 ## Reset environment
 reset: down install
-
-#################################
-Docker:
 
 ## Build containers
 build:
@@ -29,6 +29,14 @@ down:
 ## Show logs
 logs:
 	$(DOCKER_COMPOSE) logs -f --tail 0
+
+## Update composer
+composer-update:
+	$(EXEC_PHP) composer update
+
+## Install composer
+composer-install:
+	$(EXEC_PHP) composer install
 
 #################################
 Database:
@@ -50,15 +58,15 @@ db-validate: db-reload
 
 ## Snapshot Dump the database
 db-dump: wait-db
-	$(EXEC_PHP) sh -c 'PGPASSWORD="02468" pg_dump cesi -h database -U pedro > dump/cesi.sql'
+	$(EXEC_PHP) sh -c 'PGPASSWORD="P@ss02468*" pg_dump ressources -h database -U pedro > dump/ressources.sql'
 
 ## Regenerate dump database
 db-regenerate-dump: db-drop db-create db-migrate
-	$(EXEC_PHP) sh -c 'PGPASSWORD="02468" pg_dump cesi -h database -U pedro > dump/cesi.sql'
+	$(EXEC_PHP) sh -c 'PGPASSWORD="P@ss02468*" pg_dump ressources -h database -U pedro > dump/ressources.sql'
 
 ## Reload Database from dump @see db-regenerate-dump
 db-reload: db-drop db-create
-	$(EXEC_PHP) sh -c 'PGPASSWORD="02468" pg_dump cesi -h database -U pedro > dump/cesi.sql'
+	$(EXEC_PHP) sh -c 'PGPASSWORD="P@ss02468*" pg_dump ressources -h database -U pedro > dump/ressources.sql'
 
 ## Generate Doctrine Migration Diff
 db-diff:
