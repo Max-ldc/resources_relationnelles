@@ -51,6 +51,10 @@ env-test:
 	@-$(EXEC_PHP) bash -c 'grep APP_ENV= .env.local 1>/dev/null 2>&1 || echo -e "\nAPP_ENV=test" >> .env.local'
 	@-$(EXEC_PHP) sed -i 's/APP_ENV=.*/APP_ENV=test/g' .env.local
 
+api-test: env-test db-reload-test db-reload-test
+	$(EXEC_PHP) php -dmemory_limit=512M bin/phpunit --testsuite Integration
+	$(MAKE) ci-env-dev
+
 #################################
 Database:
 
@@ -109,9 +113,9 @@ db-drop-test: wait-db
 db-migrate-test:
 	$(EXEC_SYMFONY) doctrine:migration:migrate --no-interaction --env test
 
-## Load Data fixtures on Database Test
+## Load Data fixtures on Database
 db-fixtures-test:
-    $(EXEC_SYMFONY) doctrine:fixtures:load --no-interaction --env test
+	$(EXEC_SYMFONY) doctrine:fixtures:load --no-interaction --env test
 
 ## Regenerate dump test database
 db-regenerate-dump-test: db-drop-test db-create-test db-migrate-test db-fixtures-test
