@@ -50,3 +50,6 @@ for ($i = 0; $i < 50; $i++) {
 
 $manager->flush();
 ```
+
+| + d'infos :  [Documentation complète sur Faker](https://fakerphp.github.io/)   |
+|-----------------------------------------|
