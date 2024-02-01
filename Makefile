@@ -30,6 +30,9 @@ down:
 logs:
 	$(DOCKER_COMPOSE) logs -f --tail 0
 
+#################################
+Project:
+
 ## Update composer
 composer-update:
 	$(EXEC_PHP) composer update
@@ -37,6 +40,16 @@ composer-update:
 ## Install composer
 composer-install:
 	$(EXEC_PHP) composer install
+
+## Run phpunit tests
+unit-test:
+	$(EXEC_PHP) bin/phpunit --testsuite Unit
+
+## Switch Environment to test
+env-test:
+	@echo "Switch to ${YELLOW}test${RESET}"
+	@-$(EXEC_PHP) bash -c 'grep APP_ENV= .env.local 1>/dev/null 2>&1 || echo -e "\nAPP_ENV=test" >> .env.local'
+	@-$(EXEC_PHP) sed -i 's/APP_ENV=.*/APP_ENV=test/g' .env.local
 
 #################################
 Database:
@@ -56,12 +69,16 @@ db-drop: wait-db
 db-validate: db-reload
 	$(EXEC_SYMFONY) doctrine:schema:validate
 
+## Load Data fixtures on Database
+db-fixtures:
+	$(EXEC_SYMFONY) doctrine:fixtures:load --no-interaction
+
 ## Snapshot Dump the database
 db-dump: wait-db
 	$(EXEC_PHP) sh -c 'PGPASSWORD="P@ss02468*" pg_dump ressources -h database -U pedro > dump/ressources.sql'
 
 ## Regenerate dump database
-db-regenerate-dump: db-drop db-create db-migrate
+db-regenerate-dump: db-drop db-create db-migrate db-fixtures
 	$(EXEC_PHP) sh -c 'PGPASSWORD="P@ss02468*" pg_dump ressources -h database -U pedro > dump/ressources.sql'
 
 ## Reload Database from dump @see db-regenerate-dump
@@ -80,6 +97,29 @@ db-migrate:
 db-status:
 	$(EXEC_SYMFONY) doctrine:migration:status --no-interaction
 
+## Create Database Test
+db-create-test: wait-db
+	$(EXEC_SYMFONY) doctrine:database:create --if-not-exists --env test
+
+## Drop Database Test
+db-drop-test: wait-db
+	$(EXEC_SYMFONY) doctrine:database:drop --force --if-exists --env test
+
+## Execute Doctrine Migration Test
+db-migrate-test:
+	$(EXEC_SYMFONY) doctrine:migration:migrate --no-interaction --env test
+
+## Load Data fixtures on Database Test
+db-fixtures-test:
+    $(EXEC_SYMFONY) doctrine:fixtures:load --no-interaction --env test
+
+## Regenerate dump test database
+db-regenerate-dump-test: db-drop-test db-create-test db-migrate-test db-fixtures-test
+	$(EXEC_PHP) sh -c 'PGPASSWORD="P@ss02468*" pg_dump ressources_test -h database -U pedro > dump/ressources_test.sql'
+
+## Reload Test Database from dump @see db-regenerate-dump-test
+db-reload-test: db-drop-test db-create-test
+	$(EXEC_PHP) sh -c 'PGPASSWORD="P@ss02468*" psql ressources_test -h database -U pedro < dump/ressources_test.sql'
 
 #################################
 Code_quality_and_security:
