@@ -23,6 +23,9 @@ public function load(ObjectManager $manager)
 | /!\  Bien penser à "persist" chaque entité à ajouter, puis à flush une seule fois en fin de méthode load()   |
 |-----------------------------------------|
 
+| + d'infos :  [Documentation Fixtures Bundle](https://symfony.com/bundles/DoctrineFixturesBundle/current/index.html)   |
+|-----------------------------------------|
+
 On peut ensuite envoyer ces données de tests en base grâce à : 
 
 ```
