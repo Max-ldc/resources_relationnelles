@@ -45,6 +45,11 @@ composer-install:
 unit-test:
 	$(EXEC_PHP) bin/phpunit --testsuite Unit
 
+## Run API tests
+api-test: env-test db-reload-test
+	$(EXEC_PHP) php -dmemory_limit=512M bin/phpunit --testsuite Integration
+	$(MAKE) env-test
+
 ## Switch Environment to test
 env-test:
 	@echo "Switch to ${YELLOW}test${RESET}"
