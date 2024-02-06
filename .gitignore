@@ -27,3 +27,32 @@
 /phpunit.xml
 .phpunit.result.cache
 ###< phpunit/phpunit ###
+
+
+
+
+
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/public/my-app/node_modules
+/public/my-app/.pnp
+/public/my-app/.pnp.js
+
+# testing
+/public/my-app/coverage
+
+# production
+/public/my-app/build
+
+# misc
+/public/my-app/.DS_Store
+/public/my-app/.env.local
+/public/my-app/.env.development.local
+/public/my-app/.env.test.local
+/public/my-app/.env.production.local
+
+/public/my-app/npm-debug.log*
+/public/my-app/yarn-debug.log*
+/public/my-app/yarn-error.log*
