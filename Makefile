@@ -56,10 +56,6 @@ env-test:
 	@-$(EXEC_PHP) bash -c 'grep APP_ENV= .env.local 1>/dev/null 2>&1 || echo -e "\nAPP_ENV=test" >> .env.local'
 	@-$(EXEC_PHP) sed -i 's/APP_ENV=.*/APP_ENV=test/g' .env.local
 
-api-test: env-test db-reload-test db-reload-test
-	$(EXEC_PHP) php -dmemory_limit=512M bin/phpunit --testsuite Integration
-	$(MAKE) ci-env-dev
-
 #################################
 Database:
 
@@ -136,3 +132,7 @@ Code_quality_and_security:
 ## CS fixer
 cs-fixer:
 	$(EXEC_PHP) ./vendor/bin/php-cs-fixer fix --dry-run --diff
+
+## CS fixer apply
+cs-fixer-apply:
+	$(EXEC_PHP) ./vendor/bin/php-cs-fixer fix --diff
