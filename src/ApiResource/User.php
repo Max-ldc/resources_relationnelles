@@ -1,17 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ApiResource;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
-use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use App\Processor\UserProcessor;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
     operations: [
-        new Get(),
         new Post(
             openapiContext: [
                 'summary' => 'Create a new user',
@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
                             'schema' => [
                                 'type' => 'object',
                                 'properties' => [
-                                    'userName' => [
+                                    'username' => [
                                         'type' => 'string',
                                         'required' => 'true',
                                     ],
@@ -46,7 +46,7 @@ class User
     #[Assert\NotBlank(message: 'validation.user.username.empty')]
     #[Assert\Length(min: 3, max: 16, minMessage: 'validation.user.username.minlength', maxMessage: 'validation.user.username.maxlength')]
     #[Assert\Regex(pattern: '/^[a-zA-Z0-9_]+$/', message: 'validation.user.username.regex')]
-    private string $userName;
+    private string $username;
 
     #[Assert\NotBlank(message: 'validation.user.email.empty')]
     #[Assert\Email(message: 'validation.user.email.invalid')]
@@ -54,14 +54,14 @@ class User
 
     private bool $accountEnabled = true;
 
-    public function getUserName(): string
+    public function getUsername(): string
     {
-        return $this->userName;
+        return $this->username;
     }
 
-    public function setUserName(string $userName): self
+    public function setUsername(string $username): self
     {
-        $this->userName = $userName;
+        $this->username = $username;
 
         return $this;
     }

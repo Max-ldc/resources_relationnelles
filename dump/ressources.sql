@@ -39,8 +39,7 @@ ALTER TABLE public.doctrine_migration_versions OWNER TO pedro;
 
 CREATE TABLE public."user" (
     id integer NOT NULL,
-    user_data_id integer,
-    user_name character varying(255) NOT NULL,
+    username character varying(255) NOT NULL,
     account_enabled boolean DEFAULT true NOT NULL
 );
 
@@ -53,6 +52,7 @@ ALTER TABLE public."user" OWNER TO pedro;
 
 CREATE TABLE public.user_data (
     id integer NOT NULL,
+    user_id integer NOT NULL,
     email_encrypted character varying(255) NOT NULL,
     email_hash character varying(255) NOT NULL
 );
@@ -93,7 +93,7 @@ ALTER TABLE public.user_id_seq OWNER TO pedro;
 --
 
 COPY public.doctrine_migration_versions (version, executed_at, execution_time) FROM stdin;
-DoctrineMigrations\\Version20240207235532	2024-02-08 00:15:07	86
+DoctrineMigrations\\Version20240208222614	2024-02-08 22:26:49	57
 \.
 
 
@@ -101,7 +101,9 @@ DoctrineMigrations\\Version20240207235532	2024-02-08 00:15:07	86
 -- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: pedro
 --
 
-COPY public."user" (id, user_data_id, user_name, account_enabled) FROM stdin;
+COPY public."user" (id, username, account_enabled) FROM stdin;
+1	Pedro	t
+2	Maria	t
 \.
 
 
@@ -109,7 +111,9 @@ COPY public."user" (id, user_data_id, user_name, account_enabled) FROM stdin;
 -- Data for Name: user_data; Type: TABLE DATA; Schema: public; Owner: pedro
 --
 
-COPY public.user_data (id, email_encrypted, email_hash) FROM stdin;
+COPY public.user_data (id, user_id, email_encrypted, email_hash) FROM stdin;
+1	1	+54tnk8ef6F4oJ4feVBpSJa4hnd38lVlI/FW5JBT6/0UfsC5jwIGZoHpRpEoxVb+	6b02958be1505abf91d5a12dc8a97cd41254a1f17d08503048faef77c1a569ae
+2	2	1+Luw8//VIa9d8dwqWuZPeE+8hct46534ZIO0HGzkMkOeDwTelUc4GvqC3/5fPJd	10ef04a5a1acd81d18a0c61fdd354a063da07223720a1d8760aa5c2afa5e8ee0
 \.
 
 
@@ -117,14 +121,14 @@ COPY public.user_data (id, email_encrypted, email_hash) FROM stdin;
 -- Name: user_data_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pedro
 --
 
-SELECT pg_catalog.setval('public.user_data_id_seq', 1, false);
+SELECT pg_catalog.setval('public.user_data_id_seq', 2, true);
 
 
 --
 -- Name: user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pedro
 --
 
-SELECT pg_catalog.setval('public.user_id_seq', 1, false);
+SELECT pg_catalog.setval('public.user_id_seq', 2, true);
 
 
 --
@@ -159,25 +163,25 @@ CREATE UNIQUE INDEX email_hash ON public.user_data USING btree (email_hash);
 
 
 --
--- Name: uniq_8d93d6496ff8bf36; Type: INDEX; Schema: public; Owner: pedro
+-- Name: uniq_d772bfaaa76ed395; Type: INDEX; Schema: public; Owner: pedro
 --
 
-CREATE UNIQUE INDEX uniq_8d93d6496ff8bf36 ON public."user" USING btree (user_data_id);
-
-
---
--- Name: user_name; Type: INDEX; Schema: public; Owner: pedro
---
-
-CREATE UNIQUE INDEX user_name ON public."user" USING btree (user_name);
+CREATE UNIQUE INDEX uniq_d772bfaaa76ed395 ON public.user_data USING btree (user_id);
 
 
 --
--- Name: user fk_8d93d6496ff8bf36; Type: FK CONSTRAINT; Schema: public; Owner: pedro
+-- Name: username; Type: INDEX; Schema: public; Owner: pedro
 --
 
-ALTER TABLE ONLY public."user"
-    ADD CONSTRAINT fk_8d93d6496ff8bf36 FOREIGN KEY (user_data_id) REFERENCES public.user_data(id);
+CREATE UNIQUE INDEX username ON public."user" USING btree (username);
+
+
+--
+-- Name: user_data fk_d772bfaaa76ed395; Type: FK CONSTRAINT; Schema: public; Owner: pedro
+--
+
+ALTER TABLE ONLY public.user_data
+    ADD CONSTRAINT fk_d772bfaaa76ed395 FOREIGN KEY (user_id) REFERENCES public."user"(id);
 
 
 --

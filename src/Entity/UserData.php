@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -20,7 +22,9 @@ class UserData
     #[ORM\Column(type: 'string', unique: true)]
     private string $emailHash;
 
-    #[ORM\OneToOne(mappedBy: 'userData', targetEntity: User::class)]
+
+    #[ORM\OneToOne(inversedBy: "userData", targetEntity: User::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(name: "user_id", referencedColumnName: "id", nullable: false)]
     private User $user;
 
     public function getId(): int

@@ -48,13 +48,19 @@ unit-test:
 ## Run API tests
 api-test: env-test db-reload-test
 	$(EXEC_PHP) php -dmemory_limit=512M bin/phpunit --testsuite Integration
-	$(MAKE) env-test
+	$(MAKE) env-dev
 
 ## Switch Environment to test
 env-test:
 	@echo "Switch to ${YELLOW}test${RESET}"
 	@-$(EXEC_PHP) bash -c 'grep APP_ENV= .env.local 1>/dev/null 2>&1 || echo -e "\nAPP_ENV=test" >> .env.local'
 	@-$(EXEC_PHP) sed -i 's/APP_ENV=.*/APP_ENV=test/g' .env.local
+
+## Switch Environment to dev
+env-dev:
+	@echo "Switch to ${YELLOW}dev${RESET}"
+	@-$(EXEC_PHP) bash -c 'grep APP_ENV= .env.local 1>/dev/null 2>&1 || echo -e "\nAPP_ENV=dev" >> .env.local'
+	@-$(EXEC_PHP) sed -i 's/APP_ENV=.*/APP_ENV=dev/g' .env.local
 
 #################################
 Database:

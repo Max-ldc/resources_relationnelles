@@ -1,12 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use App\Provider\UserItemDataProvider;
 use Doctrine\ORM\Mapping as ORM;
 
+#[Get, GetCollection(provider: UserItemDataProvider::class)]
 #[ORM\Entity]
 #[ORM\Table(name: '`user`')]
-#[ORM\UniqueConstraint(name: "user_name", columns: ["user_name"])]
+#[ORM\UniqueConstraint(name: "username", columns: ["username"])]
 class User
 {
     #[ORM\Id]
@@ -15,14 +21,13 @@ class User
     private int $id;
 
     #[ORM\Column(type: 'string')]
-    private string $userName;
+    private string $username;
 
     #[ORM\Column(type: 'boolean', options: ['default' => true])]
     private bool $accountEnabled = true;
 
-    #[ORM\OneToOne(targetEntity: UserData::class, cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(name: "user_data_id", referencedColumnName: "id")]
-    private UserData $userData;
+    #[ORM\OneToOne(mappedBy: 'user', targetEntity: UserData::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private ?UserData $userData = null;
 
     public function getId(): int
     {
@@ -36,14 +41,14 @@ class User
         return $this;
     }
 
-    public function getUserName(): string
+    public function getUsername(): string
     {
-        return $this->userName;
+        return $this->username;
     }
 
-    public function setUserName(string $userName): self
+    public function setUsername(string $username): self
     {
-        $this->userName = $userName;
+        $this->username = $username;
 
         return $this;
     }

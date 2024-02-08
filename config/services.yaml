@@ -21,6 +21,11 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    # explicitly define the UserItemDataProvider service and tag it for API Platform
+    App\DataProvider\UserItemDataProvider:
+        tags:
+            - { name: 'api_platform.state_provider' }
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
     App\Security\DatabaseEncryption:
