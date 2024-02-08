@@ -1,0 +1,7 @@
+# translations/validators.fr.yaml
+validation.user.username.empty: "Le nom d'utilisateur ne peut pas être vide."
+validation.user.username.minlength: "Le nom d'utilisateur ne peut pas contenir moins de {{ limit }} caractères."
+validation.user.username.maxlength: "Le nom d'utilisateur ne peut pas contenir plus de {{ limit }} caractères."
+validation.user.username.regex: "Le nom d'utilisateur ne peut contenir que des lettres, des chiffres et des underscores."
+validation.user.email.empty: "L'adresse mail ne peut pas être vide."
+validation.user.email.invalid: "L'adresse mail n'est pas valide."

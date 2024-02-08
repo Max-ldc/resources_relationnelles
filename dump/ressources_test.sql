@@ -93,7 +93,7 @@ ALTER TABLE public.user_id_seq OWNER TO pedro;
 --
 
 COPY public.doctrine_migration_versions (version, executed_at, execution_time) FROM stdin;
-DoctrineMigrations\\Version20240207235532	2024-02-08 00:15:07	86
+DoctrineMigrations\\Version20240207235532	2024-02-08 00:15:43	57
 \.
 
 

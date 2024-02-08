@@ -7,6 +7,7 @@ use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use App\Processor\UserProcessor;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
     operations: [
@@ -29,14 +30,6 @@ use App\Processor\UserProcessor;
                                         'type' => 'string',
                                         'required' => 'true',
                                     ],
-                                    'firstName' => [
-                                        'type' => 'string',
-                                        'required' => 'true',
-                                    ],
-                                    'lastName' => [
-                                        'type' => 'string',
-                                        'required' => 'true',
-                                    ],
                                 ],
                             ],
                         ],
@@ -50,13 +43,14 @@ use App\Processor\UserProcessor;
 ]
 class User
 {
+    #[Assert\NotBlank(message: 'validation.user.username.empty')]
+    #[Assert\Length(min: 3, max: 16, minMessage: 'validation.user.username.minlength', maxMessage: 'validation.user.username.maxlength')]
+    #[Assert\Regex(pattern: '/^[a-zA-Z0-9_]+$/', message: 'validation.user.username.regex')]
     private string $userName;
 
+    #[Assert\NotBlank(message: 'validation.user.email.empty')]
+    #[Assert\Email(message: 'validation.user.email.invalid')]
     private string $email;
-
-    private string $firstName;
-
-    private string $lastName;
 
     private bool $accountEnabled = true;
 
@@ -80,30 +74,6 @@ class User
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    public function getFirstName(): string
-    {
-        return $this->firstName;
-    }
-
-    public function setFirstName(string $firstName): self
-    {
-        $this->firstName = $firstName;
-
-        return $this;
-    }
-
-    public function getLastName(): string
-    {
-        return $this->lastName;
-    }
-
-    public function setLastName(string $lastName): self
-    {
-        $this->lastName = $lastName;
 
         return $this;
     }

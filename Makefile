@@ -88,7 +88,7 @@ db-regenerate-dump: db-drop db-create db-migrate db-fixtures
 
 ## Reload Database from dump @see db-regenerate-dump
 db-reload: db-drop db-create
-	$(EXEC_PHP) sh -c 'PGPASSWORD="P@ss02468*" pg_dump ressources -h database -U pedro > dump/ressources.sql'
+	$(EXEC_PHP) sh -c 'PGPASSWORD="P@ss02468*" psql ressources -h database -U pedro < dump/ressources.sql'
 
 ## Generate Doctrine Migration Diff
 db-diff:

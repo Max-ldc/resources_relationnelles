@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Table(name: '`user`')]
+#[ORM\UniqueConstraint(name: "user_name", columns: ["user_name"])]
 class User
 {
     #[ORM\Id]
@@ -16,26 +17,23 @@ class User
     #[ORM\Column(type: 'string')]
     private string $userName;
 
-    #[ORM\Column(type: 'string')]
-    private string $email;
-
-    #[ORM\Column(type: 'string')]
-    private string $firstName;
-
-    #[ORM\Column(type: 'string')]
-    private string $lastName;
-
     #[ORM\Column(type: 'boolean', options: ['default' => true])]
     private bool $accountEnabled = true;
+
+    #[ORM\OneToOne(targetEntity: UserData::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(name: "user_data_id", referencedColumnName: "id")]
+    private UserData $userData;
 
     public function getId(): int
     {
         return $this->id;
     }
 
-    public function setId(int $id): void
+    public function setId(int $id): self
     {
         $this->id = $id;
+
+        return $this;
     }
 
     public function getUserName(): string
@@ -43,41 +41,11 @@ class User
         return $this->userName;
     }
 
-    public function setUserName(string $userName): void
+    public function setUserName(string $userName): self
     {
         $this->userName = $userName;
-    }
-
-    public function getEmail(): string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
 
         return $this;
-    }
-
-    public function getFirstName(): string
-    {
-        return $this->firstName;
-    }
-
-    public function setFirstName(string $firstName): void
-    {
-        $this->firstName = $firstName;
-    }
-
-    public function getLastName(): string
-    {
-        return $this->lastName;
-    }
-
-    public function setLastName(string $lastName): void
-    {
-        $this->lastName = $lastName;
     }
 
     public function isAccountEnabled(): bool
@@ -85,8 +53,23 @@ class User
         return $this->accountEnabled;
     }
 
-    public function setAccountEnabled(bool $accountEnabled): void
+    public function setAccountEnabled(bool $accountEnabled): self
     {
         $this->accountEnabled = $accountEnabled;
+
+        return $this;
     }
+
+    public function getUserData(): UserData
+    {
+        return $this->userData;
+    }
+
+    public function setUserData(UserData $userData): self
+    {
+        $this->userData = $userData;
+
+        return $this;
+    }
+
 }
