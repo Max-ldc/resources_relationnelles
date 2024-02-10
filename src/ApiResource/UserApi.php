@@ -4,14 +4,26 @@ declare(strict_types=1);
 
 namespace App\ApiResource;
 
+use ApiPlatform\Doctrine\Orm\State\Options;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use App\Processor\UserProcessor;
+use App\Entity\User as UserEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
     operations: [
+        new Get(),
+        new GetCollection(
+            normalizationContext: [
+                'groups' => [
+                    'read_user',
+                ]
+            ],
+        ),
         new Post(
             openapiContext: [
                 'summary' => 'Create a new user',
@@ -39,7 +51,14 @@ use Symfony\Component\Validator\Constraints as Assert;
             processor: UserProcessor::class
         ),
         new Delete(),
-    ])
+    ],
+    normalizationContext: [
+        'groups' => ['read_user']
+    ],
+    stateOptions: new Options(
+        entityClass: UserEntity::class
+    )
+)
 ]
 class User
 {
