@@ -4,29 +4,32 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\GetCollection;
-use App\Provider\UserItemDataProvider;
+use ApiPlatform\Metadata\ApiProperty;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
-#[Get, GetCollection(provider: UserItemDataProvider::class)]
 #[ORM\Entity]
 #[ORM\Table(name: '`user`')]
-#[ORM\UniqueConstraint(name: "username", columns: ["username"])]
+#[ORM\UniqueConstraint(name: 'username', columns: ['username'])]
 class User
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
     #[ORM\Column(type: 'integer')]
+    #[ApiProperty(identifier: true)]
+    #[Groups(['read_user'])]
     private int $id;
 
     #[ORM\Column(type: 'string')]
+    #[Groups(['read_user'])]
     private string $username;
 
     #[ORM\Column(type: 'boolean', options: ['default' => true])]
+    #[Groups(['read_user'])]
     private bool $accountEnabled = true;
 
     #[ORM\OneToOne(mappedBy: 'user', targetEntity: UserData::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[Groups('read_user_with_user_details')]
     private ?UserData $userData = null;
 
     public function getId(): int
@@ -76,5 +79,4 @@ class User
 
         return $this;
     }
-
 }

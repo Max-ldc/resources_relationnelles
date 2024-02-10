@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\UserData;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
 class UserDataRepository extends ServiceEntityRepository
 {
@@ -19,6 +19,6 @@ class UserDataRepository extends ServiceEntityRepository
     {
         $existingEmail = $this->findOneBy(['emailHash' => $emailHash]);
 
-        return $existingEmail !== null;
+        return null !== $existingEmail;
     }
 }

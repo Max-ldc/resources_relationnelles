@@ -16,8 +16,12 @@ class AppFixtures extends Fixture
     {
         $faker = Factory::create();
 
-        $usernames = ["Pedro", "Maria"];
-        $emailsEncrypted = ["+54tnk8ef6F4oJ4feVBpSJa4hnd38lVlI/FW5JBT6/0UfsC5jwIGZoHpRpEoxVb+", "1+Luw8//VIa9d8dwqWuZPeE+8hct46534ZIO0HGzkMkOeDwTelUc4GvqC3/5fPJd"];
+        $usernames = ['Pedro', 'Maria', 'UserForDeleteTest'];
+        $emailsEncrypted = [
+            '9RiA1iLwrzFwGM/E45V8swdw0dQCvPKGs9/5OQhgQGdZ8kBKm4Zlrw7NIDZf3HZi',
+            'mZhTA1q/KhjLltgxh9UXn3hRNkhm1nMSwaohh5Ix5WWXSJt4zv1hjtgX+UUm9gPK',
+            'FnFbcypAOBl0+s/IVr8KOlFL83Re6dMnOBOVMNAlBcTjWv6xtjNJkDRiM6Djd8wy',
+        ];
 
         foreach ($usernames as $index => $username) {
             $user = new User();
@@ -26,7 +30,7 @@ class AppFixtures extends Fixture
 
             $emailEncrypted = $emailsEncrypted[$index];
 
-            $email = strtolower($username) . "@example.com";
+            $email = strtolower($username).'@example.com';
 
             $userData = new UserData();
             $userData->setUser($user)

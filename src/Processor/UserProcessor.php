@@ -6,14 +6,13 @@ namespace App\Processor;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use App\ApiResource\User as UserDto;
+use App\ApiResource\UserApi;
 use App\Entity\User;
 use App\Entity\UserData;
 use App\Repository\UserDataRepository;
 use App\Repository\UserRepository;
 use App\Security\DatabaseEncryption;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 readonly class UserProcessor implements ProcessorInterface
@@ -26,13 +25,9 @@ readonly class UserProcessor implements ProcessorInterface
     ) {
     }
 
-    /**
-     * @throws Exception
-     */
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): void
     {
-        if ($data instanceof UserDto) {
-
+        if ($data instanceof UserApi) {
             $emailHash = hash('sha256', $data->getEmail());
             $username = $data->getUserName();
 
@@ -46,7 +41,7 @@ readonly class UserProcessor implements ProcessorInterface
         }
     }
 
-    private function createUser(UserDto $data, string $emailHash): User
+    private function createUser(UserApi $data, string $emailHash): User
     {
         $emailEncrypt = $this->encryptionService->encrypt($data->getEmail());
 
@@ -69,7 +64,7 @@ readonly class UserProcessor implements ProcessorInterface
         $existingUsername = $this->userRepository->isUsernameTaken($username);
 
         if ($existingEmail) {
-            throw new BadRequestHttpException("Cet email est déjà utilisé.");
+            throw new BadRequestHttpException('Cet email est déjà utilisé.');
         }
 
         if ($existingUsername) {

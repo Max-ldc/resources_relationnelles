@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\User;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
 class UserRepository extends ServiceEntityRepository
 {
@@ -19,6 +19,6 @@ class UserRepository extends ServiceEntityRepository
     {
         $existingUser = $this->findOneBy(['username' => $username]);
 
-        return $existingUser !== null;
+        return null !== $existingUser;
     }
 }

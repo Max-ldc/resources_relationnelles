@@ -93,7 +93,7 @@ ALTER TABLE public.user_id_seq OWNER TO pedro;
 --
 
 COPY public.doctrine_migration_versions (version, executed_at, execution_time) FROM stdin;
-DoctrineMigrations\\Version20240208222614	2024-02-08 22:28:26	77
+DoctrineMigrations\\Version20240208222614	2024-02-10 14:44:53	57
 \.
 
 
@@ -104,6 +104,7 @@ DoctrineMigrations\\Version20240208222614	2024-02-08 22:28:26	77
 COPY public."user" (id, username, account_enabled) FROM stdin;
 1	Pedro	t
 2	Maria	t
+3	UserForDeleteTest	t
 \.
 
 
@@ -112,8 +113,9 @@ COPY public."user" (id, username, account_enabled) FROM stdin;
 --
 
 COPY public.user_data (id, user_id, email_encrypted, email_hash) FROM stdin;
-1	1	+54tnk8ef6F4oJ4feVBpSJa4hnd38lVlI/FW5JBT6/0UfsC5jwIGZoHpRpEoxVb+	6b02958be1505abf91d5a12dc8a97cd41254a1f17d08503048faef77c1a569ae
-2	2	1+Luw8//VIa9d8dwqWuZPeE+8hct46534ZIO0HGzkMkOeDwTelUc4GvqC3/5fPJd	10ef04a5a1acd81d18a0c61fdd354a063da07223720a1d8760aa5c2afa5e8ee0
+1	1	9RiA1iLwrzFwGM/E45V8swdw0dQCvPKGs9/5OQhgQGdZ8kBKm4Zlrw7NIDZf3HZi	6b02958be1505abf91d5a12dc8a97cd41254a1f17d08503048faef77c1a569ae
+2	2	mZhTA1q/KhjLltgxh9UXn3hRNkhm1nMSwaohh5Ix5WWXSJt4zv1hjtgX+UUm9gPK	10ef04a5a1acd81d18a0c61fdd354a063da07223720a1d8760aa5c2afa5e8ee0
+3	3	FnFbcypAOBl0+s/IVr8KOlFL83Re6dMnOBOVMNAlBcTjWv6xtjNJkDRiM6Djd8wy	446e262b19dd0c3389a73d12a717a3179af1eb778c0217e9cb26900b32a0e872
 \.
 
 
@@ -121,14 +123,14 @@ COPY public.user_data (id, user_id, email_encrypted, email_hash) FROM stdin;
 -- Name: user_data_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pedro
 --
 
-SELECT pg_catalog.setval('public.user_data_id_seq', 2, true);
+SELECT pg_catalog.setval('public.user_data_id_seq', 3, true);
 
 
 --
 -- Name: user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pedro
 --
 
-SELECT pg_catalog.setval('public.user_id_seq', 2, true);
+SELECT pg_catalog.setval('public.user_id_seq', 3, true);
 
 
 --

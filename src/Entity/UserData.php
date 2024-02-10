@@ -8,11 +8,11 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Table(name: '`user_data`')]
-#[ORM\UniqueConstraint(name: "email_hash", columns: ["email_hash"])]
+#[ORM\UniqueConstraint(name: 'email_hash', columns: ['email_hash'])]
 class UserData
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
     #[ORM\Column(type: 'integer')]
     private int $id;
 
@@ -22,9 +22,8 @@ class UserData
     #[ORM\Column(type: 'string', unique: true)]
     private string $emailHash;
 
-
-    #[ORM\OneToOne(inversedBy: "userData", targetEntity: User::class, cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(name: "user_id", referencedColumnName: "id", nullable: false)]
+    #[ORM\OneToOne(inversedBy: 'userData', targetEntity: User::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
     private User $user;
 
     public function getId(): int
@@ -74,5 +73,4 @@ class UserData
 
         return $this;
     }
-
 }

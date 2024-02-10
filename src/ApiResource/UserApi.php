@@ -10,19 +10,38 @@ use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
+use App\Entity\User;
 use App\Processor\UserProcessor;
-use App\Entity\User as UserEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
+    shortName: 'User',
     operations: [
-        new Get(),
-        new GetCollection(
+        new Get(
+            uriTemplate: '/users/{id}',
+            openapiContext: [
+                'parameters' => [
+                    [
+                        'name' => 'id',
+                        'in' => 'path',
+                        'required' => true,
+                        'schema' => [
+                            'type' => 'integer',
+                        ],
+                        'description' => 'User identifier',
+                    ],
+                ],
+                'summary' => 'Retrieves a User resource.',
+                'description' => 'Retrieves a User resource by ID.',
+            ],
+            class: User::class,
             normalizationContext: [
                 'groups' => [
                     'read_user',
-                ]
+                ],
             ],
+        ),
+        new GetCollection(
         ),
         new Post(
             openapiContext: [
@@ -50,17 +69,36 @@ use Symfony\Component\Validator\Constraints as Assert;
             ],
             processor: UserProcessor::class
         ),
-        new Delete(),
+        new Delete(
+            uriTemplate: '/users/{id}',
+            openapiContext: [
+                'parameters' => [
+                    [
+                        'name' => 'id',
+                        'in' => 'path',
+                        'required' => true,
+                        'schema' => [
+                            'type' => 'integer',
+                        ],
+                        'description' => 'User identifier',
+                    ],
+                ],
+                'summary' => 'Removes a User resource.',
+                'description' => 'Removes a User resource by ID.',
+            ],
+        ),
     ],
     normalizationContext: [
-        'groups' => ['read_user']
+        'groups' => [
+            'read_user',
+        ],
     ],
     stateOptions: new Options(
-        entityClass: UserEntity::class
+        entityClass: User::class
     )
 )
 ]
-class User
+class UserApi
 {
     #[Assert\NotBlank(message: 'validation.user.username.empty')]
     #[Assert\Length(min: 3, max: 16, minMessage: 'validation.user.username.minlength', maxMessage: 'validation.user.username.maxlength')]
