@@ -3,6 +3,10 @@ api_platform:
     version: 1.0.0
     description: 'This is the Ressources Relationnelles API'
     show_webby: false
+##    test
+#    mapping:
+#        paths: [ '%kernel.project_dir%/src/Entity', '%kernel.project_dir%/src/ApiResource' ]
+##        fin test
     formats:
         jsonld: ['application/ld+json']
     docs_formats:
