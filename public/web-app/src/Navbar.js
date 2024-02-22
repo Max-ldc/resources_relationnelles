@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import User from './user/User'
 import './navbar.css';
+
 
 function Navbar() {
    return (
@@ -11,7 +11,7 @@ function Navbar() {
                      <Link to="/">Home</Link>
                   </li>
                   <li>
-                     <Link to="/about">About</Link>
+                     <Link to="/service">Service</Link>
                   </li>
                   <li>
                      <Link to="/products">Products</Link>
@@ -21,7 +21,7 @@ function Navbar() {
          
 
          <div className='header-utilisateur'>
-            <User />
+            {/* <User /> */}
          </div>
 
 

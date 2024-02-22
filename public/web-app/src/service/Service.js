@@ -1,9 +1,33 @@
-import baseDonne from './bd.json'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+// https://levelup.gitconnected.com/how-to-make-an-api-call-with-all-crud-operations-in-react-ed6e6b94c363
 
-//Как создат функции(свободные,без html) для применения на любой страницу
-export  const getAll =()=>{ return baseDonne }
-export const getOne =(id)=>{
-    return baseDonne.find(logement=>logement.id===id)
+
+const Service = () => {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+      axios.get('http://localhost/api/users')
+          .then(response => {
+              setPosts(response.data);
+              console.log(response.data)
+          })
+          .catch(error => {
+              console.error('Error fetching data:', error);
+          });
+  }, []);
+
+  return (
+      <div>
+          <h1>Posts</h1>
+          {posts['hydra:member']?.map(user => (
+            <li key={user.id}>
+              {user.username}
+            </li>
+          ))}
+        
+      </div>
+  );
 }
-//или так
-// export {getAll,getOne}
+
+export default Service;
