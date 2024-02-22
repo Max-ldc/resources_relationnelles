@@ -26,3 +26,18 @@ services:
     App\Security\DatabaseEncryption:
         arguments:
             $pseudonymizeKey: '%pseudonymize_key%'
+
+    App\Service\FileSystemAdaptor:
+        class: App\Service\FileSystemAdaptor
+        arguments:
+            - '@oneup_flysystem.resources_filesystem'
+
+    acme.s3_client:
+        class: Aws\S3\S3Client
+        arguments:
+            -
+                version: 'latest' # or 'latest'
+                region: "eu-central-1"
+                credentials:
+                    key: "%env(MINIO_ROOT_USER)%"
+                    secret: "%env(MINIO_ROOT_PASSWORD)%"
