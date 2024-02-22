@@ -48,7 +48,7 @@ unit-test:
 ## Run API tests
 api-test: env-test db-reload-test
 	$(EXEC_PHP) php -dmemory_limit=512M bin/phpunit --testsuite Integration
-	$(MAKE) env-test
+	$(MAKE) env-dev
 
 ## Switch Environment to test
 env-test:
@@ -56,9 +56,11 @@ env-test:
 	@-$(EXEC_PHP) bash -c 'grep APP_ENV= .env.local 1>/dev/null 2>&1 || echo -e "\nAPP_ENV=test" >> .env.local'
 	@-$(EXEC_PHP) sed -i 's/APP_ENV=.*/APP_ENV=test/g' .env.local
 
-api-test: env-test db-reload-test db-reload-test
-	$(EXEC_PHP) php -dmemory_limit=512M bin/phpunit --testsuite Integration
-	$(MAKE) ci-env-dev
+## Switch Environment to dev
+env-dev:
+	@echo "Switch to ${YELLOW}dev${RESET}"
+	@-$(EXEC_PHP) bash -c 'grep APP_ENV= .env.local 1>/dev/null 2>&1 || echo -e "\nAPP_ENV=dev" >> .env.local'
+	@-$(EXEC_PHP) sed -i 's/APP_ENV=.*/APP_ENV=dev/g' .env.local
 
 #################################
 Database:
@@ -92,7 +94,7 @@ db-regenerate-dump: db-drop db-create db-migrate db-fixtures
 
 ## Reload Database from dump @see db-regenerate-dump
 db-reload: db-drop db-create
-	$(EXEC_PHP) sh -c 'PGPASSWORD="P@ss02468*" pg_dump ressources -h database -U pedro > dump/ressources.sql'
+	$(EXEC_PHP) sh -c 'PGPASSWORD="P@ss02468*" psql ressources -h database -U pedro < dump/ressources.sql'
 
 ## Generate Doctrine Migration Diff
 db-diff:
@@ -136,3 +138,7 @@ Code_quality_and_security:
 ## CS fixer
 cs-fixer:
 	$(EXEC_PHP) ./vendor/bin/php-cs-fixer fix --dry-run --diff
+
+## CS fixer apply
+cs-fixer-apply:
+	$(EXEC_PHP) ./vendor/bin/php-cs-fixer fix --diff

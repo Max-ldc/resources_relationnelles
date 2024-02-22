@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 15.6
--- Dumped by pg_dump version 15.6
+-- Dumped from database version 15.5
+-- Dumped by pg_dump version 15.5
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -93,7 +93,7 @@ ALTER TABLE public.user_id_seq OWNER TO pedro;
 --
 
 COPY public.doctrine_migration_versions (version, executed_at, execution_time) FROM stdin;
-DoctrineMigrations\\Version20240208222614	2024-02-10 14:44:47	69
+DoctrineMigrations\\Version20240208222614	2024-02-10 14:44:53	57
 \.
 
 
