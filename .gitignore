@@ -7,6 +7,7 @@
 /public/bundles/
 /var/
 /vendor/
+.DS_Store
 ###< symfony/framework-bundle ###
 
 ###> Ignored PHPStorm folders ###
@@ -31,28 +32,27 @@
 
 
 
-
 # React
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/public/my-app/node_modules
-/public/my-app/.pnp
-/public/my-app/.pnp.js
+/public/web-app/node_modules
+/public/web-app/.pnp
+/public/web-app/.pnp.js
 
 # testing
-/public/my-app/coverage
+/public/web-app/coverage
 
 # production
-/public/my-app/build
+/public/web-app/build
 
 # misc
-/public/my-app/.DS_Store
-/public/my-app/.env.local
-/public/my-app/.env.development.local
-/public/my-app/.env.test.local
-/public/my-app/.env.production.local
+/public/web-app/.DS_Store
+/public/web-app/.env.local
+/public/web-app/.env.development.local
+/public/web-app/.env.test.local
+/public/web-app/.env.production.local
 
-/public/my-app/npm-debug.log*
-/public/my-app/yarn-debug.log*
-/public/my-app/yarn-error.log*
+/public/web-app/npm-debug.log*
+/public/web-app/yarn-debug.log*
+/public/web-app/yarn-error.log*
