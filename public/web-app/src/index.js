@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import Navbar from './Navbar'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Service from './service/Service';
+import CreateUser from './service/CreateUser';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -15,6 +16,7 @@ root.render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/service" element={<Service />} />
+        <Route path="/createUser" element={<CreateUser />} />
       </Routes>
       {/* <App />
       <Service/> */}

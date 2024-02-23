@@ -22,7 +22,7 @@ const Service = () => {
           <h1>Posts</h1>
           {posts['hydra:member']?.map(user => (
             <li key={user.id}>
-              {user.username}
+              <h2>{user.id} ------- {user.username}</h2>
             </li>
           ))}
         

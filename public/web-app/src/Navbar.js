@@ -14,7 +14,7 @@ function Navbar() {
                      <Link to="/service">Service</Link>
                   </li>
                   <li>
-                     <Link to="/products">Products</Link>
+                     <Link to="/createUser">Creat User</Link>
                   </li>
                </ul>
             </nav>
