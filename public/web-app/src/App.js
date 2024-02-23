@@ -10,15 +10,18 @@ function App() {
     <div className="App">
       <main>
       <section className='main-contanair'>
-        <article className='video'><a>Video
-          </a>
-          </article>
+        <article className='video'><a>Video</a></article>
+        <article className='video'><a>Video</a></article>
+        <article className='video'><a>Video</a></article>
+        <article className='video'><a>Video</a></article>
+        <article className='video'><a>Video</a></article>
+        <article className='video'><a>Video</a></article>
+        <article className='video'><a>Video</a></article>
+        <article className='video'><a>Video</a></article>
+        <article className='video'><a>Video</a></article>
+        <article className='video'><a>Video</a></article>
+        <article className='video'><a>Video</a></article>
 
-
-
-        <article className='media'>Media</article>
-        <article className='books'>Books</article>
-        <article className='xxx'>xxx</article>
       </section>
     </main>
 

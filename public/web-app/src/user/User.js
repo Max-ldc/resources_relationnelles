@@ -1,7 +1,5 @@
 
 
-
-
 const User = () => {
     return (
       <div className="block-utilisateur">
