@@ -15,7 +15,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 50vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,4 +35,32 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+
+/* ******************************* */
+/* ----------------------------- */
+.main-contanair{
+  display: grid;
+  /* grid-template-columns: repeat(4, 1fr); */
+  grid-template-columns: repeat(auto-fit, minmax(100px, 400px));
+  justify-content: center;
+  gap: 20px;
+  border: 1px solid blue;
+  padding: 20px;
+}
+.video{
+    min-height: 300px;
+    border: 1px solid red;
+    background: url(../public/logo192.png) no-repeat;
+    background-position: center;
+    border-radius: 5px; /* Радиус скругления */
+}
+.media, .books, .xxx{
+  min-height: 300px;
+  border: 1px solid red;
+  background: url(../public/logo192.png) no-repeat;
+  background-position: center;
+  border-radius: 5px; /* Радиус скругления */
 }
