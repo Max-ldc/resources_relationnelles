@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import User from './user/User'
 import './navbar.css';
 
 function Navbar() {
@@ -21,7 +20,6 @@ function Navbar() {
          
 
          <div className='header-utilisateur'>
-            <User />
          </div>
 
 
