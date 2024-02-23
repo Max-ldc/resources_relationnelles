@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import './navbar.css';
-
+import User from './user/User'
 
 function Navbar() {
    return (
@@ -17,11 +17,12 @@ function Navbar() {
                      <Link to="/createUser">Creat User</Link>
                   </li>
                </ul>
+               
             </nav>
          
 
          <div className='header-utilisateur'>
-            {/* <User /> */}
+            <User />
          </div>
 
 
