@@ -36,8 +36,9 @@ services:
         class: Aws\S3\S3Client
         arguments:
             -
-                version: 'latest' # or 'latest'
+                version: 'latest'
                 region: "eu-central-1"
+                endpoint: 'http://192.168.48.3:9000/'
                 credentials:
                     key: "%env(MINIO_ROOT_USER)%"
                     secret: "%env(MINIO_ROOT_PASSWORD)%"

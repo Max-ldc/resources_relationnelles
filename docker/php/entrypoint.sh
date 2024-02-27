@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+sed -i 's/9000/3000/' /usr/local/etc/php-fpm.d/zz-docker.conf
+
 uid=$(stat -c %u /home/app)
 gid=$(stat -c %g /home/app)
 
