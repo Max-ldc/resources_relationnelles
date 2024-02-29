@@ -38,7 +38,7 @@ services:
             -
                 version: 'latest'
                 region: "eu-central-1"
-                endpoint: 'http://192.168.48.3:9000/'
+                endpoint: 'http://172.252.2.4:9000/'
                 credentials:
                     key: "%env(MINIO_ROOT_USER)%"
                     secret: "%env(MINIO_ROOT_PASSWORD)%"
