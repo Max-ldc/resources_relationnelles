@@ -1,0 +1,98 @@
+.video{
+
+  border-radius: 4px; /* Радиус скругления */
+  border: 1px solid  #282c34;
+  padding-bottom:5px;
+
+  .article-link {
+      text-decoration: none; /* Убираем подчеркивание */
+      color: inherit; /* Наследуем цвет текста */
+      position: relative;
+      min-width: 100px;
+      max-width: 270px;
+  }
+
+  .title-article {
+    position: absolute;
+    color: aliceblue;
+    font-family: "Gill Sans", sans-serif;
+    margin: 5px auto;
+    font-size: 1.2em;
+    right: 9%;
+    width: 240px;
+  }
+  
+  .article-img {
+    height: 180px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 4px; /* Радиус скругления */
+  }
+
+
+  .like-block {
+    display: flex;
+    justify-content: space-between; 
+    padding: 2px 5px;
+    font-size: 0.9em;
+
+    .like {
+        display: flex;
+        padding: 0 5px;
+
+        .like-number {
+          color: beige;
+          font-size: 14px;
+          font-style: italic;
+          padding: 1px;
+          }
+
+          .likeDislike-img{
+            width: 17px;
+            height: 17px;
+        }
+    }
+  }
+
+
+    .relation-block {
+      display: flex;
+      /* border: 1px solid red; */
+      justify-content: space-between; 
+      padding: 2px 5px;
+      font-size: 0.9em;
+
+        .relation {
+          font-style: italic;
+          color: red;
+        }
+    }
+
+
+    .resource-categoty-block {
+      display: flex;
+      justify-content: space-between; 
+      padding: 2px 5px;
+      font-size: 0.9em;
+
+        .resource-categoty {
+          font-style: italic;
+          color: red;
+          padding-right: 5px;
+        }
+    }
+
+    .resource-type-block {
+      display: flex;
+      justify-content: space-between; 
+      padding: 2px 5px;
+      font-size: 0.9em;
+
+        .resource-type {
+          font-style: italic;
+          color: red;
+          padding-right: 5px;
+        }
+    }
+
+}

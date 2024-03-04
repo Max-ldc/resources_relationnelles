@@ -6,6 +6,9 @@ import axios from 'axios';
 const Service = () => {
   const [posts, setPosts] = useState([]);
 
+
+
+  //get list users
   useEffect(() => {
       axios.get('http://localhost/api/users')
           .then(response => {
