@@ -7,6 +7,9 @@ import Navbar from './Navbar'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Service from './service/Service';
 import CreateUser from './service/CreateUser';
+import Resource from './resource/Resource'
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,6 +20,9 @@ root.render(
         <Route path="/" element={<App />} />
         <Route path="/service" element={<Service />} />
         <Route path="/createUser" element={<CreateUser />} />
+        <Route path="/resource/:resourceId" element={<Resource/>} />
+
+       
       </Routes>
       {/* <App />
       <Service/> */}

@@ -49,14 +49,14 @@
   margin: 10px;
   justify-items: stretch;
   justify-content: space-evenly;
-
+  color: aliceblue;
 }
 .video{
     height: 270px;
-    border: 1px solid red;
-    background: url(../public/logo192.png) no-repeat;
+    /* background: url(../public/logo192.png) no-repeat; */
+    background-color: rgb(29, 28, 28) ;
     background-position: center;
-    border-radius: 8px; /* Радиус скругления */
+    margin: 10px 0;
 }
 .media, .books, .xxx{
   height: 270px;
