@@ -12,6 +12,8 @@ function HomePage() {
                         {/* <article className='video'>
                             <Link to={`/articles/${articleId}`}>Видео id={articleId}</Link>
                         </article> */}
+                        {/* https://www.svgrepo.com/svg/474891/like    icons bibliotheque*/}
+
 
                 <article className='video'>
                           <Link to={`/articles/1`} className="article-link">
@@ -125,7 +127,6 @@ function HomePage() {
                           <Link to={`/articles/1`} className="article-link">
                               <div className="title-article">Whose Vote Counts, Explained	</div>
                               <div><img className="article-img" src="/imgs/dicaprio4.jpeg" alt="dicaprio1"/></div>
-                              {/* https://www.svgrepo.com/svg/474891/like    icons bibliotheque*/}
                           </Link>
 
                           <div className="like-block">
