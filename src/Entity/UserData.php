@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+
 
 #[ORM\Entity]
 #[ORM\Table(name: '`user_data`')]
@@ -25,6 +28,16 @@ class UserData
     #[ORM\OneToOne(inversedBy: 'userData', targetEntity: User::class, cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
     private User $user;
+
+    /**
+     * @var Collection<int, Resource>
+     */
+    #[ORM\ManyToMany(targetEntity: Resource::class, inversedBy: 'usersWhoAddedThisResourceToFavorite')]
+    private Collection $favoriteResources;
+
+    public function __construct() {
+        $this->favoriteResources = new ArrayCollection();
+    }
 
     public function getId(): int
     {
@@ -72,5 +85,35 @@ class UserData
         $this->user = $user;
 
         return $this;
+    }
+
+    public function getFavoriteResources(): Collection
+    {
+        return $this->favoriteResources;
+    }
+
+    public function setFavoriteResources(Collection $favoriteResources): self
+    {
+        $this->favoriteResources = $favoriteResources;
+
+        return $this;
+    }
+
+    public function addFavoriteResource(Resource $resource): self
+    {
+        if (!$this->favoriteResources->contains($resource)) {
+            $this->favoriteResources[] = $resource;
+            $resource->addUserWhoAddedThisResourceToFavorite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteResource(Resource $resource): void
+    {
+        if ($this->favoriteResources->contains($resource)) {
+            $this->favoriteResources->removeElement($resource);
+            $resource->removeUserWhoAddedThisResourceToFavorite($this);
+        }
     }
 }

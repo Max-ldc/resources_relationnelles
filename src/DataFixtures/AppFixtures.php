@@ -17,6 +17,7 @@ class AppFixtures extends Fixture
     {
         $faker = Factory::create();
 
+        // User
         $usernames = ['Pedro', 'Maria', 'UserForDeleteTest'];
         $emailsEncrypted = [
             '9RiA1iLwrzFwGM/E45V8swdw0dQCvPKGs9/5OQhgQGdZ8kBKm4Zlrw7NIDZf3HZi',
@@ -43,6 +44,16 @@ class AppFixtures extends Fixture
             $manager->persist($user);
             $manager->persist($userData);
         }
+
+        // A FAIRE :
+        // db diff + db mig / vérifier si tout OK dans les relations
+        // Créer les fixtures + déplacer dans des privates pour la lisibilité
+
+        //Resource
+        //ResourceMetaData
+        // RelationType
+        // $relationTypes = ['Soi', 'Conjoints', 'Famille', 'Professionnel', 'Amis et communautés', 'Inconnus'];
+        // $relationSubTypes = ['Enfants', 'Parents', 'Fratrie', 'Collègues', 'Collaborateurs',  'Managers'];
 
         $manager->flush();
     }
