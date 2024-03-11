@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Doctrine\Traits\TimestampTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
@@ -9,6 +10,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\Table(name: '`resource_metadata`')]
 class ResourceMetadata
 {
+    use TimestampTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
     #[ORM\Column(type: 'integer')]
@@ -18,9 +21,9 @@ class ResourceMetadata
     #[Groups(['upload_audio', 'upload_video', 'upload_pdf'])]
     private string $title;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'integer', nullable: true)]
     #[Groups(['upload_audio', 'upload_video'])]
-    private ?int $duration = null; // Duration in seconds
+    private ?int $duration = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
     #[Groups(['upload_audio', 'upload_video', 'upload_pdf'])]
@@ -38,9 +41,9 @@ class ResourceMetadata
     #[Groups(['upload_audio', 'upload_video'])]
     private ?string $genre = null;
 
-    #[ORM\Column(type: 'datetime')]
-    #[Groups(['upload_audio', 'upload_video'])]
-    private \DateTime $releaseDate;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Groups(['upload_audio', 'upload_video', 'upload_pdf'])]
+    private ?\DateTime $releaseDate = null;
 
     #[ORM\OneToOne(inversedBy: 'resourceMetadata', targetEntity: Resource::class)]
     #[ORM\JoinColumn(nullable: false)]

@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
+use App\Repository\RelationTypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: RelationTypeRepository::class)]
 #[ORM\Table(name: '`relation_type`')]
 class RelationType
 {
@@ -27,7 +28,8 @@ class RelationType
     #[ORM\ManyToMany(targetEntity: Resource::class, mappedBy: 'resourceRelationTypes')]
     private Collection $resources;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->children = new ArrayCollection();
         $this->resources = new ArrayCollection();
     }
@@ -81,31 +83,39 @@ class RelationType
         return $this;
     }
 
-    public function getParent(): ?self {
+    public function getParent(): ?self
+    {
         return $this->parent;
     }
 
-    public function setParent(?self $parent): self {
+    public function setParent(?self $parent): self
+    {
         $this->parent = $parent;
+
         return $this;
     }
 
-    public function getChildren(): Collection {
+    public function getChildren(): Collection
+    {
         return $this->children;
     }
 
-    public function addChild(self $child): self {
+    public function addChild(self $child): self
+    {
         if (!$this->children->contains($child)) {
             $this->children[] = $child;
             $child->setParent($this);
         }
+
         return $this;
     }
 
-    public function removeChild(self $child): self {
+    public function removeChild(self $child): self
+    {
         if ($this->children->removeElement($child) && $child->getParent() === $this) {
             $child->setParent(null);
         }
+
         return $this;
     }
 }

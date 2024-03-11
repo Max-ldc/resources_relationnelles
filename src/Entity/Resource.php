@@ -2,15 +2,18 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+use App\Doctrine\Traits\TimestampTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 
 #[ORM\Entity]
 #[ORM\Table(name: '`resource`')]
 class Resource
 {
+    use TimestampTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
     #[ORM\Column(type: 'integer')]
@@ -19,18 +22,12 @@ class Resource
     #[ORM\Column(type: 'string')]
     private string $fileName;
 
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, options: ['default' => 'CURRENT_TIMESTAMP'])]
-    private \DateTime $creationDate;
-// TRAIT POUR LA DATE
-    #[ORM\Column(type: 'datetime')]
-    private ?\DateTime $modificationDate = null;
-
     #[ORM\Column(type: 'resourceSharedStatusType')]
     private string $sharedStatus;
 
-    #[ORM\ManyToOne(targetEntity: User::class)]
-    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
-    private User $user;
+    #[ORM\ManyToOne(targetEntity: UserData::class)]
+    #[JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    private UserData $userData;
 
     #[ORM\OneToOne(mappedBy: 'resource', targetEntity: ResourceMetadata::class)]
     private ?ResourceMetadata $resourceMetadata = null;
@@ -45,16 +42,9 @@ class Resource
     #[ORM\JoinTable(name: 'resource_relation_type')]
     private Collection $resourceRelationTypes;
 
-    #[ORM\ManyToMany(targetEntity: UserData::class, mappedBy: 'favoriteResources')]
-    #[ORM\JoinTable(joinColumns: [
-        new JoinColumn(name: 'resource_id', referencedColumnName: 'id', onDelete: 'CASCADE'),
-        new JoinColumn(name: 'user_id', referencedColumnName: 'id', onDelete: 'CASCADE'),
-    ])]
-    private Collection $usersWhoAddedThisResourceToFavorite;
-
-    public function __construct() {
+    public function __construct()
+    {
         $this->resourceRelationTypes = new ArrayCollection();
-        $this->usersWhoAddedThisResourceToFavorite = new ArrayCollection();
     }
 
     public function getId(): int
@@ -81,30 +71,6 @@ class Resource
         return $this;
     }
 
-    public function getCreationDate(): \DateTime
-    {
-        return $this->creationDate;
-    }
-
-    public function setCreationDate(\DateTime $creationDate): self
-    {
-        $this->creationDate = $creationDate;
-
-        return $this;
-    }
-
-    public function getModificationDate(): ?\DateTime
-    {
-        return $this->modificationDate;
-    }
-
-    public function setModificationDate(?\DateTime $modificationDate): self
-    {
-        $this->modificationDate = $modificationDate;
-
-        return $this;
-    }
-
     public function getSharedStatus(): string
     {
         return $this->sharedStatus;
@@ -117,14 +83,14 @@ class Resource
         return $this;
     }
 
-    public function getUser(): User
+    public function getUserData(): UserData
     {
-        return $this->user;
+        return $this->userData;
     }
 
-    public function setUser(User $user): self
+    public function setUserData(UserData $userData): self
     {
-        $this->user = $user;
+        $this->userData = $userData;
 
         return $this;
     }
@@ -192,38 +158,6 @@ class Resource
         if ($this->resourceRelationTypes->contains($relationType)) {
             $this->resourceRelationTypes->removeElement($relationType);
             $relationType->removeResource($this);
-        }
-
-        return $this;
-    }
-
-    public function getUsersWhoAddedThisResourceToFavorite(): Collection
-    {
-        return $this->usersWhoAddedThisResourceToFavorite;
-    }
-
-    public function setUsersWhoAddedThisResourceToFavorite(Collection $usersWhoAddedThisResourceToFavorite): self
-    {
-        $this->usersWhoAddedThisResourceToFavorite = $usersWhoAddedThisResourceToFavorite;
-
-        return $this;
-    }
-
-    public function addUserWhoAddedThisResourceToFavorite(UserData $userData): self
-    {
-        if (!$this->usersWhoAddedThisResourceToFavorite->contains($userData)) {
-            $this->usersWhoAddedThisResourceToFavorite[] = $userData;
-            $userData->addFavoriteResource($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUserWhoAddedThisResourceToFavorite(UserData $userData): self
-    {
-        if ($this->usersWhoAddedThisResourceToFavorite->contains($userData)) {
-            $this->usersWhoAddedThisResourceToFavorite->removeElement($userData);
-            $userData->removeFavoriteResource($this);
         }
 
         return $this;

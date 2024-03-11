@@ -20,7 +20,7 @@ abstract class AbstractEnumType extends Type
 
         $defaultValue = static::getDefaultValue();
 
-        if ($defaultValue !== null) {
+        if (null !== $defaultValue) {
             $sqlDeclaration .= sprintf(' DEFAULT %s', $platform->quoteStringLiteral((string) $defaultValue));
         }
 
@@ -34,7 +34,7 @@ abstract class AbstractEnumType extends Type
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform): mixed
     {
-        if ($value !== null && !in_array($value, $this->getValues())) {
+        if (null !== $value && !in_array($value, $this->getValues())) {
             throw new \InvalidArgumentException(sprintf('Invalid value "%s" for ENUM "%s".', $value, $this->getName()));
         }
 

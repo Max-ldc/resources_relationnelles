@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
-
+use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Table(name: '`user_data`')]
@@ -29,14 +28,13 @@ class UserData
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
     private User $user;
 
-    /**
-     * @var Collection<int, Resource>
-     */
-    #[ORM\ManyToMany(targetEntity: Resource::class, inversedBy: 'usersWhoAddedThisResourceToFavorite')]
-    private Collection $favoriteResources;
+    /** @var Collection<int, resource> */
+    #[ORM\OneToMany(mappedBy: 'userData', targetEntity: Resource::class, cascade: ['persist', 'remove'])]
+    private Collection $resources;
 
-    public function __construct() {
-        $this->favoriteResources = new ArrayCollection();
+    public function __construct()
+    {
+        $this->resources = new ArrayCollection();
     }
 
     public function getId(): int
@@ -87,33 +85,24 @@ class UserData
         return $this;
     }
 
-    public function getFavoriteResources(): Collection
+    public function getResources(): Collection
     {
-        return $this->favoriteResources;
+        return $this->resources;
     }
 
-    public function setFavoriteResources(Collection $favoriteResources): self
+    public function addResource(Resource $resource): self
     {
-        $this->favoriteResources = $favoriteResources;
-
-        return $this;
-    }
-
-    public function addFavoriteResource(Resource $resource): self
-    {
-        if (!$this->favoriteResources->contains($resource)) {
-            $this->favoriteResources[] = $resource;
-            $resource->addUserWhoAddedThisResourceToFavorite($this);
+        if (!$this->resources->contains($resource)) {
+            $this->resources->add($resource);
         }
 
         return $this;
     }
 
-    public function removeFavoriteResource(Resource $resource): void
+    public function removeResources(Resource $resource): void
     {
-        if ($this->favoriteResources->contains($resource)) {
-            $this->favoriteResources->removeElement($resource);
-            $resource->removeUserWhoAddedThisResourceToFavorite($this);
+        if ($this->resources->contains($resource)) {
+            $this->resources->removeElement($resource);
         }
     }
 }
