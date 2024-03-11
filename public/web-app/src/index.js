@@ -6,9 +6,9 @@ import reportWebVitals from './reportWebVitals';
 import Navbar from './Navbar'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Service from './service/Service';
-import CreateUser from './service/CreateUser';
-import Resource from './resource/Resource'
-
+import Account from './user/account/Account';
+import Ressource from './ressources/Ressource';
+import User from './user/User';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -19,10 +19,12 @@ root.render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/service" element={<Service />} />
-        <Route path="/createUser" element={<CreateUser />} />
-        <Route path="/resource/:resourceId" element={<Resource/>} />
+        {/* <Route path="/createUser" element={<CreateUser />} /> */}
+        <Route path="/ressource/:ressourceId" element={<Ressource/>} />
+        <Route path="/account/" element={<Account/>} />
 
-       
+        <Route path="/user/:id" element={<User/>} />
+
       </Routes>
       {/* <App />
       <Service/> */}

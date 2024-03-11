@@ -1,0 +1,9 @@
+.connecter-block {
+    display: flex;
+    background-color: orange;
+    margin: 20px auto;
+    padding: 10px 0;
+}
+.connecter-block div{
+    margin: 10px 15px;
+}
