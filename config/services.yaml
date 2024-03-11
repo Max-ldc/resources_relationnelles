@@ -27,10 +27,10 @@ services:
         arguments:
             $pseudonymizeKey: '%pseudonymize_key%'
 
-    App\Service\FileSystemAdaptor:
-        class: App\Service\FileSystemAdaptor
+    App\Storage\FileSystemAdaptor:
+        class: App\Storage\FileSystemAdaptor
         arguments:
-            - '@oneup_flysystem.resources_filesystem'
+            - '@resources_filesystem'
 
     acme.s3_client:
         class: Aws\S3\S3Client

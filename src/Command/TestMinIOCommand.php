@@ -3,11 +3,11 @@
 // src/Command/TestMinIOCommand.php
 namespace App\Command;
 
+use App\Storage\FileSystemAdaptor;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use League\Flysystem\FilesystemOperator;
 
 #[AsCommand(
     name: 'app:test-minio',
@@ -15,12 +15,10 @@ use League\Flysystem\FilesystemOperator;
 )]
 class TestMinIOCommand extends Command
 {
-    private FilesystemOperator $filesystem;
-
-    public function __construct(FilesystemOperator $resourcesFilesystem)
-    {
+    public function __construct(
+        private FileSystemAdaptor $fileSystemAdaptor,
+    ) {
         parent::__construct();
-        $this->filesystem = $resourcesFilesystem;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -29,19 +27,19 @@ class TestMinIOCommand extends Command
         $testContent = 'Hello, MinIO!';
 
         try {
-            $this->filesystem->write($testFileName, $testContent);
+            $this->fileSystemAdaptor->addFile($testFileName, $testContent);
             $output->writeln('File uploaded successfully.');
 
-            $contents = $this->filesystem->listContents('')->toArray();
+            $contents = $this->fileSystemAdaptor->getAllFiles();
             $output->writeln('Files in bucket:');
             foreach ($contents as $object) {
                 $output->writeln($object['path']);
             }
 
-            $downloadedContent = $this->filesystem->read($testFileName);
+            $downloadedContent = $this->fileSystemAdaptor->getFileContent($testFileName);
             $output->writeln('Downloaded file content: ' . $downloadedContent);
 
-            $this->filesystem->delete($testFileName);
+            $this->fileSystemAdaptor->delete($testFileName);
             $output->writeln('File deleted successfully.');
 
             return Command::SUCCESS;
