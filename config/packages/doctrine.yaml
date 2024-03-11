@@ -10,6 +10,7 @@ doctrine:
 
         types:
             resourceCategoryType: App\Doctrine\DBAL\Types\ResourceCategoryType
+            resourceSharedStatusType: App\Doctrine\DBAL\Types\ResourceSharedStatusType
             resourceTypeType: App\Doctrine\DBAL\Types\ResourceTypeType
 
     orm:

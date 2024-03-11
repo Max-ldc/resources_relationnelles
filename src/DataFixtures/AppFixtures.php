@@ -46,14 +46,20 @@ class AppFixtures extends Fixture
         }
 
         // A FAIRE :
-        // db diff + db mig / vérifier si tout OK dans les relations
         // Créer les fixtures + déplacer dans des privates pour la lisibilité
 
         //Resource
+        $resourceName = 'Extrait - La Boétie.pdf';
+
         //ResourceMetaData
         // RelationType
         // $relationTypes = ['Soi', 'Conjoints', 'Famille', 'Professionnel', 'Amis et communautés', 'Inconnus'];
         // $relationSubTypes = ['Enfants', 'Parents', 'Fratrie', 'Collègues', 'Collaborateurs',  'Managers'];
+
+        // RelationType
+        //$relationTypes = ['Soi', 'Conjoints', 'Famille', 'Professionnel', 'Amis et communautés', 'Inconnus'];
+        //$relationSubTypes = [Famille => 'Enfants', Famille => 'Parents', Famille => 'Fratrie', Professionnel => 'Collègues',
+        // Professionnel => 'Collaborateurs',  Professionnel => 'Managers'];
 
         $manager->flush();
     }

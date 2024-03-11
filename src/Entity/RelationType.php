@@ -6,10 +6,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-// RelationType
-//$relationTypes = ['Soi', 'Conjoints', 'Famille', 'Professionnel', 'Amis et communautés', 'Inconnus'];
-//$relationSubTypes = ['Enfants', 'Parents', 'Fratrie', 'Collègues', 'Collaborateurs',  'Managers'];
-
 #[ORM\Entity]
 #[ORM\Table(name: '`relation_type`')]
 class RelationType
@@ -19,18 +15,20 @@ class RelationType
     #[ORM\Column(type: 'integer')]
     private int $id;
 
-    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'subTypes')]
-    #[ORM\JoinColumn(name: 'type_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
-    private ?self $type = null;
+    #[ORM\Column(type: 'string')]
+    private string $type;
 
-    #[ORM\OneToMany(mappedBy: 'type', targetEntity: self::class)]
-    private Collection $subTypes;
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
+    private ?self $parent = null;
+
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
+    private Collection $children;
 
     #[ORM\ManyToMany(targetEntity: Resource::class, mappedBy: 'resourceRelationTypes')]
     private Collection $resources;
 
     public function __construct() {
-        $this->subTypes = new ArrayCollection();
+        $this->children = new ArrayCollection();
         $this->resources = new ArrayCollection();
     }
 
@@ -46,26 +44,14 @@ class RelationType
         return $this;
     }
 
-    public function getType(): ?RelationType
+    public function getType(): string
     {
         return $this->type;
     }
 
-    public function setType(?RelationType $type): self
+    public function setType(string $type): self
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    public function getSubTypes(): Collection
-    {
-        return $this->subTypes;
-    }
-
-    public function setSubTypes(Collection $subTypes): self
-    {
-        $this->subTypes = $subTypes;
 
         return $this;
     }
@@ -73,13 +59,6 @@ class RelationType
     public function getResources(): Collection
     {
         return $this->resources;
-    }
-
-    public function setResources(Collection $resources): self
-    {
-        $this->resources = $resources;
-
-        return $this;
     }
 
     public function addResource(Resource $resource): self
@@ -102,25 +81,31 @@ class RelationType
         return $this;
     }
 
-    public function addSubType(RelationType $subType): self
-    {
-        if (!$this->subTypes->contains($subType)) {
-            $this->subTypes[] = $subType;
-            $subType->setType($this);
-        }
+    public function getParent(): ?self {
+        return $this->parent;
+    }
 
+    public function setParent(?self $parent): self {
+        $this->parent = $parent;
         return $this;
     }
 
-    public function removeSubType(RelationType $subType): self
-    {
-        if ($this->subTypes->contains($subType)) {
-            $this->subTypes->removeElement($subType);
-            if ($subType->getType() === $this) {
-                $subType->setType(null);
-            }
-        }
+    public function getChildren(): Collection {
+        return $this->children;
+    }
 
+    public function addChild(self $child): self {
+        if (!$this->children->contains($child)) {
+            $this->children[] = $child;
+            $child->setParent($this);
+        }
+        return $this;
+    }
+
+    public function removeChild(self $child): self {
+        if ($this->children->removeElement($child) && $child->getParent() === $this) {
+            $child->setParent(null);
+        }
         return $this;
     }
 }

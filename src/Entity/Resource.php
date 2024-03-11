@@ -19,9 +19,9 @@ class Resource
     #[ORM\Column(type: 'string')]
     private string $fileName;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, options: ['default' => 'CURRENT_TIMESTAMP'])]
     private \DateTime $creationDate;
-
+// TRAIT POUR LA DATE
     #[ORM\Column(type: 'datetime')]
     private ?\DateTime $modificationDate = null;
 
