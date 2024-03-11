@@ -1,0 +1,15 @@
+const ResourceCategory = {
+  Communication: "Communication",
+  Culture: "Culture",
+  DeveloppementPersonnel: "DeveloppementPersonnel",
+  IntelligenceEmotionnelle: "IntelligenceEmotionnelle",
+  Loisirs: "Loisirs",
+  MondeProfessionnel: "MondeProfessionnel",
+  Parentailite: "Parentailite",
+  QualiteDeVie: "QualiteDeVie",
+  RechercheDeSens: "RechercheDeSens",
+  SantePhysique: "SantePhysique",
+  SantePsychique: "SantePsychique",
+  Spiritualite: "Spiritualite",
+  VieAffective: "VieAffective",
+};
