@@ -34,6 +34,150 @@ CREATE TABLE public.doctrine_migration_versions (
 ALTER TABLE public.doctrine_migration_versions OWNER TO pedro;
 
 --
+-- Name: relation_type; Type: TABLE; Schema: public; Owner: pedro
+--
+
+CREATE TABLE public.relation_type (
+    id integer NOT NULL,
+    parent_id integer,
+    type character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.relation_type OWNER TO pedro;
+
+--
+-- Name: relation_type_id_seq; Type: SEQUENCE; Schema: public; Owner: pedro
+--
+
+CREATE SEQUENCE public.relation_type_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.relation_type_id_seq OWNER TO pedro;
+
+--
+-- Name: resource; Type: TABLE; Schema: public; Owner: pedro
+--
+
+CREATE TABLE public.resource (
+    id integer NOT NULL,
+    user_data_id integer NOT NULL,
+    file_name character varying(255) NOT NULL,
+    shared_status character varying(255) NOT NULL,
+    category character varying(255) NOT NULL,
+    type character varying(255) NOT NULL,
+    creation_date timestamp(0) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    modification_date timestamp(0) without time zone DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT resource_category_check CHECK (((category)::text = ANY ((ARRAY['communication'::character varying, 'culture'::character varying, 'developpement_personnel'::character varying, 'intelligence_emotionnelle'::character varying, 'loisirs'::character varying, 'monde_professionnel'::character varying, 'parentalite'::character varying, 'qualite_de_vie'::character varying, 'recherche_de_sens'::character varying, 'sante_physique'::character varying, 'sante_psychique'::character varying, 'spiritualite'::character varying, 'vie_affective'::character varying])::text[]))),
+    CONSTRAINT resource_shared_status_check CHECK (((shared_status)::text = ANY ((ARRAY['public'::character varying, 'shared'::character varying, 'private'::character varying])::text[]))),
+    CONSTRAINT resource_type_check CHECK (((type)::text = ANY ((ARRAY['article'::character varying, 'carte_defi'::character varying, 'cours_pdf'::character varying, 'excercice'::character varying, 'fiche_lecture'::character varying, 'video'::character varying, 'audio'::character varying, 'game'::character varying])::text[])))
+);
+
+
+ALTER TABLE public.resource OWNER TO pedro;
+
+--
+-- Name: COLUMN resource.shared_status; Type: COMMENT; Schema: public; Owner: pedro
+--
+
+COMMENT ON COLUMN public.resource.shared_status IS '(DC2Type:resourceSharedStatusType)';
+
+
+--
+-- Name: COLUMN resource.category; Type: COMMENT; Schema: public; Owner: pedro
+--
+
+COMMENT ON COLUMN public.resource.category IS '(DC2Type:resourceCategoryType)';
+
+
+--
+-- Name: COLUMN resource.type; Type: COMMENT; Schema: public; Owner: pedro
+--
+
+COMMENT ON COLUMN public.resource.type IS '(DC2Type:resourceTypeType)';
+
+
+--
+-- Name: COLUMN resource.creation_date; Type: COMMENT; Schema: public; Owner: pedro
+--
+
+COMMENT ON COLUMN public.resource.creation_date IS '(DC2Type:datetime_immutable)';
+
+
+--
+-- Name: resource_id_seq; Type: SEQUENCE; Schema: public; Owner: pedro
+--
+
+CREATE SEQUENCE public.resource_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.resource_id_seq OWNER TO pedro;
+
+--
+-- Name: resource_metadata; Type: TABLE; Schema: public; Owner: pedro
+--
+
+CREATE TABLE public.resource_metadata (
+    id integer NOT NULL,
+    resource_id integer NOT NULL,
+    title character varying(255) NOT NULL,
+    duration integer,
+    format character varying(255) DEFAULT NULL::character varying,
+    author character varying(255) DEFAULT NULL::character varying,
+    album character varying(255) DEFAULT NULL::character varying,
+    genre character varying(255) DEFAULT NULL::character varying,
+    release_date timestamp(0) without time zone DEFAULT NULL::timestamp without time zone,
+    creation_date timestamp(0) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    modification_date timestamp(0) without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+
+ALTER TABLE public.resource_metadata OWNER TO pedro;
+
+--
+-- Name: COLUMN resource_metadata.creation_date; Type: COMMENT; Schema: public; Owner: pedro
+--
+
+COMMENT ON COLUMN public.resource_metadata.creation_date IS '(DC2Type:datetime_immutable)';
+
+
+--
+-- Name: resource_metadata_id_seq; Type: SEQUENCE; Schema: public; Owner: pedro
+--
+
+CREATE SEQUENCE public.resource_metadata_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.resource_metadata_id_seq OWNER TO pedro;
+
+--
+-- Name: resource_relation_type; Type: TABLE; Schema: public; Owner: pedro
+--
+
+CREATE TABLE public.resource_relation_type (
+    resource_id integer NOT NULL,
+    relation_type_id integer NOT NULL
+);
+
+
+ALTER TABLE public.resource_relation_type OWNER TO pedro;
+
+--
 -- Name: user; Type: TABLE; Schema: public; Owner: pedro
 --
 
@@ -93,7 +237,55 @@ ALTER TABLE public.user_id_seq OWNER TO pedro;
 --
 
 COPY public.doctrine_migration_versions (version, executed_at, execution_time) FROM stdin;
-DoctrineMigrations\\Version20240208222614	2024-02-10 14:44:47	69
+DoctrineMigrations\\Version20240208222614	2024-03-11 15:12:52	14
+DoctrineMigrations\\Version20240311140314	2024-03-11 15:12:52	25
+\.
+
+
+--
+-- Data for Name: relation_type; Type: TABLE DATA; Schema: public; Owner: pedro
+--
+
+COPY public.relation_type (id, parent_id, type) FROM stdin;
+1	\N	Soi
+2	\N	Conjoints
+3	\N	Famille
+4	\N	Professionnel
+5	\N	Amis et communautés
+6	\N	Inconnus
+7	3	Enfants
+8	3	Parents
+9	3	Fratrie
+10	4	Collègues
+11	4	Collaborateurs
+12	4	Managers
+\.
+
+
+--
+-- Data for Name: resource; Type: TABLE DATA; Schema: public; Owner: pedro
+--
+
+COPY public.resource (id, user_data_id, file_name, shared_status, category, type, creation_date, modification_date) FROM stdin;
+1	3	Extrait - La Boétie.pdf	public	recherche_de_sens	cours_pdf	2024-03-11 15:12:53	2024-03-11 15:12:53
+\.
+
+
+--
+-- Data for Name: resource_metadata; Type: TABLE DATA; Schema: public; Owner: pedro
+--
+
+COPY public.resource_metadata (id, resource_id, title, duration, format, author, album, genre, release_date, creation_date, modification_date) FROM stdin;
+1	1	Discours de la servitude volontaire	\N	\N	Etienne de La Boétie	\N	\N	\N	2024-03-11 15:12:53	2024-03-11 15:12:53
+\.
+
+
+--
+-- Data for Name: resource_relation_type; Type: TABLE DATA; Schema: public; Owner: pedro
+--
+
+COPY public.resource_relation_type (resource_id, relation_type_id) FROM stdin;
+1	1
 \.
 
 
@@ -120,6 +312,27 @@ COPY public.user_data (id, user_id, email_encrypted, email_hash) FROM stdin;
 
 
 --
+-- Name: relation_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pedro
+--
+
+SELECT pg_catalog.setval('public.relation_type_id_seq', 12, true);
+
+
+--
+-- Name: resource_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pedro
+--
+
+SELECT pg_catalog.setval('public.resource_id_seq', 1, true);
+
+
+--
+-- Name: resource_metadata_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pedro
+--
+
+SELECT pg_catalog.setval('public.resource_metadata_id_seq', 1, true);
+
+
+--
 -- Name: user_data_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pedro
 --
 
@@ -139,6 +352,38 @@ SELECT pg_catalog.setval('public.user_id_seq', 3, true);
 
 ALTER TABLE ONLY public.doctrine_migration_versions
     ADD CONSTRAINT doctrine_migration_versions_pkey PRIMARY KEY (version);
+
+
+--
+-- Name: relation_type relation_type_pkey; Type: CONSTRAINT; Schema: public; Owner: pedro
+--
+
+ALTER TABLE ONLY public.relation_type
+    ADD CONSTRAINT relation_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: resource_metadata resource_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: pedro
+--
+
+ALTER TABLE ONLY public.resource_metadata
+    ADD CONSTRAINT resource_metadata_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: resource resource_pkey; Type: CONSTRAINT; Schema: public; Owner: pedro
+--
+
+ALTER TABLE ONLY public.resource
+    ADD CONSTRAINT resource_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: resource_relation_type resource_relation_type_pkey; Type: CONSTRAINT; Schema: public; Owner: pedro
+--
+
+ALTER TABLE ONLY public.resource_relation_type
+    ADD CONSTRAINT resource_relation_type_pkey PRIMARY KEY (resource_id, relation_type_id);
 
 
 --
@@ -165,10 +410,45 @@ CREATE UNIQUE INDEX email_hash ON public.user_data USING btree (email_hash);
 
 
 --
+-- Name: idx_3bf454a4727aca70; Type: INDEX; Schema: public; Owner: pedro
+--
+
+CREATE INDEX idx_3bf454a4727aca70 ON public.relation_type USING btree (parent_id);
+
+
+--
+-- Name: idx_7218726289329d25; Type: INDEX; Schema: public; Owner: pedro
+--
+
+CREATE INDEX idx_7218726289329d25 ON public.resource_relation_type USING btree (resource_id);
+
+
+--
+-- Name: idx_72187262dc379ee2; Type: INDEX; Schema: public; Owner: pedro
+--
+
+CREATE INDEX idx_72187262dc379ee2 ON public.resource_relation_type USING btree (relation_type_id);
+
+
+--
+-- Name: idx_bc91f4166ff8bf36; Type: INDEX; Schema: public; Owner: pedro
+--
+
+CREATE INDEX idx_bc91f4166ff8bf36 ON public.resource USING btree (user_data_id);
+
+
+--
 -- Name: uniq_d772bfaaa76ed395; Type: INDEX; Schema: public; Owner: pedro
 --
 
 CREATE UNIQUE INDEX uniq_d772bfaaa76ed395 ON public.user_data USING btree (user_id);
+
+
+--
+-- Name: uniq_e198feb989329d25; Type: INDEX; Schema: public; Owner: pedro
+--
+
+CREATE UNIQUE INDEX uniq_e198feb989329d25 ON public.resource_metadata USING btree (resource_id);
 
 
 --
@@ -179,11 +459,51 @@ CREATE UNIQUE INDEX username ON public."user" USING btree (username);
 
 
 --
+-- Name: relation_type fk_3bf454a4727aca70; Type: FK CONSTRAINT; Schema: public; Owner: pedro
+--
+
+ALTER TABLE ONLY public.relation_type
+    ADD CONSTRAINT fk_3bf454a4727aca70 FOREIGN KEY (parent_id) REFERENCES public.relation_type(id);
+
+
+--
+-- Name: resource_relation_type fk_7218726289329d25; Type: FK CONSTRAINT; Schema: public; Owner: pedro
+--
+
+ALTER TABLE ONLY public.resource_relation_type
+    ADD CONSTRAINT fk_7218726289329d25 FOREIGN KEY (resource_id) REFERENCES public.resource(id) ON DELETE CASCADE;
+
+
+--
+-- Name: resource_relation_type fk_72187262dc379ee2; Type: FK CONSTRAINT; Schema: public; Owner: pedro
+--
+
+ALTER TABLE ONLY public.resource_relation_type
+    ADD CONSTRAINT fk_72187262dc379ee2 FOREIGN KEY (relation_type_id) REFERENCES public.relation_type(id) ON DELETE CASCADE;
+
+
+--
+-- Name: resource fk_bc91f4166ff8bf36; Type: FK CONSTRAINT; Schema: public; Owner: pedro
+--
+
+ALTER TABLE ONLY public.resource
+    ADD CONSTRAINT fk_bc91f4166ff8bf36 FOREIGN KEY (user_data_id) REFERENCES public.user_data(id) ON DELETE CASCADE;
+
+
+--
 -- Name: user_data fk_d772bfaaa76ed395; Type: FK CONSTRAINT; Schema: public; Owner: pedro
 --
 
 ALTER TABLE ONLY public.user_data
     ADD CONSTRAINT fk_d772bfaaa76ed395 FOREIGN KEY (user_id) REFERENCES public."user"(id);
+
+
+--
+-- Name: resource_metadata fk_e198feb989329d25; Type: FK CONSTRAINT; Schema: public; Owner: pedro
+--
+
+ALTER TABLE ONLY public.resource_metadata
+    ADD CONSTRAINT fk_e198feb989329d25 FOREIGN KEY (resource_id) REFERENCES public.resource(id);
 
 
 --
