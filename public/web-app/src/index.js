@@ -9,6 +9,7 @@ import Service from './service/Service';
 import Account from './user/account/Account';
 import Ressource from './ressources/Ressource';
 import User from './user/User';
+import HomePage2 from './home/HomePages2';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -18,6 +19,8 @@ root.render(
     <Navbar />
       <Routes>
         <Route path="/" element={<App />} />
+        <Route path="/home2" element={<HomePage2 />} />
+
         <Route path="/service" element={<Service />} />
         {/* <Route path="/createUser" element={<CreateUser />} /> */}
         <Route path="/ressource/:ressourceId" element={<Ressource/>} />
