@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -25,6 +27,15 @@ class UserData
     #[ORM\OneToOne(inversedBy: 'userData', targetEntity: User::class, cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
     private User $user;
+
+    /** @var Collection<int, resource> */
+    #[ORM\OneToMany(mappedBy: 'userData', targetEntity: Resource::class, cascade: ['persist', 'remove'])]
+    private Collection $resources;
+
+    public function __construct()
+    {
+        $this->resources = new ArrayCollection();
+    }
 
     public function getId(): int
     {
@@ -72,5 +83,26 @@ class UserData
         $this->user = $user;
 
         return $this;
+    }
+
+    public function getResources(): Collection
+    {
+        return $this->resources;
+    }
+
+    public function addResource(Resource $resource): self
+    {
+        if (!$this->resources->contains($resource)) {
+            $this->resources->add($resource);
+        }
+
+        return $this;
+    }
+
+    public function removeResources(Resource $resource): void
+    {
+        if ($this->resources->contains($resource)) {
+            $this->resources->removeElement($resource);
+        }
     }
 }
