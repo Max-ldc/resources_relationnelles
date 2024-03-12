@@ -29,7 +29,7 @@ class Resource
     #[JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private UserData $userData;
 
-    #[ORM\OneToOne(mappedBy: 'resource', targetEntity: ResourceMetadata::class)]
+    #[ORM\OneToOne(mappedBy: 'resource', targetEntity: ResourceMetadata::class, cascade: ['remove'])]
     private ?ResourceMetadata $resourceMetadata = null;
 
     #[ORM\Column(type: 'resourceCategoryType')]
