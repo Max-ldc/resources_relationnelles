@@ -3,8 +3,10 @@
 namespace Unit;
 
 use App\Storage\FileSystemAdaptor;
+use League\Flysystem\DirectoryListing;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\UnableToDeleteFile;
+use League\Flysystem\UnableToListContents;
 use League\Flysystem\UnableToReadFile;
 use League\Flysystem\UnableToWriteFile;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -37,6 +39,9 @@ class FileSystemAdaptorTest extends TestCase
     {
         $instance = $this->getInstance();
 
+        $this->filesystemOp->expects($this->once())
+            ->method('write')
+            ->with($this->filename, $this->content);
         $this->assertTrue($instance->addFile($this->filename, $this->content));
     }
 
@@ -58,6 +63,8 @@ class FileSystemAdaptorTest extends TestCase
         // Mock
         $this->filesystemOp->method('write')->willThrowException(new UnableToWriteFile());
 
+        $this->logger->expects($this->once())
+            ->method('error');
         $this->expectException(UnableToWriteFile::class);
         $instance->addFile($this->filename, $this->content);
     }
@@ -69,6 +76,8 @@ class FileSystemAdaptorTest extends TestCase
         // Mock
         $this->filesystemOp->method('read')->willThrowException(new UnableToReadFile());
 
+        $this->logger->expects($this->once())
+            ->method('error');
         $this->expectException(UnableToReadFile::class);
         $instance->getFileContent('unfoundable_file.pdf');
     }
@@ -77,6 +86,9 @@ class FileSystemAdaptorTest extends TestCase
     {
         $instance = $this->getInstance();
 
+        $this->filesystemOp->expects($this->once())
+            ->method('delete')
+            ->with($this->filename);
         $this->assertTrue($instance->delete($this->filename));
     }
 
@@ -87,7 +99,38 @@ class FileSystemAdaptorTest extends TestCase
         // Mock
         $this->filesystemOp->method('delete')->willThrowException(new UnableToDeleteFile());
 
+        $this->logger->expects($this->once())
+            ->method('error');
         $this->expectException(UnableToDeleteFile::class);
         $instance->delete('unfoundable_file.pdf');
+    }
+
+    public function testGetAllFiles(): void
+    {
+        $instance = $this->getInstance();
+        $mockedFiles = [
+            ['type' => 'file', 'path' => 'file1.txt'],
+            ['type' => 'file', 'path' => 'file2.txt']
+        ];
+        $this->filesystemOp->method('listContents')
+            ->willReturn(new DirectoryListing($mockedFiles));
+
+        $files = $instance->getAllFiles();
+        $this->assertCount(2, $files);
+        $this->assertEquals('file1.txt', $files[0]['path']);
+        $this->assertEquals('file2.txt', $files[1]['path']);
+    }
+
+    public function testGetAllFilesFailure(): void
+    {
+        $instance = $this->getInstance();
+        // Mock
+        $this->filesystemOp->method('listContents')
+            ->willThrowException(new UnableToListContents());
+
+        $this->logger->expects($this->once())
+            ->method('error');
+
+        $instance->getAllFiles();
     }
 }
