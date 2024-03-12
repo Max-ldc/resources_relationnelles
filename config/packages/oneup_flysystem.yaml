@@ -1,0 +1,18 @@
+# Read the documentation: https://github.com/1up-lab/OneupFlysystemBundle
+oneup_flysystem:
+    adapters:
+        default_adapter:
+            local:
+                location: '%kernel.cache_dir%/flysystem'
+        acme.flysystem_adapter:
+            awss3v3:
+                client: acme.s3_client
+                bucket: '%env(MINIO_DEFAULT_BUCKETS)%'
+                prefix: 'users' # Optional path prefix, you can set empty string
+    filesystems:
+        default_filesystem:
+            adapter: default_adapter
+            alias: League\Flysystem\Filesystem
+        resources_filesystem:
+            adapter: acme.flysystem_adapter
+            alias: resources_filesystem

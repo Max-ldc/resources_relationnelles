@@ -12,6 +12,7 @@ use Faker\Factory;
 
 class AppFixtures extends Fixture
 {
+
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create();
@@ -30,7 +31,7 @@ class AppFixtures extends Fixture
 
             $emailEncrypted = $emailsEncrypted[$index];
 
-            $email = strtolower($username).'@example.com';
+            $email = strtolower($username) . '@example.com';
 
             $userData = new UserData();
             $userData->setUser($user)

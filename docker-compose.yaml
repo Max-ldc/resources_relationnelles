@@ -7,8 +7,8 @@ services:
     working_dir: /home/app
     volumes:
       - .:/home/app
-    ports:
-      - "9000:9000"
+    networks:
+      web:
 
   nginx:
     container_name: nginx-container
@@ -21,6 +21,8 @@ services:
       - php
     ports:
       - "80:80"
+    networks:
+      web:
 
   database:
     image: postgres:${POSTGRES_VERSION:-15}-alpine
@@ -32,6 +34,30 @@ services:
       - "5432:5432"
     volumes:
       - database_data:/var/lib/postgresql/data:rw
+    networks:
+      web:
+    
+  minio:
+    container_name: minio-container
+    image: docker.io/bitnami/minio:2024
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+      MINIO_DEFAULT_BUCKETS: ${MINIO_DEFAULT_BUCKETS}
+    ports:
+      - "9001:9001"
+    volumes:
+      - 'storage:/data'
+    networks:
+      web:
+        ipv4_address: 172.252.2.4
 
 volumes:
   database_data:
+  storage:
+
+networks:
+  web:
+    ipam:
+      config:
+        - subnet: 172.252.2.0/24
