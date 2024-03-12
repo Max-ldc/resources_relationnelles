@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
 import './homepage.css';
+import Search from "../search/Search";
 
 
 function HomePage2() {
     
     return (
-    
       <div>
            <main>
+                <Search></Search>
               <section className='main-contanair'>
                         {/* <article className='video'>
                             <Link to={`/articles/${articleId}`}>Видео id={articleId}</Link>

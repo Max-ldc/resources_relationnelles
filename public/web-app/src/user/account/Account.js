@@ -1,12 +1,12 @@
 import Connecter from "./Connecter";
-import CreerCompte from "./CreerCompte";
-
+import CreateUser from "./CreateUser";
+import './account-css.css'
 
 const Account = () => {
     return (
       <div className="account-block">
         <section><Connecter/></section>
-        <section><CreerCompte/></section>
+        <section><CreateUser/></section>
       </div>
     );
   };
