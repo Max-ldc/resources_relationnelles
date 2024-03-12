@@ -131,6 +131,7 @@ class FileSystemAdaptorTest extends TestCase
         $this->logger->expects($this->once())
             ->method('error');
 
+        $this->expectException(UnableToListContents::class);
         $instance->getAllFiles();
     }
 }
