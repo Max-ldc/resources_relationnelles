@@ -12,6 +12,7 @@ doctrine:
             resourceCategoryType: App\Doctrine\DBAL\Types\ResourceCategoryType
             resourceSharedStatusType: App\Doctrine\DBAL\Types\ResourceSharedStatusType
             resourceTypeType: App\Doctrine\DBAL\Types\ResourceTypeType
+            userRoleType: App\Doctrine\DBAL\Types\UserRoleType
 
     orm:
         auto_generate_proxy_classes: true
