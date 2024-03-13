@@ -184,11 +184,20 @@ ALTER TABLE public.resource_relation_type OWNER TO pedro;
 CREATE TABLE public."user" (
     id integer NOT NULL,
     username character varying(255) NOT NULL,
-    account_enabled boolean DEFAULT true NOT NULL
+    account_enabled boolean DEFAULT true NOT NULL,
+    role character varying(255) DEFAULT 'citoyen connecté'::character varying NOT NULL,
+    CONSTRAINT user_role_check CHECK (((role)::text = ANY ((ARRAY['citoyen connecté'::character varying, 'modérateur'::character varying, 'administrateur'::character varying, 'super administrateur'::character varying])::text[])))
 );
 
 
 ALTER TABLE public."user" OWNER TO pedro;
+
+--
+-- Name: COLUMN "user".role; Type: COMMENT; Schema: public; Owner: pedro
+--
+
+COMMENT ON COLUMN public."user".role IS '(DC2Type:userRoleType)';
+
 
 --
 -- Name: user_data; Type: TABLE; Schema: public; Owner: pedro
@@ -237,8 +246,9 @@ ALTER TABLE public.user_id_seq OWNER TO pedro;
 --
 
 COPY public.doctrine_migration_versions (version, executed_at, execution_time) FROM stdin;
-DoctrineMigrations\\Version20240208222614	2024-03-11 15:12:52	14
-DoctrineMigrations\\Version20240311140314	2024-03-11 15:12:52	25
+DoctrineMigrations\\Version20240208222614	2024-03-13 15:02:06	16
+DoctrineMigrations\\Version20240311140314	2024-03-13 15:02:06	29
+DoctrineMigrations\\Version20240313142256	2024-03-13 15:02:06	3
 \.
 
 
@@ -267,7 +277,7 @@ COPY public.relation_type (id, parent_id, type) FROM stdin;
 --
 
 COPY public.resource (id, user_data_id, file_name, shared_status, category, type, creation_date, modification_date) FROM stdin;
-1	3	Extrait - La Boétie.pdf	public	recherche_de_sens	cours_pdf	2024-03-11 15:12:53	2024-03-11 15:12:53
+1	3	Extrait - La Boétie.pdf	public	recherche_de_sens	cours_pdf	2024-03-13 15:02:08	2024-03-13 15:02:08
 \.
 
 
@@ -276,7 +286,7 @@ COPY public.resource (id, user_data_id, file_name, shared_status, category, type
 --
 
 COPY public.resource_metadata (id, resource_id, title, duration, format, author, album, genre, release_date, creation_date, modification_date) FROM stdin;
-1	1	Discours de la servitude volontaire	\N	\N	Etienne de La Boétie	\N	\N	\N	2024-03-11 15:12:53	2024-03-11 15:12:53
+1	1	Discours de la servitude volontaire	\N	\N	Etienne de La Boétie	\N	\N	\N	2024-03-13 15:02:08	2024-03-13 15:02:08
 \.
 
 
@@ -293,10 +303,10 @@ COPY public.resource_relation_type (resource_id, relation_type_id) FROM stdin;
 -- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: pedro
 --
 
-COPY public."user" (id, username, account_enabled) FROM stdin;
-1	Pedro	t
-2	Maria	t
-3	UserForDeleteTest	t
+COPY public."user" (id, username, account_enabled, role) FROM stdin;
+1	Pedro	t	citoyen connecté
+2	Maria	t	citoyen connecté
+3	UserForDeleteTest	t	citoyen connecté
 \.
 
 

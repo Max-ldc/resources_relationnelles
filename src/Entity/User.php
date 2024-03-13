@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiProperty;
+use App\Domain\Resource\UserRoleEnum;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
@@ -31,6 +32,15 @@ class User
     #[ORM\OneToOne(mappedBy: 'user', targetEntity: UserData::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[Groups('read_user_with_user_details')]
     private ?UserData $userData = null;
+
+    #[ORM\Column(type: 'userRoleType', options: ['default' => UserRoleEnum::USER_ROLE_CONNECTED_CITIZEN->value])]
+    #[Groups(['read_user'])]
+    private string $role;
+
+    public function __construct()
+    {
+        $this->role = UserRoleEnum::USER_ROLE_CONNECTED_CITIZEN->value;
+    }
 
     public function getId(): int
     {
@@ -76,6 +86,18 @@ class User
     public function setUserData(UserData $userData): self
     {
         $this->userData = $userData;
+
+        return $this;
+    }
+
+    public function getRole(): string
+    {
+        return $this->role;
+    }
+
+    public function setRole(string $role): self
+    {
+        $this->role = $role;
 
         return $this;
     }

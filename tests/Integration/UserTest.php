@@ -56,6 +56,7 @@ class UserTest extends ApiTestCase
             'id' => 2,
             'username' => 'Maria',
             'accountEnabled' => true,
+            'role' => 'citoyen connecté',
         ]);
     }
 
