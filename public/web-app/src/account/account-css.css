@@ -1,0 +1,55 @@
+.account-container {
+  height: 100vh;
+  display: grid;
+  align-content: center;
+}
+
+.account-block{
+  display: grid;
+  gap: 50px;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 400px));
+  grid-row: auto;
+  justify-items: center;
+  justify-content: center;
+  /* border: 1px solid #2767A0; */
+}
+
+
+.connecter{
+  background-color: rgb(194, 153, 233);
+}
+.createuser {
+   background-color: aquamarine;
+}
+
+.react-aria-Input {
+    max-width: 300px;
+}
+
+
+
+.connecter,
+.createuser {
+    display: grid;
+    /* border: 1px solid blue; */
+    min-width: 400px;
+    min-height: 300px;
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
+}
+  /* Connecter */
+h2 {
+    text-align: center;
+}
+.connecter-block {
+    display: grid;
+    justify-content: center;
+    padding: 10px;
+    text-align: right;
+}
+.connecter-block button{
+    width: 100px;
+    margin: 10px auto;
+}
+

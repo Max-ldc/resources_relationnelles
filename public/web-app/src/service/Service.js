@@ -9,6 +9,7 @@ import AllUsers from '../user/allUsers/AllUsers';
 const Service = () => {
     const [users, setAllUsers] = useState([]);
     // const [userId, setUserId] = useState({});
+    const [loading, setLoading] = useState(true);
 
 
   //get list users
@@ -17,6 +18,7 @@ const Service = () => {
           .then(response => {
               setAllUsers(response.data);
               console.log(response.data)
+              setLoading(false);
           })
           .catch(error => {
               console.error('Error fetching data:', error);
@@ -43,6 +45,8 @@ const Service = () => {
   return (
     <div>
         <h1>List Users</h1>
+        { loading ? ( <p>Loading...</p>) : (
+          <div>
           {users['hydra:member']?.map(user => (
             <Link key={user.id} to={`/user/${user.id}`}>
               <AllUsers key={user.id}
@@ -52,6 +56,8 @@ const Service = () => {
               />
             </Link>
           ))}
+         </div>
+          )}
     </div>
   );
 

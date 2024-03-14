@@ -9,16 +9,17 @@
 
     return (
       <div className='connecter'>
-          <h2>Page Connecter si Déjà client ?!</h2>
+          <h2>Déjà client ?</h2>
             <Form className='connecter-block'>
-            <TextField className="text-input" name="username" type="text" isRequired>
-                <Label className='label-input'>username </Label>
+            <TextField name="username" type="text" isRequired>
+                <Label>username </Label>
                 <Input value={username}  onChange={(e) => setUsername(e.target.value)}/>
                 <FieldError />
             </TextField>
+
             <TextField name="email" type="email" isRequired>
-                <Label className='label-input'>email </Label>
-                <Input className='input-input' />
+                <Label>email </Label>
+                <Input />
                 <FieldError />
             </TextField>
             
