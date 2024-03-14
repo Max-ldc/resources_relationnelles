@@ -1,13 +1,107 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+html,
+:host {
+  line-height: 1.5;
+  /* 1 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */
+  /* 3 */
+  tab-size: 4;
+  /* 3 */
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  /* 4 */
+  font-feature-settings: normal;
+  /* 5 */
+  font-variation-settings: normal;
+  /* 6 */
+  -webkit-tap-highlight-color: transparent;
+  /* 7 */
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* You can add global styles to this file, and also import other style files */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  /* suprime border input */
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: #e5e7eb;
+}
+img {
+  object-fit: cover;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+  text-decoration: none;
+}
+
+/*
+1. Change the font styles in all browsers.
+2. Remove the margin in Firefox and Safari.
+3. Remove default padding in all browsers.
+*/
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  font-feature-settings: inherit;
+  font-variation-settings: inherit;
+  font-size: 100%;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+
+
+
+/* aria */
+.react-aria-Button {
+  background-color: orange;
+  padding: 5px 12px;
+  color: white;
+  border-radius: 4px;
+}
+.react-aria-TextField {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  margin: 5px 0;
+
+}
+
+.react-aria-Input,
+.react-aria-TextArea {
+    border: 1px solid #bbbec0;;
+    border-radius: 4px;
+    height: 50px;    
+    width: 300px;
+    
+    &[data-focused] {
+      outline: 2px solid #2767A0;;
+      outline-offset: -1px;
+    }
+}
+.react-aria-Label {
+  text-align: left;
+}
+.react-aria-FieldError{
+  font-size: 10px;
+  color:red;
+  max-width: 300px;
+  text-align: left;
+  border: 1px solid red;
+  word-wrap: break-word;
 }

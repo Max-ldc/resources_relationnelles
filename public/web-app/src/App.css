@@ -1,33 +1,9 @@
-.App {
-  text-align: center;
-}
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
+/* @media (prefers-reduced-motion: no-preference) {
+  .footer-img {
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 50vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -35,33 +11,37 @@
   to {
     transform: rotate(360deg);
   }
+} */
+
+
+footer { 
+  background-color: black;
+  color:white;
+  text-align:center;
+  padding: 10px 0;
+  margin-top: 70px;
 }
-
-
-
-/* ******************************* */
-/* ----------------------------- */
-.main-contanair{
+.footer-img {
+  height: 50px;
+  pointer-events: none;
+  border-radius: 50%;
+  margin:0 5px;
+}
+.footer-up {
+  display: flex;
+  text-align: left;
+}
+.footer-up-text {
   display: grid;
-  /* grid-template-columns: repeat(4, 1fr); */
-  grid-template-columns: repeat(auto-fit, minmax(100px, 270px));
-  gap: 10px;
-  margin: 10px;
-  justify-items: stretch;
-  justify-content: space-evenly;
-  color: aliceblue;
 }
-.video{
-    height: 270px;
-    /* background: url(../public/logo192.png) no-repeat; */
-    background-color: rgb(29, 28, 28) ;
-    background-position: center;
-    margin: 10px 0;
+.text-footer-up-text {
+ font-size: 14px;
+ font-style: italic;
+ padding: 3px 3px 0 3px;
 }
-.media, .books, .xxx{
-  height: 270px;
-  border: 1px solid red;
-  background: url(../public/logo192.png) no-repeat;
-  background-position: center;
-  border-radius: 5px; 
+.footer-down{
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(100px,1fr));
+  margin-top: 5px;
+  color: gray;
 }

@@ -36,16 +36,16 @@ const CreateUser = () => {
 
     return (
         <div className='createuser'>
-            <h2>Greete User?!</h2>
+            <h2>Create User</h2>
                 <Form  onSubmit={handleSubmit} className='connecter-block'>
-                    <TextField name="username" type="text" isRequired className="text-input">
-                        <Label className='label-input'>username</Label>
+                    <TextField name="username" type="text" isRequired>
+                        <Label>username</Label>
                         <Input onChange={(e) => setUsername(e.target.value)}/>
                         <FieldError />
                     </TextField>
                     <TextField name="email" type="email" isRequired>
-                        <Label className='label-input'>email</Label>
-                        <Input onChange={(e) => setUseremail(e.target.value)} className='input-input' />
+                        <Label>email</Label>
+                        <Input onChange={(e) => setUseremail(e.target.value)} />
                         <FieldError />
                     </TextField>
                     

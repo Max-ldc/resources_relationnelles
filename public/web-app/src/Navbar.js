@@ -3,38 +3,53 @@ import "./navbar.css";
 
 function Navbar() {
   return (
-    <div className="header">
+    <header className="header">
+      
+      <div className="logo-block">
+      <Link to="/">
+          <div><img src="logo-3.png" className="site-logo" alt="logo" /></div>
+          <div className="title-site"><span>Sources Relationnelles</span></div>
+          <div className="logo-little-text">La plateforme pour améliorer vos relations</div>
+      </Link> 
+      </div>
+
+
+
       <nav>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/">Accueil</Link>
           </li>
           <li>
-            <Link to="/home2">Home2</Link>
+            <Link to="/ressources">Ressources</Link>
+          </li>
+          <li>
+            <Link to="/uploader">Uploader</Link>
+          </li>
+          
+          <li>
+            <Link to="/account">Mon compte</Link>
+          </li>
+
+
+
+          <li>
+            <Link to="/home2">H2</Link>
           </li>
           <li>
             <Link to="/service">Service</Link>
           </li>
 
-          <li>
-            <Link to="/account">Account</Link>
-          </li>
           
         </ul>
       </nav>
 
-      <div className="header-utilisateur">
-        {/* <Link to="/account">
-          <UserNavbar />
-        </Link> */}
-      </div>
 
 
 
 
 
-
-    </div>
+    </header>
   );
 }
 

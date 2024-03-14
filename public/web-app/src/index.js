@@ -6,10 +6,10 @@ import reportWebVitals from './reportWebVitals';
 import Navbar from './Navbar'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Service from './service/Service';
-import Account from './user/account/Account';
 import Ressource from './ressources/Ressource';
 import User from './user/User';
 import HomePage2 from './home/HomePages2';
+import Account from './account/Account';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
