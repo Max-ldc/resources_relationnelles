@@ -21,4 +21,10 @@ class UserRepository extends ServiceEntityRepository
 
         return null !== $existingUser;
     }
+
+    public function save(User $user): void
+    {
+        $this->_em->persist($user);
+        $this->_em->flush();
+    }
 }

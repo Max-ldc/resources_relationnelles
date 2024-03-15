@@ -11,6 +11,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use App\Entity\User;
+use App\Processor\UserPrivilegedProcessor;
 use App\Processor\UserProcessor;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -67,7 +68,48 @@ use Symfony\Component\Validator\Constraints as Assert;
                     ],
                 ],
             ],
+            validationContext: [
+                'groups' => [
+                    'create_user',
+                ],
+            ],
             processor: UserProcessor::class
+        ),
+        new Post(
+            uriTemplate: '/users_privileged',
+            openapiContext: [
+                'summary' => 'Create a new user with privileges',
+                'requestBody' => [
+                    'required' => true,
+                    'content' => [
+                        'application/ld+json' => [
+                            'schema' => [
+                                'type' => 'object',
+                                'properties' => [
+                                    'username' => [
+                                        'type' => 'string',
+                                        'required' => 'true',
+                                    ],
+                                    'email' => [
+                                        'type' => 'string',
+                                        'required' => 'true',
+                                    ],
+                                    'role' => [
+                                        'type' => 'string',
+                                        'required' => 'true',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            validationContext: [
+                'groups' => [
+                    'create_user_with_privileges',
+                ],
+            ],
+            processor: UserPrivilegedProcessor::class
         ),
         new Delete(
             uriTemplate: '/users/{id}',
@@ -100,16 +142,19 @@ use Symfony\Component\Validator\Constraints as Assert;
 ]
 class UserApi
 {
-    #[Assert\NotBlank(message: 'validation.user.username.empty')]
+    #[Assert\NotBlank(message: 'validation.user.username.empty', groups: ['create_user', 'create_user_with_privileges'])]
     #[Assert\Length(min: 3, max: 16, minMessage: 'validation.user.username.minlength', maxMessage: 'validation.user.username.maxlength')]
     #[Assert\Regex(pattern: '/^[a-zA-Z0-9_]+$/', message: 'validation.user.username.regex')]
     private string $username;
 
-    #[Assert\NotBlank(message: 'validation.user.email.empty')]
+    #[Assert\NotBlank(message: 'validation.user.email.empty', groups: ['create_user', 'create_user_with_privileges'])]
     #[Assert\Email(message: 'validation.user.email.invalid')]
     private string $email;
 
     private bool $accountEnabled = true;
+
+    #[Assert\NotBlank(message: 'validation.user.role.empty', groups: ['create_user_with_privileges'])]
+    private ?string $role = null;
 
     public function getUsername(): string
     {
@@ -143,6 +188,18 @@ class UserApi
     public function setAccountEnabled(bool $accountEnabled): self
     {
         $this->accountEnabled = $accountEnabled;
+
+        return $this;
+    }
+
+    public function getRole(): ?string
+    {
+        return $this->role;
+    }
+
+    public function setRole(?string $role): self
+    {
+        $this->role = $role;
 
         return $this;
     }
