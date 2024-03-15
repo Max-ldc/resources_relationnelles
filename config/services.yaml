@@ -32,6 +32,12 @@ services:
         arguments:
             - '@resources_filesystem'
 
+    App\EventListener\DeserializeListener:
+        tags:
+            - {name: 'kernel.event_listener', event: 'kernel.request', method: 'onKernelRequest', priority: 2}
+        decorates: 'api_platform.listener.request.deserialize'
+        autoconfigure: false
+
     acme.s3_client:
         class: Aws\S3\S3Client
         arguments:
