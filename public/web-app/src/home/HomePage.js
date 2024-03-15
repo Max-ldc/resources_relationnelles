@@ -15,10 +15,10 @@ function HomePage() {
         {/* buttons */}
         <section className="buttons-block">
           <Button className="button-orange">
-            <Link to="/account">Se connecter</Link>
+            <Link to="/connecter">Se connecter</Link>
           </Button>
           <Button className="button-orange">
-            <Link to="/account">Créer un compte</Link>
+            <Link to="/creer-compte">Créer un compte</Link>
           </Button>
         </section>
 

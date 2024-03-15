@@ -53,6 +53,7 @@ const Service = () => {
                 id={user.id}
                 username={user.username}
                 accountEnabled={user.accountEnabled}
+                role={user.role}
               />
             </Link>
           ))}

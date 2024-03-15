@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import {Button, FieldError, Form, Input, Label, TextField} from 'react-aria-components';
 import './account-css.css';
+import { Link } from "react-router-dom";
 
 const CreateUser = () => {
     const [username, setUsername] = useState('');
@@ -62,6 +63,9 @@ const CreateUser = () => {
                 
                 <Button type="submit">Valider</Button>
             </Form>
+
+            <Link to="/connecter" className='link-creer'>Se connecter</Link>
+
         </div>
     </div>
 

@@ -1,6 +1,7 @@
   import { useState } from 'react';
   import './account-css.css';
   import {Button, FieldError, Form, Input, Label, TextField} from 'react-aria-components';
+  import { Link } from "react-router-dom";
 
 
   const Connecter = () => {
@@ -25,7 +26,7 @@
                   <FieldError />
               </TextField>
 
-              <TextField name="email" type="email" isRequired>
+              <TextField name="password" type="password" isRequired>
                   <Label>Mot de passe*</Label>
                   <Input />
                   <FieldError />
@@ -33,6 +34,11 @@
               
               <Button type="submit">Valider</Button>
           </Form>
+
+          <Link to="/creer-compte" className='link-creer'>Créer un compte</Link>
+
+
+
       </div>
     </div>
 

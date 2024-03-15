@@ -1,6 +1,6 @@
 // import { Link } from "react-router-dom";
 
-const AllUsers = ({id, username, accountEnabled, handleSearchById })  => {
+const AllUsers = ({id, username, accountEnabled, role })  => {
   //  const[allLogement, setAllBd]=useState([]); //заводим переменные
     return (
       <div className="block-utilisateur">
@@ -9,7 +9,7 @@ const AllUsers = ({id, username, accountEnabled, handleSearchById })  => {
 
 
             {/* <Link to={`/user/${id}`}> */}
-               <p>ID: {id}; Username: {username}; AccountEnabled: {accountEnabled}</p>
+               <p>ID: {id}; Username: {username}; role:{role}</p>
             {/* </Link> */}
           </div>
         </div>

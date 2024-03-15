@@ -32,19 +32,16 @@ function Navbar() {
           <li>
             <Link to="/uploader">Uploader</Link>
           </li>
-          <li>
-            <Link to="/account">Mon compte</Link>
-          </li>
+
           <li>
             <Link to="/service">Admin</Link>
           </li>
 
           <li>
-            <Link to="/connecter">connecter</Link>
+            <Link to="/connecter">Connecter-vous</Link>
           </li>
-          <li>
-            <Link to="/create">create</Link>
-          </li>
+
+
         </ul>
       </nav>
       <Button onClick={()=> setOpenMenu(!isOpen)} className="icon-menu-open">
