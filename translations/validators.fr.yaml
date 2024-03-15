@@ -14,3 +14,5 @@ validation.resource.category.invalid: "La catégorie de la ressource n'est pas r
 validation.resource.type.invalid: "Le type de ressource n'est pas reconnu"
 validation.resource.title.empty: "Le titre de la ressource ne peut pas être vide"
 validation.resource.invalid.format: "Le format est invalide"
+validation.resource.file.empty: "Le fichier ne doit pas être vide"
+validation.resource.maxsize: "Le fichier est trop volumineux"

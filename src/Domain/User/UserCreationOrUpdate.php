@@ -2,7 +2,7 @@
 
 namespace App\Domain\User;
 
-use App\ApiResource\UserApi;
+use App\DTO\CreateUser;
 use App\Entity\User;
 use App\Entity\UserData;
 use App\Repository\UserDataRepository;
@@ -19,7 +19,7 @@ readonly class UserCreationOrUpdate
     ) {
     }
 
-    public function createUser(UserApi $data, string $emailHash): User
+    public function createUser(CreateUser $data, string $emailHash): User
     {
         $emailEncrypt = $this->encryptionService->encrypt($data->getEmail());
 

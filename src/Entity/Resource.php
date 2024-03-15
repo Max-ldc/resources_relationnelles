@@ -3,7 +3,14 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiProperty;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
 use App\Doctrine\Traits\TimestampTrait;
+use App\Processor\ResourceProcessor;
+use ApiPlatform\Doctrine\Orm\State\Options;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,6 +19,118 @@ use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity]
 #[ORM\Table(name: '`resource`')]
+#[ApiResource(
+    shortName: 'Resource',
+    operations: [
+        new Get(
+            uriTemplate: '/resources/{id}',
+            openapiContext: [
+                'parameters' => [
+                    [
+                        'name' => 'id',
+                        'in' => 'path',
+                        'required' => true,
+                        'schema' => [
+                            'type' => 'integer',
+                        ],
+                        'description' => 'Resource identifier',
+                    ],
+                ],
+                'summary' => 'Retrieves a Resource item',
+                'description' => 'Retrieves a Resource item by ID'
+            ],
+            class: Resource::class
+        ),
+        new GetCollection(),
+        new Post(
+            openapiContext: [
+                'summary' => 'Create a new resource',
+                'requestBody' => [
+                    'required' => true,
+                    'content' => [
+                        'multipart/form-data' => [
+                            'schema' => [
+                                'type' => 'object',
+                                'properties' => [
+                                    'json' => [
+                                        'type' => 'object',
+                                        'properties' => [
+                                            'sharedStatus' => [
+                                                'type' => 'string',
+                                                'required' => 'true',
+                                            ],
+                                            'category' => [
+                                                'type' => 'string',
+                                                'required' => 'true',
+                                            ],
+                                            'type' => [
+                                                'type' => 'string',
+                                                'required' => 'true',
+                                            ],
+                                            'title' => [
+                                                'type' => 'string',
+                                                'required' => 'true',
+                                            ],
+                                            'author' => [
+                                                'type' => 'string',
+                                                'required' => 'true',
+                                            ],
+                                        ],
+                                    ],
+                                    'importFile' => [
+                                        'type' => 'string',
+                                        'format' => 'binary',
+                                    ],
+                                ],
+                            ],
+                            'encoding' => [
+                                'json' => [
+                                    'contentType' => 'application/json',
+                                ],
+                                'importFile' => [
+                                    'contentType' => 'multipart/form-data',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            validationContext: [
+                'groups' => [
+                    'create_resource_pdf',
+                ],
+            ],
+            processor: ResourceProcessor::class,
+            inputFormats: ['multipart' => ['multipart/form-data']],
+        ),
+        new Delete(
+            uriTemplate: '/resources/{id}',
+            openapiContext: [
+                'parameters' => [
+                    [
+                        'name' => 'id',
+                        'in' => 'path',
+                        'required' => true,
+                        'schema' => [
+                            'type' => 'integer',
+                        ],
+                        'description' => 'Resource identifier',
+                    ],
+                ],
+                'summary' => 'Removes a Resource item.',
+                'description' => 'Removes a Resource item by ID.',
+            ],
+        )
+    ],
+    normalizationContext: [
+        'groups' => [
+            'read_resource'
+        ],
+    ],
+    stateOptions: new Options(
+        entityClass: Resource::class
+    )
+)]
 class Resource
 {
     use TimestampTrait;

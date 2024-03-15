@@ -14,4 +14,10 @@ class ResourceRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Resource::class);
     }
+
+    public function save(Resource $resource): void
+    {
+        $this->_em->persist($resource);
+        $this->_em->flush();
+    }
 }

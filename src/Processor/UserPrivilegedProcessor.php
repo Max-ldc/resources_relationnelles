@@ -6,8 +6,8 @@ namespace App\Processor;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use App\ApiResource\UserApi;
 use App\Domain\User\UserCreationOrUpdate;
+use App\DTO\CreateUser;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
@@ -25,7 +25,7 @@ readonly class UserPrivilegedProcessor implements ProcessorInterface
             throw new BadRequestHttpException('Providing a role is mandatory');
         }
 
-        if ($data instanceof UserApi) {
+        if ($data instanceof CreateUser) {
             $emailHash = hash('sha256', $data->getEmail());
             $username = $data->getUserName();
 

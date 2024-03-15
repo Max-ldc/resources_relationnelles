@@ -5,13 +5,138 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiProperty;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use App\Processor\UserPrivilegedProcessor;
+use App\Processor\UserProcessor;
 use App\Domain\Resource\UserRoleEnum;
+use App\DTO\CreateUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity]
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'username', columns: ['username'])]
+#[ApiResource(
+    shortName: 'User',
+    operations: [
+        new Get(
+            uriTemplate: '/users/{id}',
+            openapiContext: [
+                'parameters' => [
+                    [
+                        'name' => 'id',
+                        'in' => 'path',
+                        'required' => true,
+                        'schema' => [
+                            'type' => 'integer',
+                        ],
+                        'description' => 'User identifier',
+                    ],
+                ],
+                'summary' => 'Retrieves a User resource.',
+                'description' => 'Retrieves a User resource by ID.',
+            ],
+        ),
+        new GetCollection(),
+        new Post(
+            openapiContext: [
+                'summary' => 'Create a new user',
+                'requestBody' => [
+                    'required' => true,
+                    'content' => [
+                        'application/ld+json' => [
+                            'schema' => [
+                                'type' => 'object',
+                                'properties' => [
+                                    'username' => [
+                                        'type' => 'string',
+                                        'required' => 'true',
+                                    ],
+                                    'email' => [
+                                        'type' => 'string',
+                                        'required' => 'true',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            validationContext: [
+                'groups' => [
+                    'create_user',
+                ],
+            ],
+            processor: UserProcessor::class,
+            input: CreateUser::class
+        ),
+        new Post(
+            uriTemplate: '/users_privileged',
+            openapiContext: [
+                'summary' => 'Create a new user with privileges',
+                'requestBody' => [
+                    'required' => true,
+                    'content' => [
+                        'application/ld+json' => [
+                            'schema' => [
+                                'type' => 'object',
+                                'properties' => [
+                                    'username' => [
+                                        'type' => 'string',
+                                        'required' => 'true',
+                                    ],
+                                    'email' => [
+                                        'type' => 'string',
+                                        'required' => 'true',
+                                    ],
+                                    'role' => [
+                                        'type' => 'string',
+                                        'required' => 'true',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            validationContext: [
+                'groups' => [
+                    'create_user_with_privileges',
+                ],
+            ],
+            processor: UserPrivilegedProcessor::class,
+            input: CreateUser::class
+        ),
+        new Delete(
+            uriTemplate: '/users/{id}',
+            openapiContext: [
+                'parameters' => [
+                    [
+                        'name' => 'id',
+                        'in' => 'path',
+                        'required' => true,
+                        'schema' => [
+                            'type' => 'integer',
+                        ],
+                        'description' => 'User identifier',
+                    ],
+                ],
+                'summary' => 'Removes a User resource.',
+                'description' => 'Removes a User resource by ID.',
+            ],
+        ),
+    ],
+    normalizationContext: [
+        'groups' => [
+            'read_user',
+        ],
+    ],
+)]
+
 class User
 {
     #[ORM\Id]

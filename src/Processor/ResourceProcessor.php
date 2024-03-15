@@ -6,43 +6,58 @@ namespace App\Processor;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use App\ApiResource\ResourceApi;
+use App\DTO\CreateResource;
 use App\Entity\Resource;
+use App\Entity\ResourceMetadata;
+use App\Repository\ResourceRepository;
 use App\Repository\UserRepository;
-use DateTime;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Storage\FileSystemAdaptor;
 
 readonly class ResourceProcessor implements ProcessorInterface
 {
     public function __construct(
-        private EntityManagerInterface $em,
+        private ResourceRepository $resourceRepository,
         private UserRepository $userRepository,
+        private FileSystemAdaptor $fileSystem,
     ) {
     }
 
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = [])
     {
-        if ($data instanceof ResourceApi) {
+        if ($data instanceof CreateResource) {
             $resource = $this->createResource($data);
 
-            $this->em->persist($resource);
-
-            $this->em->flush();
+            $this->resourceRepository->save($resource);
         }
     }
 
-    private function createResource(ResourceApi $data): Resource
+    private function createResource(CreateResource $data): Resource
     {
-        // User mock, to be deleted when we should retrieved user ID's at the resource creation
+        // User mock, to be deleted when we will be capable of retrieving user ID's at the resource creation
         $user = $this->userRepository->find(1);
         $userData = $user->getUserData();
 
+        $fileName = $data->getFile()->getFilename();
+        $fileContent = $data->getFile()->getContent();
+
+        $metadata = (new ResourceMetadata())
+            ->setTitle($data->getTitle())
+            ->setDuration($data->getDuration())
+            ->setAuthor($data->getAuthor())
+            ->setFormat($data->getFormat())
+            ->setAlbum($data->getAlbum())
+            ->setGenre($data->getGenre());
+
         $resource = (new Resource())
-            ->setFileName($data->getFilename())
+            ->setFileName($fileName)
             ->setSharedStatus($data->getSharedStatus())
             ->setCategory($data->getCategory())
             ->setType($data->getType())
-            ->setUserData($userData);
+            ->setUserData($userData)
+            ->setResourceMetadata($metadata);
+
+
+        $this->fileSystem->addFile($data->getFile()->getFilename(), $fileContent);
 
         return $resource;
     }
