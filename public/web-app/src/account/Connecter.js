@@ -8,26 +8,33 @@
 
 
     return (
-      <div className='connecter'>
-          <h2>Se connecter</h2>
-            <div className='text-accedez'>Accèdez à votre compte</div>
-            <Form className='connecter-block'>
-            <TextField name="username" type="text" isRequired>
-                <Label>Nom d’utilisateur</Label>
-                <Input value={username}  onChange={(e) => setUsername(e.target.value)}/>
-                <FieldError />
-            </TextField>
+      <div className='connecter-container'>
+        <div className='connecter'>
+              <div><img src="logoRSR2.png" className="logo-for-account"alt="logoRSR" /></div>
 
-            <TextField name="email" type="email" isRequired>
-                <Label>Mot de passe</Label>
-                <Input />
-                <FieldError />
-            </TextField>
-            
-            <Button type="submit">Valider</Button>
-        </Form>
-     </div>
+            <h2>Se connecter</h2>
+              <div className='text-accedez'>Accèdez à votre compte</div>
+              <div className='text-star'>* champ obligatoire</div>
 
+
+
+              <Form className='connecter-block'>
+              <TextField name="username" type="text" isRequired>
+                  <Label>Nom d’utilisateur*</Label>
+                  <Input value={username}  onChange={(e) => setUsername(e.target.value)}/>
+                  <FieldError />
+              </TextField>
+
+              <TextField name="email" type="email" isRequired>
+                  <Label>Mot de passe*</Label>
+                  <Input />
+                  <FieldError />
+              </TextField>
+              
+              <Button type="submit">Valider</Button>
+          </Form>
+      </div>
+    </div>
 
 
       // <div className='connecter-block'>

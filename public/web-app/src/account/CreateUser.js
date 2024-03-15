@@ -25,33 +25,63 @@ const CreateUser = () => {
         };
 
     
-    //     axios.post('http://localhost/api/users', newPost)
-    //         .then(response => {
-    //             console.log(`New Post Created with ID: ${response.data.id}`);
-    //         })
-    //         .catch(error => {
-    //             console.error('Error creating a post:', error);
-    //         });
-    // };
 
     return (
-        <div className='createuser'>
-            <h2>Create User</h2>
-                <Form  onSubmit={handleSubmit} className='connecter-block'>
-                    <TextField name="username" type="text" isRequired>
-                        <Label>username</Label>
-                        <Input onChange={(e) => setUsername(e.target.value)}/>
-                        <FieldError />
-                    </TextField>
-                    <TextField name="email" type="email" isRequired>
-                        <Label>email</Label>
-                        <Input onChange={(e) => setUseremail(e.target.value)} />
-                        <FieldError />
-                    </TextField>
-                    
-                    <Button type="submit" >Submit</Button>
-                </Form>
+        <div className='connecter-container'>
+            <div className='connecter'>
+                <div><img src="logoRSR2.png" className="logo-for-account"alt="logoRSR" /></div>
+
+                <h2>Créer un compte</h2>
+                <div className='text-accedez'>Get started with an account</div>
+                <div className='text-star'>* champ obligatoire</div>
+
+
+                <Form className='connecter-block'>
+                <TextField name="username" type="text" isRequired>
+                    <Label>Nom d’utilisateur*</Label>
+                    <Input value={username}  onChange={(e) => setUsername(e.target.value)}/>
+                    <FieldError />
+                </TextField>
+                <TextField name="email" type="email" isRequired>
+                    <Label>Email*</Label>
+                    <Input onChange={(e) => setUseremail(e.target.value)} />
+                    <FieldError />
+                </TextField>
+
+                <TextField name="password" type="password" isRequired>
+                    <Label>Mot de passe*</Label>
+                    <Input />
+                    <FieldError />
+                </TextField>
+
+                <TextField name="password" type="password" isRequired>
+                    <Label>Confirmez le mot de passe*</Label>
+                    <Input />
+                    <FieldError />
+                </TextField>
+                
+                <Button type="submit">Valider</Button>
+            </Form>
         </div>
+    </div>
+
+        // <div className='createuser'>
+        //     <h2>Create User</h2>
+        //         <Form  onSubmit={handleSubmit} className='connecter-block'>
+        //             <TextField name="username" type="text" isRequired>
+        //                 <Label>username</Label>
+        //                 <Input onChange={(e) => setUsername(e.target.value)}/>
+        //                 <FieldError />
+        //             </TextField>
+        //             <TextField name="email" type="email" isRequired>
+        //                 <Label>email</Label>
+        //                 <Input onChange={(e) => setUseremail(e.target.value)} />
+        //                 <FieldError />
+        //             </TextField>
+                    
+        //             <Button type="submit" >Submit</Button>
+        //         </Form>
+        // </div>
 
 
         // <form onSubmit={handleSubmit} className='creat-user-block'>

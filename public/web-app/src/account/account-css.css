@@ -1,4 +1,4 @@
-.account-container {
+/* .account-container {
   height: 100vh;
   display: grid;
   align-content: center;
@@ -11,34 +11,51 @@
   grid-row: auto;
   justify-items: center;
   justify-content: center;
-  /* border: 1px solid #2767A0; */
-}
+} */
 
 
-.connecter{
-  background-color: rgb(194, 153, 233);
-}
-.createuser {
+
+/* .createuser {
    background-color: aquamarine;
-}
-
-.react-aria-Input {
+} */
+/* .react-aria-Input {
     max-width: 300px;
-}
+} */
 
 
-
-.connecter,
+/* .connecter,
 .createuser {
     display: grid;
-    /* border: 1px solid blue; */
     min-width: 400px;
     min-height: 300px;
     justify-items: center;
     justify-content: center;
     align-items: center;
+} */
+
+
+
+
+/* ---------Connecter ------------*/
+.connecter-container {
+  background-color: rgb(247, 247, 247);
+  display: grid;
+  height: 100%;
+  min-height: 100vh;
+  align-content: center;
+  padding: 20px 0;
 }
-  /* Connecter */
+.connecter {
+    display: grid;
+    min-width: 400px;
+    min-height: 300px;
+    justify-content: center;
+}
+.logo-for-account {
+  width: 300px;
+  height: 100px;
+  border-radius: 4px;
+}
 h2 {
     text-align: center;
 }
@@ -53,11 +70,17 @@ h2 {
     margin: 10px auto;
 }
 
-
-
-
-
-
-.text-accedez {
-   font-size: 12px;
+.text-star {
+  font-size: 12px;
+  color: blue;
+  padding-left: 10px;  
 }
+.text-accedez {
+   font-size: 14px;
+   padding-left: 10px;  
+}
+
+
+
+
+

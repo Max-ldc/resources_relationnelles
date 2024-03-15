@@ -8,8 +8,9 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Service from './service/Service';
 import Ressource from './ressources/Ressource';
 import User from './user/User';
-import HomePage2 from './home/HomePages2';
 import Account from './account/Account';
+import Connecter from './account/Connecter';
+import CreateUser from './account/CreateUser';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -19,7 +20,8 @@ root.render(
     <Navbar />
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="/home2" element={<HomePage2 />} />
+        <Route path="/connecter" element={<Connecter />} />
+        <Route path="/create" element={<CreateUser />} />
 
         <Route path="/service" element={<Service />} />
         {/* <Route path="/createUser" element={<CreateUser />} /> */}
@@ -29,8 +31,7 @@ root.render(
         <Route path="/user/:id" element={<User/>} />
 
       </Routes>
-      {/* <App />
-      <Service/> */}
+
     </Router>
   </React.StrictMode>,
 );

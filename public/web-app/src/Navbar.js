@@ -40,7 +40,10 @@ function Navbar() {
           </li>
 
           <li>
-            <Link to="/home2">H2</Link>
+            <Link to="/connecter">connecter</Link>
+          </li>
+          <li>
+            <Link to="/create">create</Link>
           </li>
         </ul>
       </nav>
