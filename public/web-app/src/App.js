@@ -25,9 +25,11 @@ function App() {
           </div>
 
           <div className='footer-down'>
-              <div>Accuile</div>
-              <div>Ressources</div>
-              <div>About...</div>
+              <div>Accueil</div>
+              <div>Aide</div>
+              <div>Protection des données</div>
+              <div>Conditions d'utilisation</div>
+
           </div>
      </footer>
 

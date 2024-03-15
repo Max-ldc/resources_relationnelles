@@ -9,21 +9,22 @@
 
     return (
       <div className='connecter'>
-          <h2>Déjà client ?</h2>
+          <h2>Se connecter</h2>
+            <div className='text-accedez'>Accèdez à votre compte</div>
             <Form className='connecter-block'>
             <TextField name="username" type="text" isRequired>
-                <Label>username </Label>
+                <Label>Nom d’utilisateur</Label>
                 <Input value={username}  onChange={(e) => setUsername(e.target.value)}/>
                 <FieldError />
             </TextField>
 
             <TextField name="email" type="email" isRequired>
-                <Label>email </Label>
+                <Label>Mot de passe</Label>
                 <Input />
                 <FieldError />
             </TextField>
             
-            <Button type="submit" >Submit</Button>
+            <Button type="submit">Valider</Button>
         </Form>
      </div>
 

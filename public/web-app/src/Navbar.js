@@ -1,7 +1,13 @@
 import { Link } from "react-router-dom";
 import "./navbar.css";
+import { Button } from "react-aria-components";
+import { useState } from "react";
+
+
 
 function Navbar() {
+   const [isOpen,setOpenMenu] = useState();
+
   return (
     <header className="header">
       
@@ -15,8 +21,8 @@ function Navbar() {
 
 
 
-      <nav>
-        <ul>
+      <nav className={`nav-header ${isOpen ? "open" : ""}`}>
+        <ul className="nav-header__ul">
           <li>
             <Link to="/">Accueil</Link>
           </li>
@@ -26,23 +32,25 @@ function Navbar() {
           <li>
             <Link to="/uploader">Uploader</Link>
           </li>
-          
           <li>
             <Link to="/account">Mon compte</Link>
           </li>
-
-
+          <li>
+            <Link to="/service">Admin</Link>
+          </li>
 
           <li>
             <Link to="/home2">H2</Link>
           </li>
-          <li>
-            <Link to="/service">Service</Link>
-          </li>
-
-          
         </ul>
       </nav>
+      <Button onClick={()=> setOpenMenu(!isOpen)} className="icon-menu-open">
+      <img
+                    className="likeDislike-img"
+                    src="./menu-close.svg"
+                    alt="like"
+                  ></img>
+      </Button>
 
 
 

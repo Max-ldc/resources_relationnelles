@@ -17,7 +17,9 @@ html,
   -webkit-tap-highlight-color: transparent;
   /* 7 */
 }
-
+body {
+  font-size: 18px;
+}
 /* You can add global styles to this file, and also import other style files */
 *,
 *::before,
@@ -66,10 +68,10 @@ textarea {
 
 
 
-
+/* ******************************************* */
 /* aria */
 .react-aria-Button {
-  background-color: orange;
+  background-color: #235B90;
   padding: 5px 12px;
   color: white;
   border-radius: 4px;
@@ -90,7 +92,7 @@ textarea {
     width: 300px;
     
     &[data-focused] {
-      outline: 2px solid #2767A0;;
+      outline: 2px solid #235B90;
       outline-offset: -1px;
     }
 }
