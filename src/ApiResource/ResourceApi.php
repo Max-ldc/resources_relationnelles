@@ -109,13 +109,13 @@ class ResourceApi
     #[Assert\Regex(pattern: '/^[a-zA-Z0-9_-]+\.([a-z0-9]+)?$/', message: 'validation.resource.filename.regex')]
     private string $filename;
 
-    // #[Assert\Choice(callback: [ResourceSharedStatusEnum::class, "values"], message: 'validation.resource.sharedStatus.invalid')]
+    #[Assert\Choice(callback: [ResourceSharedStatusEnum::class, "values"], message: 'validation.resource.sharedStatus.invalid')]
     private string $sharedStatus;
 
-    // #[Assert\Choice(callback: [ResourceTypeEnum::class, "values"], message: 'validation.resource.category.invalid')]
+    #[Assert\Choice(callback: [ResourceCategoryEnum::class, "values"], message: 'validation.resource.category.invalid')]
     private string $category;
 
-    // #[Assert\Choice(callback: [ResourceCategoryEnum::class, "values"], message: 'validation.resource.type.invalid')]
+    #[Assert\Choice(callback: [ResourceTypeEnum::class, "values"], message: 'validation.resource.type.invalid')]
     private string $type;
 
     public function getFilename(): string
