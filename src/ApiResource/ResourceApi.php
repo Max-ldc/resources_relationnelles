@@ -15,6 +15,7 @@ use App\Domain\Resource\ResourceSharedStatusEnum;
 use App\Domain\Resource\ResourceTypeEnum;
 use App\Entity\Resource;
 use App\Processor\ResourceProcessor;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
@@ -46,7 +47,7 @@ use Symfony\Component\Validator\Constraints as Assert;
                 'requestBody' => [
                     'required' => true,
                     'content' => [
-                        'application/ld+json' => [
+                        'multipart/form-data' => [
                             'schema' => [
                                 'type' => 'object',
                                 'properties' => [
@@ -68,11 +69,20 @@ use Symfony\Component\Validator\Constraints as Assert;
                                     ],
                                 ],
                             ],
+                            'encoding' => [
+                                'json' => [
+                                    'contentType' => 'application/json',
+                                ],
+                                'importFile' => [
+                                    'contentType' => 'multipart/form-data',
+                                ],
+                            ],
                         ],
                     ],
                 ],
             ],
-            processor: ResourceProcessor::class
+            processor: ResourceProcessor::class,
+            inputFormats: ['multipart' => ['multipart/form-data']],
         ),
         new Delete(
             uriTemplate: '/resources/{id}',
@@ -105,7 +115,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class ResourceApi
 {
-    #[Assert\NotBlank(message: 'validation.resource.name.empty')]
+    private const FILE_IMPORT_MIME_TYPES = [
+        'application/pdf',
+    ];
+
+    #[Assert\NotBlank(message: 'validation.resource.filename.empty')]
     #[Assert\Regex(pattern: '/^[a-zA-Z0-9_-]+\.([a-z0-9]+)?$/', message: 'validation.resource.filename.regex')]
     private string $filename;
 
@@ -117,6 +131,27 @@ class ResourceApi
 
     #[Assert\Choice(callback: [ResourceTypeEnum::class, "values"], message: 'validation.resource.type.invalid')]
     private string $type;
+
+    // ResourceMetadatas :
+
+    #[Assert\NotBlank(message: 'validation.resource.title.empty')]
+    private string $title;
+
+    #[Assert\NotBlank(groups: ['upload_audio', 'upload_video', 'read_resource'])]
+    private ?int $duration = null;
+
+    private ?string $format = null;
+
+    #[Assert\NotBlank(groups: ['create_resource_pdf'])]
+    private ?string $author = null;
+
+    private ?string $album = null;
+
+    #[Assert\NotBlank(groups: ['upload_audio', 'upload_video', 'read_resource'])]
+    private ?string $genre = null;
+
+    #[Assert\File(maxSize: 8_000_000, mimeTypes: self::FILE_IMPORT_MIME_TYPES, mimeTypesMessage: 'validation.resource.invalid.format')]
+    private ?File $importFile = null;
 
     public function getFilename(): string
     {
@@ -159,6 +194,85 @@ class ResourceApi
     public function setType(string $type): self
     {
         $this->type = $type;
+        return $this;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    public function getDuration(): ?int
+    {
+        return $this->duration;
+    }
+
+    public function setDuration(?int $duration): self
+    {
+        $this->duration = $duration;
+        return $this;
+    }
+
+    public function getFormat(): ?string
+    {
+        return $this->format;
+    }
+
+    public function setFormat(?string $format): self
+    {
+        $this->format = $format;
+        return $this;
+    }
+
+    public function getAuthor(): ?string
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?string $author): self
+    {
+        $this->author = $author;
+        return $this;
+    }
+
+    public function getAlbum(): ?string
+    {
+        return $this->album;
+    }
+
+    public function setAlbum(?string $album): self
+    {
+        $this->album = $album;
+
+        return $this;
+    }
+
+    public function getGenre(): ?string
+    {
+        return $this->genre;
+    }
+
+    public function setGenre(?string $genre): self
+    {
+        $this->genre = $genre;
+
+        return $this;
+    }
+
+    public function getFile(): ?File
+    {
+        return $this->importFile;
+    }
+
+    public function setFile(?File $importFile): self
+    {
+        $this->importFile = $importFile;
         return $this;
     }
 }
