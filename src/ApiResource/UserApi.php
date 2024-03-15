@@ -36,7 +36,7 @@ use Symfony\Component\Validator\Constraints as Assert;
                     'summary' => 'Retrieves a User resource.',
                     'description' => 'Retrieves a User resource by ID.',
                 ],
-                class: User::class
+                class: User::class,
             ),
             new GetCollection(),
             new Post(
@@ -63,7 +63,48 @@ use Symfony\Component\Validator\Constraints as Assert;
                         ],
                     ],
                 ],
+                validationContext: [
+                    'groups' => [
+                        'create_user',
+                    ],
+                ],
                 processor: UserProcessor::class
+            ),
+            new Post(
+                uriTemplate: '/users_privileged',
+                openapiContext: [
+                    'summary' => 'Create a new user with privileges',
+                    'requestBody' => [
+                        'required' => true,
+                        'content' => [
+                            'application/ld+json' => [
+                                'schema' => [
+                                    'type' => 'object',
+                                    'properties' => [
+                                        'username' => [
+                                            'type' => 'string',
+                                            'required' => 'true',
+                                        ],
+                                        'email' => [
+                                            'type' => 'string',
+                                            'required' => 'true',
+                                        ],
+                                        'role' => [
+                                            'type' => 'string',
+                                            'required' => 'true',
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                validationContext: [
+                    'groups' => [
+                        'create_user_with_privileges',
+                    ],
+                ],
+                processor: UserPrivilegedProcessor::class
             ),
             new Delete(
                 uriTemplate: '/users/{id}',
