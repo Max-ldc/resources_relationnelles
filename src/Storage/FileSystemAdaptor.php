@@ -2,7 +2,6 @@
 
 namespace App\Storage;
 
-use Exception;
 use League\Flysystem\FilesystemException;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\UnableToDeleteFile;
@@ -21,35 +20,30 @@ class FileSystemAdaptor
 
     /**
      * Add a file inside the minIO filesystem
-     * Returns true if the file is correctly added
+     * Returns true if the file is correctly added.
      *
-     * @param string $filename
-     * @param string $content
-     * @return boolean
-     * @throws Exception
+     * @throws \Exception
      */
     public function addFile(string $filename, string $content): bool
     {
         try {
             $this->resourcesFilesystem->write($filename, $content);
+
             return true;
-        } catch (UnableToWriteFile | FilesystemException $exception) {
+        } catch (UnableToWriteFile|FilesystemException $exception) {
             $this->logger->error(sprintf('Error %s"', $exception->getMessage()));
             throw $exception;
         }
     }
 
     /**
-     * Retrieve a file inside the minIO file system
-     *
-     * @param string $filename
-     * @return string
+     * Retrieve a file inside the minIO file system.
      */
     public function getFileContent(string $filename): string
     {
         try {
             return $this->resourcesFilesystem->read($filename);
-        } catch (UnableToReadFile | FilesystemException $exception) {
+        } catch (UnableToReadFile|FilesystemException $exception) {
             $this->logger->error(sprintf('Error %s"', $exception->getMessage()));
             throw $exception;
         }
@@ -59,7 +53,7 @@ class FileSystemAdaptor
     {
         try {
             return $this->resourcesFilesystem->listContents('')->toArray();
-        } catch (UnableToListContents | FilesystemException $exception) {
+        } catch (UnableToListContents|FilesystemException $exception) {
             $this->logger->error(sprintf('Error %s"', $exception->getMessage()));
             throw $exception;
         }
@@ -69,8 +63,9 @@ class FileSystemAdaptor
     {
         try {
             $this->resourcesFilesystem->delete($filename);
+
             return true;
-        } catch (UnableToDeleteFile | FilesystemException $exception) {
+        } catch (UnableToDeleteFile|FilesystemException $exception) {
             $this->logger->error(sprintf('Error %s"', $exception->getMessage()));
             throw $exception;
         }

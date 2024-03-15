@@ -6,4 +6,5 @@ validation.user.username.maxlength: "Le nom d'utilisateur ne peut pas contenir p
 validation.user.username.regex: "Le nom d'utilisateur ne peut contenir que des lettres, des chiffres et des underscores."
 validation.user.email.empty: "L'adresse mail ne peut pas être vide."
 validation.user.email.invalid: "L'adresse mail n'est pas valide."
+validation.user.role.empty: "Le rôle ne peut pas être vide."
 validation.userdata.emailhash.duplicate: "L'adresse mail existe déjà."

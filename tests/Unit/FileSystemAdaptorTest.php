@@ -110,7 +110,7 @@ class FileSystemAdaptorTest extends TestCase
         $instance = $this->getInstance();
         $mockedFiles = [
             ['type' => 'file', 'path' => 'file1.txt'],
-            ['type' => 'file', 'path' => 'file2.txt']
+            ['type' => 'file', 'path' => 'file2.txt'],
         ];
         $this->filesystemOp->method('listContents')
             ->willReturn(new DirectoryListing($mockedFiles));
