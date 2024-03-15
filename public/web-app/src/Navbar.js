@@ -13,8 +13,8 @@ function Navbar() {
       
       <div className="logo-block">
       <Link to="/">
-          <div><img src="logo-3.png" className="site-logo" alt="logo" /></div>
-          <div className="title-site"><span>Sources Relationnelles</span></div>
+          <div><img src="logo-4.png" className="site-logo" alt="logo" /></div>
+          <div className="title-site">Sources Relationnelles</div>
           <div className="logo-little-text">La plateforme pour améliorer vos relations</div>
       </Link> 
       </div>

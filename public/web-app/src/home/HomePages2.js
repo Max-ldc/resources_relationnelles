@@ -62,7 +62,7 @@ function HomePage2() {
             <div className="relation-block">
               <div>Type relation:</div>
               <div className="relation">
-                <div className="like-number">amis,famille</div>
+                <div className="like-number">famille</div>
               </div>
             </div>
 

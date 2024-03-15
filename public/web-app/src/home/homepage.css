@@ -96,10 +96,6 @@
           font-style: italic;
           padding: 1px;
           }
-
-          .likeDislike-img{
-
-        }
     }
   }
 
@@ -112,7 +108,13 @@
 
         .relation {
           font-style: italic;
-          color: #fc7100;
+          color: #fc7100;          
+          width: 150px;
+          text-align: right;
+          white-space: nowrap; /* Текст не переносится */
+          overflow: hidden; /* Обрезаем всё за пределами блока */
+          text-overflow: ellipsis; /* Добавляем многоточие */
+       
         }
     }
 
