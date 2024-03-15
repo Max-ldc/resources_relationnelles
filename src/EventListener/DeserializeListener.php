@@ -25,11 +25,8 @@ class DeserializeListener
             return;
         }
 
-        // Problem with getContentType deprecated method, how to replace it ?
-        // or the content type isn't multipart ?
-        echo ($request->getContentTypeFormat());
-
-        if ($request->getContentTypeFormat() === 'multipart') {
+        // must be 'form' and not 'multipart' to work
+        if ($request->getContentTypeFormat() === 'form') {
             $this->denormalizeFromRequest($request);
         } else {
             $this->decorated->onKernelRequest($event);

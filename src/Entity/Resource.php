@@ -10,15 +10,13 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use App\Doctrine\Traits\TimestampTrait;
 use App\Processor\ResourceProcessor;
-use ApiPlatform\Doctrine\Orm\State\Options;
+use App\Repository\ResourceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Symfony\Component\Serializer\Attribute\Groups;
 
-#[ORM\Entity]
-#[ORM\Table(name: '`resource`')]
 #[ApiResource(
     shortName: 'Resource',
     operations: [
@@ -43,6 +41,14 @@ use Symfony\Component\Serializer\Attribute\Groups;
         ),
         new GetCollection(),
         new Post(
+            inputFormats: [
+                'multipart' => [
+                    'multipart/form-data'
+                ],
+                'jsonld' => [
+                    'application/ld+json'
+                ],
+            ],
             openapiContext: [
                 'summary' => 'Create a new resource',
                 'requestBody' => [
@@ -95,13 +101,9 @@ use Symfony\Component\Serializer\Attribute\Groups;
                     ],
                 ],
             ],
-            validationContext: [
-                'groups' => [
-                    'create_resource_pdf',
-                ],
-            ],
+            normalizationContext: ['groups' => []],
+            denormalizationContext: ['groups' => ['create_resource']],
             processor: ResourceProcessor::class,
-            inputFormats: ['multipart' => ['multipart/form-data']],
         ),
         new Delete(
             uriTemplate: '/resources/{id}',
@@ -127,10 +129,9 @@ use Symfony\Component\Serializer\Attribute\Groups;
             'read_resource'
         ],
     ],
-    stateOptions: new Options(
-        entityClass: Resource::class
-    )
 )]
+#[ORM\Entity(repositoryClass: ResourceRepository::class)]
+#[ORM\Table(name: '`resource`')]
 class Resource
 {
     use TimestampTrait;
@@ -138,6 +139,7 @@ class Resource
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
     #[ORM\Column(type: 'integer')]
+    #[ApiProperty(identifier: false)]
     #[Groups(['read_resource'])]
     private int $id;
 
@@ -152,7 +154,6 @@ class Resource
     #[ORM\ManyToOne(targetEntity: UserData::class)]
     #[JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Groups(['read_resource'])]
-    #[ApiProperty(readableLink: false, writableLink: false)]
     private UserData $userData;
 
     #[ORM\OneToOne(mappedBy: 'resource', targetEntity: ResourceMetadata::class, cascade: ['remove'])]

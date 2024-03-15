@@ -8,29 +8,38 @@ use App\Domain\Resource\ResourceCategoryEnum;
 use App\Domain\Resource\ResourceSharedStatusEnum;
 use App\Domain\Resource\ResourceTypeEnum;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class CreateResource
 {
-    // To add a accepted file format, add the MIME Type in the following array
+    // To add an accepted file format, add the MIME Type in the following array
     private const FILE_IMPORT_MIME_TYPES = [
         'application/pdf',
     ];
 
-    private string $filename;
+    // File to upload on MinIO :
+    #[Assert\File(maxSize: 8_000_000, mimeTypes: self::FILE_IMPORT_MIME_TYPES, maxSizeMessage: 'validation.resource.maxsize', mimeTypesMessage: 'validation.resource.invalid.format')]
+    #[Assert\NotBlank(message: 'validation.resource.file.empty')]
+    #[Groups(['create_resource'])]
+    private ?File $importFile = null;
 
+    // Resource :
     #[Assert\Choice(callback: [ResourceSharedStatusEnum::class, "values"], message: 'validation.resource.sharedStatus.invalid')]
+    #[Groups(['create_resource'])]
     private string $sharedStatus;
 
     #[Assert\Choice(callback: [ResourceCategoryEnum::class, "values"], message: 'validation.resource.category.invalid')]
+    #[Groups(['create_resource'])]
     private string $category;
 
     #[Assert\Choice(callback: [ResourceTypeEnum::class, "values"], message: 'validation.resource.type.invalid')]
+    #[Groups(['create_resource'])]
     private string $type;
 
     // ResourceMetadatas :
-
     #[Assert\NotBlank(message: 'validation.resource.title.empty')]
+    #[Groups(['create_resource'])]
     private string $title;
 
     #[Assert\NotBlank(groups: ['create_resource_audio', 'create_resource_video'])]
@@ -39,6 +48,7 @@ class CreateResource
     private ?string $format = null;
 
     #[Assert\NotBlank(groups: ['create_resource_pdf'])]
+    #[Groups(['create_resource'])]
     private ?string $author = null;
 
     #[Assert\NotBlank(groups: ['create_resource_audio'])]
@@ -47,18 +57,14 @@ class CreateResource
     #[Assert\NotBlank(groups: ['create_resource_audio', 'create_resource_video'])]
     private ?string $genre = null;
 
-    #[Assert\File(maxSize: 8_000_000, mimeTypes: self::FILE_IMPORT_MIME_TYPES, mimeTypesMessage: 'validation.resource.invalid.format', maxSizeMessage: 'validation.resource.maxsize')]
-    #[Assert\NotBlank(message: 'validation.resource.file.empty')]
-    private ?File $importFile = null;
-
-    public function getFilename(): string
+    public function getFile(): ?File
     {
-        return $this->filename;
+        return $this->importFile;
     }
 
-    public function setFilename(string $filename): self
+    public function setFile(?File $importFile): self
     {
-        $this->filename = $filename;
+        $this->importFile = $importFile;
         return $this;
     }
 
@@ -160,17 +166,6 @@ class CreateResource
     {
         $this->genre = $genre;
 
-        return $this;
-    }
-
-    public function getFile(): ?File
-    {
-        return $this->importFile;
-    }
-
-    public function setFile(?File $importFile): self
-    {
-        $this->importFile = $importFile;
         return $this;
     }
 }
