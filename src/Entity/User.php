@@ -22,7 +22,7 @@ class User
     private int $id;
 
     #[ORM\Column(type: 'string')]
-    #[Groups(['read_user'])]
+    #[Groups(['read_user', 'read_resource'])]
     private string $username;
 
     #[ORM\Column(type: 'boolean', options: ['default' => true])]

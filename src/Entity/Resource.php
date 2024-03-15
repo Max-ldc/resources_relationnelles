@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
 use App\Doctrine\Traits\TimestampTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity]
 #[ORM\Table(name: '`resource`')]
@@ -17,25 +19,33 @@ class Resource
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['read_resource'])]
     private int $id;
 
     #[ORM\Column(type: 'string')]
+    #[Groups(['read_resource'])]
     private string $fileName;
 
     #[ORM\Column(type: 'resourceSharedStatusType')]
+    #[Groups(['read_resource'])]
     private string $sharedStatus;
 
     #[ORM\ManyToOne(targetEntity: UserData::class)]
     #[JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    #[Groups(['read_resource'])]
+    #[ApiProperty(readableLink: false, writableLink: false)]
     private UserData $userData;
 
     #[ORM\OneToOne(mappedBy: 'resource', targetEntity: ResourceMetadata::class, cascade: ['remove'])]
+    #[Groups(['read_resource'])]
     private ?ResourceMetadata $resourceMetadata = null;
 
     #[ORM\Column(type: 'resourceCategoryType')]
+    #[Groups(['read_resource'])]
     private string $category;
 
     #[ORM\Column(type: 'resourceTypeType')]
+    #[Groups(['read_resource'])]
     private string $type;
 
     #[ORM\ManyToMany(targetEntity: RelationType::class, inversedBy: 'resources')]

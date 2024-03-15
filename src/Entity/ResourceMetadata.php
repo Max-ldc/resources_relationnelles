@@ -18,31 +18,31 @@ class ResourceMetadata
     private int $id;
 
     #[ORM\Column(type: 'string')]
-    #[Groups(['upload_audio', 'upload_video', 'upload_pdf'])]
+    #[Groups(['upload_audio', 'upload_video', 'upload_pdf', 'read_resource'])]
     private string $title;
 
     #[ORM\Column(type: 'integer', nullable: true)]
-    #[Groups(['upload_audio', 'upload_video'])]
+    #[Groups(['upload_audio', 'upload_video', 'read_resource'])]
     private ?int $duration = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
-    #[Groups(['upload_audio', 'upload_video', 'upload_pdf'])]
+    #[Groups(['upload_audio', 'upload_video', 'upload_pdf', 'read_resource'])]
     private ?string $format = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
-    #[Groups(['upload_audio', 'upload_video', 'upload_pdf'])]
+    #[Groups(['upload_audio', 'upload_video', 'upload_pdf', 'read_resource'])]
     private ?string $author = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
-    #[Groups(['upload_audio'])]
+    #[Groups(['upload_audio', 'read_resource'])]
     private ?string $album = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
-    #[Groups(['upload_audio', 'upload_video'])]
+    #[Groups(['upload_audio', 'upload_video', 'read_resource'])]
     private ?string $genre = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    #[Groups(['upload_audio', 'upload_video', 'upload_pdf'])]
+    #[Groups(['upload_audio', 'upload_video', 'upload_pdf', 'read_resource'])]
     private ?\DateTime $releaseDate = null;
 
     #[ORM\OneToOne(inversedBy: 'resourceMetadata', targetEntity: Resource::class)]

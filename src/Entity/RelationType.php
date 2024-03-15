@@ -6,6 +6,7 @@ use App\Repository\RelationTypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: RelationTypeRepository::class)]
 #[ORM\Table(name: '`relation_type`')]
@@ -17,6 +18,7 @@ class RelationType
     private int $id;
 
     #[ORM\Column(type: 'string')]
+    #[Groups(['read_resource'])]
     private string $type;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]

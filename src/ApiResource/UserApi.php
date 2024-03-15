@@ -15,130 +15,84 @@ use App\Processor\UserPrivilegedProcessor;
 use App\Processor\UserProcessor;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ApiResource(
-    shortName: 'User',
-    operations: [
-        new Get(
-            uriTemplate: '/users/{id}',
-            openapiContext: [
-                'parameters' => [
-                    [
-                        'name' => 'id',
-                        'in' => 'path',
-                        'required' => true,
-                        'schema' => [
-                            'type' => 'integer',
-                        ],
-                        'description' => 'User identifier',
-                    ],
-                ],
-                'summary' => 'Retrieves a User resource.',
-                'description' => 'Retrieves a User resource by ID.',
-            ],
-            class: User::class,
-            normalizationContext: [
-                'groups' => [
-                    'read_user',
-                ],
-            ],
-        ),
-        new GetCollection(
-        ),
-        new Post(
-            openapiContext: [
-                'summary' => 'Create a new user',
-                'requestBody' => [
-                    'required' => true,
-                    'content' => [
-                        'application/ld+json' => [
+#[
+    ApiResource(
+        shortName: 'User',
+        operations: [
+            new Get(
+                uriTemplate: '/users/{id}',
+                openapiContext: [
+                    'parameters' => [
+                        [
+                            'name' => 'id',
+                            'in' => 'path',
+                            'required' => true,
                             'schema' => [
-                                'type' => 'object',
-                                'properties' => [
-                                    'username' => [
-                                        'type' => 'string',
-                                        'required' => 'true',
-                                    ],
-                                    'email' => [
-                                        'type' => 'string',
-                                        'required' => 'true',
+                                'type' => 'integer',
+                            ],
+                            'description' => 'User identifier',
+                        ],
+                    ],
+                    'summary' => 'Retrieves a User resource.',
+                    'description' => 'Retrieves a User resource by ID.',
+                ],
+                class: User::class
+            ),
+            new GetCollection(),
+            new Post(
+                openapiContext: [
+                    'summary' => 'Create a new user',
+                    'requestBody' => [
+                        'required' => true,
+                        'content' => [
+                            'application/ld+json' => [
+                                'schema' => [
+                                    'type' => 'object',
+                                    'properties' => [
+                                        'username' => [
+                                            'type' => 'string',
+                                            'required' => 'true',
+                                        ],
+                                        'email' => [
+                                            'type' => 'string',
+                                            'required' => 'true',
+                                        ],
                                     ],
                                 ],
                             ],
                         ],
                     ],
                 ],
-            ],
-            validationContext: [
-                'groups' => [
-                    'create_user',
-                ],
-            ],
-            processor: UserProcessor::class
-        ),
-        new Post(
-            uriTemplate: '/users_privileged',
-            openapiContext: [
-                'summary' => 'Create a new user with privileges',
-                'requestBody' => [
-                    'required' => true,
-                    'content' => [
-                        'application/ld+json' => [
+                processor: UserProcessor::class
+            ),
+            new Delete(
+                uriTemplate: '/users/{id}',
+                openapiContext: [
+                    'parameters' => [
+                        [
+                            'name' => 'id',
+                            'in' => 'path',
+                            'required' => true,
                             'schema' => [
-                                'type' => 'object',
-                                'properties' => [
-                                    'username' => [
-                                        'type' => 'string',
-                                        'required' => 'true',
-                                    ],
-                                    'email' => [
-                                        'type' => 'string',
-                                        'required' => 'true',
-                                    ],
-                                    'role' => [
-                                        'type' => 'string',
-                                        'required' => 'true',
-                                    ],
-                                ],
+                                'type' => 'integer',
                             ],
+                            'description' => 'User identifier',
                         ],
                     ],
+                    'summary' => 'Removes a User resource.',
+                    'description' => 'Removes a User resource by ID.',
                 ],
-            ],
-            validationContext: [
-                'groups' => [
-                    'create_user_with_privileges',
-                ],
-            ],
-            processor: UserPrivilegedProcessor::class
-        ),
-        new Delete(
-            uriTemplate: '/users/{id}',
-            openapiContext: [
-                'parameters' => [
-                    [
-                        'name' => 'id',
-                        'in' => 'path',
-                        'required' => true,
-                        'schema' => [
-                            'type' => 'integer',
-                        ],
-                        'description' => 'User identifier',
-                    ],
-                ],
-                'summary' => 'Removes a User resource.',
-                'description' => 'Removes a User resource by ID.',
-            ],
-        ),
-    ],
-    normalizationContext: [
-        'groups' => [
-            'read_user',
+            ),
         ],
-    ],
-    stateOptions: new Options(
-        entityClass: User::class
+        normalizationContext: [
+            'groups' => [
+                'read_user',
+            ],
+        ],
+        stateOptions: new Options(
+            entityClass: User::class
+        )
     )
-)
 ]
 class UserApi
 {
