@@ -8,6 +8,7 @@ use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
+use App\Controller\CreateResourceController;
 use App\Doctrine\Traits\TimestampTrait;
 use App\Processor\ResourceProcessor;
 use App\Repository\ResourceRepository;
@@ -20,35 +21,15 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ApiResource(
     shortName: 'Resource',
     operations: [
-        new Get(
-            uriTemplate: '/resources/{id}',
-            openapiContext: [
-                'parameters' => [
-                    [
-                        'name' => 'id',
-                        'in' => 'path',
-                        'required' => true,
-                        'schema' => [
-                            'type' => 'integer',
-                        ],
-                        'description' => 'Resource identifier',
-                    ],
-                ],
-                'summary' => 'Retrieves a Resource item',
-                'description' => 'Retrieves a Resource item by ID'
-            ],
-            class: Resource::class
-        ),
+        new Get(),
         new GetCollection(),
         new Post(
             inputFormats: [
                 'multipart' => [
-                    'multipart/form-data'
-                ],
-                'jsonld' => [
-                    'application/ld+json'
+                    'multipart/form-data',
                 ],
             ],
+            controller: CreateResourceController::class,
             openapiContext: [
                 'summary' => 'Create a new resource',
                 'requestBody' => [
@@ -81,6 +62,19 @@ use Symfony\Component\Serializer\Attribute\Groups;
                                                 'type' => 'string',
                                                 'required' => 'true',
                                             ],
+                                            'userData' => [
+                                                'type' => 'string',
+                                                'required' => 'true',
+                                                'description' => 'IRI reference to userData',
+                                            ],
+                                            'relationTypes' => [
+                                                'type' => 'array',
+                                                'required' => 'true',
+                                                'items' => [
+                                                    'type' => 'string',
+                                                ],
+                                                'description' => 'Array of IRI references to relation types',
+                                            ],
                                         ],
                                     ],
                                     'importFile' => [
@@ -103,6 +97,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
             ],
             normalizationContext: ['groups' => []],
             denormalizationContext: ['groups' => ['create_resource']],
+            input: CreateResourceController::class,
+            deserialize: false,
             processor: ResourceProcessor::class,
         ),
         new Delete(
@@ -122,11 +118,11 @@ use Symfony\Component\Serializer\Attribute\Groups;
                 'summary' => 'Removes a Resource item.',
                 'description' => 'Removes a Resource item by ID.',
             ],
-        )
+        ),
     ],
     normalizationContext: [
         'groups' => [
-            'read_resource'
+            'read_resource',
         ],
     ],
 )]
@@ -139,7 +135,7 @@ class Resource
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
     #[ORM\Column(type: 'integer')]
-    #[ApiProperty(identifier: false)]
+    #[ApiProperty(identifier: true)]
     #[Groups(['read_resource'])]
     private int $id;
 
@@ -156,7 +152,7 @@ class Resource
     #[Groups(['read_resource'])]
     private UserData $userData;
 
-    #[ORM\OneToOne(mappedBy: 'resource', targetEntity: ResourceMetadata::class, cascade: ['remove'])]
+    #[ORM\OneToOne(mappedBy: 'resource', targetEntity: ResourceMetadata::class, cascade: ['persist', 'remove'])]
     #[Groups(['read_resource'])]
     private ?ResourceMetadata $resourceMetadata = null;
 
@@ -233,6 +229,8 @@ class Resource
     public function setResourceMetadata(?ResourceMetadata $resourceMetadata): self
     {
         $this->resourceMetadata = $resourceMetadata;
+
+        $resourceMetadata?->setResource($this);
 
         return $this;
     }

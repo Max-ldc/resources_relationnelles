@@ -2,11 +2,27 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Doctrine\Traits\TimestampTrait;
+use App\Repository\ResourceMetadataRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
-#[ORM\Entity]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection(),
+    ],
+    normalizationContext: [
+        'groups' => [
+            'read_user_data',
+        ],
+    ],
+)]
+#[ORM\Entity(repositoryClass: ResourceMetadataRepository::class)]
 #[ORM\Table(name: '`resource_metadata`')]
 class ResourceMetadata
 {
@@ -15,6 +31,7 @@ class ResourceMetadata
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
     #[ORM\Column(type: 'integer')]
+    #[ApiProperty(identifier: true)]
     private int $id;
 
     #[ORM\Column(type: 'string')]

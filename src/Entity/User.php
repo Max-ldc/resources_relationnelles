@@ -10,37 +10,20 @@ use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
-use App\Processor\UserPrivilegedProcessor;
-use App\Processor\UserProcessor;
 use App\Domain\Resource\UserRoleEnum;
 use App\DTO\CreateUser;
+use App\Processor\UserPrivilegedProcessor;
+use App\Processor\UserProcessor;
+use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'username', columns: ['username'])]
 #[ApiResource(
-    shortName: 'User',
     operations: [
-        new Get(
-            uriTemplate: '/users/{id}',
-            openapiContext: [
-                'parameters' => [
-                    [
-                        'name' => 'id',
-                        'in' => 'path',
-                        'required' => true,
-                        'schema' => [
-                            'type' => 'integer',
-                        ],
-                        'description' => 'User identifier',
-                    ],
-                ],
-                'summary' => 'Retrieves a User resource.',
-                'description' => 'Retrieves a User resource by ID.',
-            ],
-        ),
+        new Get(),
         new GetCollection(),
         new Post(
             openapiContext: [
@@ -71,8 +54,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
                     'create_user',
                 ],
             ],
-            processor: UserProcessor::class,
-            input: CreateUser::class
+            input: CreateUser::class,
+            processor: UserProcessor::class
         ),
         new Post(
             uriTemplate: '/users_privileged',
@@ -108,8 +91,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
                     'create_user_with_privileges',
                 ],
             ],
-            processor: UserPrivilegedProcessor::class,
-            input: CreateUser::class
+            input: CreateUser::class,
+            processor: UserPrivilegedProcessor::class
         ),
         new Delete(
             uriTemplate: '/users/{id}',
@@ -136,7 +119,6 @@ use Symfony\Component\Serializer\Attribute\Groups;
         ],
     ],
 )]
-
 class User
 {
     #[ORM\Id]

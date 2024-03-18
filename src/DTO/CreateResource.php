@@ -25,15 +25,15 @@ class CreateResource
     private ?File $importFile = null;
 
     // Resource :
-    #[Assert\Choice(callback: [ResourceSharedStatusEnum::class, "values"], message: 'validation.resource.sharedStatus.invalid')]
+    #[Assert\Choice(callback: [ResourceSharedStatusEnum::class, 'values'], message: 'validation.resource.sharedStatus.invalid')]
     #[Groups(['create_resource'])]
     private string $sharedStatus;
 
-    #[Assert\Choice(callback: [ResourceCategoryEnum::class, "values"], message: 'validation.resource.category.invalid')]
+    #[Assert\Choice(callback: [ResourceCategoryEnum::class, 'values'], message: 'validation.resource.category.invalid')]
     #[Groups(['create_resource'])]
     private string $category;
 
-    #[Assert\Choice(callback: [ResourceTypeEnum::class, "values"], message: 'validation.resource.type.invalid')]
+    #[Assert\Choice(callback: [ResourceTypeEnum::class, 'values'], message: 'validation.resource.type.invalid')]
     #[Groups(['create_resource'])]
     private string $type;
 
@@ -44,8 +44,6 @@ class CreateResource
 
     #[Assert\NotBlank(groups: ['create_resource_audio', 'create_resource_video'])]
     private ?int $duration = null;
-
-    private ?string $format = null;
 
     #[Assert\NotBlank(groups: ['create_resource_pdf'])]
     #[Groups(['create_resource'])]
@@ -65,6 +63,7 @@ class CreateResource
     public function setFile(?File $importFile): self
     {
         $this->importFile = $importFile;
+
         return $this;
     }
 
@@ -76,6 +75,7 @@ class CreateResource
     public function setSharedStatus(string $sharedStatus): self
     {
         $this->sharedStatus = $sharedStatus;
+
         return $this;
     }
 
@@ -87,6 +87,7 @@ class CreateResource
     public function setCategory(string $category): self
     {
         $this->category = $category;
+
         return $this;
     }
 
@@ -98,6 +99,7 @@ class CreateResource
     public function setType(string $type): self
     {
         $this->type = $type;
+
         return $this;
     }
 
@@ -109,6 +111,7 @@ class CreateResource
     public function setTitle(string $title): self
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -120,17 +123,7 @@ class CreateResource
     public function setDuration(?int $duration): self
     {
         $this->duration = $duration;
-        return $this;
-    }
 
-    public function getFormat(): ?string
-    {
-        return $this->format;
-    }
-
-    public function setFormat(?string $format): self
-    {
-        $this->format = $format;
         return $this;
     }
 
@@ -142,6 +135,7 @@ class CreateResource
     public function setAuthor(?string $author): self
     {
         $this->author = $author;
+
         return $this;
     }
 

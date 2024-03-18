@@ -246,9 +246,9 @@ ALTER TABLE public.user_id_seq OWNER TO pedro;
 --
 
 COPY public.doctrine_migration_versions (version, executed_at, execution_time) FROM stdin;
-DoctrineMigrations\\Version20240208222614	2024-03-13 15:06:05	16
-DoctrineMigrations\\Version20240311140314	2024-03-13 15:06:05	27
-DoctrineMigrations\\Version20240313142256	2024-03-13 15:06:05	3
+DoctrineMigrations\\Version20240208222614	2024-03-18 21:52:12	72
+DoctrineMigrations\\Version20240311140314	2024-03-18 21:52:12	135
+DoctrineMigrations\\Version20240313142256	2024-03-18 21:52:12	12
 \.
 
 
@@ -277,7 +277,9 @@ COPY public.relation_type (id, parent_id, type) FROM stdin;
 --
 
 COPY public.resource (id, user_data_id, file_name, shared_status, category, type, creation_date, modification_date) FROM stdin;
-1	3	Extrait - La Boétie.pdf	public	recherche_de_sens	cours_pdf	2024-03-13 15:06:06	2024-03-13 15:06:06
+1	5	Extrait - La Boétie.pdf	public	recherche_de_sens	cours_pdf	2024-03-18 21:52:13	2024-03-18 21:52:13
+2	5	Manuel d'Epictète.pdf	public	developpement_personnel	fiche_lecture	2024-03-18 21:52:13	2024-03-18 21:52:13
+3	5	Le Loup des Steppes.pdf	public	developpement_personnel	fiche_lecture	2024-03-18 21:52:13	2024-03-18 21:52:13
 \.
 
 
@@ -286,7 +288,9 @@ COPY public.resource (id, user_data_id, file_name, shared_status, category, type
 --
 
 COPY public.resource_metadata (id, resource_id, title, duration, format, author, album, genre, release_date, creation_date, modification_date) FROM stdin;
-1	1	Discours de la servitude volontaire	\N	\N	Etienne de La Boétie	\N	\N	\N	2024-03-13 15:06:06	2024-03-13 15:06:06
+1	1	Discours de la servitude volontaire	\N	\N	Etienne de La Boétie	\N	\N	\N	2024-03-18 21:52:13	2024-03-18 21:52:13
+2	2	Manuel d'Epictète	\N	\N	Epictète	\N	\N	\N	2024-03-18 21:52:13	2024-03-18 21:52:13
+3	3	Le Loup des Steppes	\N	\N	Herman Hesse	\N	\N	\N	2024-03-18 21:52:13	2024-03-18 21:52:13
 \.
 
 
@@ -296,6 +300,10 @@ COPY public.resource_metadata (id, resource_id, title, duration, format, author,
 
 COPY public.resource_relation_type (resource_id, relation_type_id) FROM stdin;
 1	1
+1	10
+2	1
+3	1
+3	5
 \.
 
 
@@ -307,6 +315,8 @@ COPY public."user" (id, username, account_enabled, role) FROM stdin;
 1	Pedro	t	citoyen connecté
 2	Maria	t	citoyen connecté
 3	UserForDeleteTest	t	citoyen connecté
+4	Alberto	t	administrateur
+5	Sofia	t	super administrateur
 \.
 
 
@@ -318,6 +328,8 @@ COPY public.user_data (id, user_id, email_encrypted, email_hash) FROM stdin;
 1	1	9RiA1iLwrzFwGM/E45V8swdw0dQCvPKGs9/5OQhgQGdZ8kBKm4Zlrw7NIDZf3HZi	6b02958be1505abf91d5a12dc8a97cd41254a1f17d08503048faef77c1a569ae
 2	2	mZhTA1q/KhjLltgxh9UXn3hRNkhm1nMSwaohh5Ix5WWXSJt4zv1hjtgX+UUm9gPK	10ef04a5a1acd81d18a0c61fdd354a063da07223720a1d8760aa5c2afa5e8ee0
 3	3	FnFbcypAOBl0+s/IVr8KOlFL83Re6dMnOBOVMNAlBcTjWv6xtjNJkDRiM6Djd8wy	446e262b19dd0c3389a73d12a717a3179af1eb778c0217e9cb26900b32a0e872
+4	4	5JurgouueiTNMtRrbwHUZ6flH6gxiScOo8FeV/XEusncUbLtoDPYq8oNvzw48E0X	d4cf6ddc2ffd0613fe888f0fb050b7d03a21f9e914018ba3615182c78d90737d
+5	5	R80wH9Cka9KewU5+WIU2EnLFAbAqSFAz2+fshumzJifMLfIbkABuvK2quaViETG9	9c9a2b4703917f82fe0261e52f280a480f0f5ae44f4f00b1d22d2b46597f0e1c
 \.
 
 
@@ -332,28 +344,28 @@ SELECT pg_catalog.setval('public.relation_type_id_seq', 12, true);
 -- Name: resource_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pedro
 --
 
-SELECT pg_catalog.setval('public.resource_id_seq', 1, true);
+SELECT pg_catalog.setval('public.resource_id_seq', 3, true);
 
 
 --
 -- Name: resource_metadata_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pedro
 --
 
-SELECT pg_catalog.setval('public.resource_metadata_id_seq', 1, true);
+SELECT pg_catalog.setval('public.resource_metadata_id_seq', 3, true);
 
 
 --
 -- Name: user_data_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pedro
 --
 
-SELECT pg_catalog.setval('public.user_data_id_seq', 3, true);
+SELECT pg_catalog.setval('public.user_data_id_seq', 5, true);
 
 
 --
 -- Name: user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pedro
 --
 
-SELECT pg_catalog.setval('public.user_id_seq', 3, true);
+SELECT pg_catalog.setval('public.user_id_seq', 5, true);
 
 
 --

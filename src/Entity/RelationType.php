@@ -2,12 +2,27 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\RelationTypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection(),
+    ],
+    normalizationContext: [
+        'groups' => [
+            'read_relation_type',
+        ],
+    ],
+)]
 #[ORM\Entity(repositoryClass: RelationTypeRepository::class)]
 #[ORM\Table(name: '`relation_type`')]
 class RelationType
@@ -15,6 +30,8 @@ class RelationType
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
     #[ORM\Column(type: 'integer')]
+    #[ApiProperty(identifier: true)]
+    #[Groups(['read_relation_type'])]
     private int $id;
 
     #[ORM\Column(type: 'string')]
