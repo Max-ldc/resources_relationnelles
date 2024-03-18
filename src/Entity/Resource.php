@@ -99,7 +99,6 @@ use Symfony\Component\Serializer\Attribute\Groups;
             denormalizationContext: ['groups' => ['create_resource']],
             input: CreateResourceController::class,
             deserialize: false,
-            processor: ResourceProcessor::class,
         ),
         new Delete(
             uriTemplate: '/resources/{id}',
