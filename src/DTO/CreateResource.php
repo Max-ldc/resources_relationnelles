@@ -45,7 +45,7 @@ class CreateResource
     #[Assert\NotBlank(groups: ['create_resource_audio', 'create_resource_video'])]
     private ?int $duration = null;
 
-    #[Assert\NotBlank(groups: ['create_resource_pdf'])]
+    #[Assert\NotBlank(message: 'validation.resource.author.empty')]
     #[Groups(['create_resource'])]
     private ?string $author = null;
 

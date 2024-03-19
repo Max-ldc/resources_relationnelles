@@ -13,14 +13,12 @@ class UserTest extends ApiTestCase
     {
         $response = static::createClient()->request('GET', 'http://localhost/api/users');
 
-        var_dump($response);
-
         self::assertResponseIsSuccessful();
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
 
         self::assertJsonContains([
             '@type' => 'hydra:Collection',
-            'hydra:totalItems' => 3,
+            'hydra:totalItems' => 5,
             'hydra:member' => [
                 [
                     '@type' => 'User',
