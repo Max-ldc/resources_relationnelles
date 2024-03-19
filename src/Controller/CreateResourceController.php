@@ -11,16 +11,20 @@ use App\Domain\User\ResourceCreationOrUpdate;
 use App\Entity\UserData;
 use App\Repository\ResourceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[AsController] // use a custom Controller because ApiPlatform cannot natively handle multipart
 class CreateResourceController extends AbstractController
 {
+    private const FILE_MAX_SIZE = 8_000_000;
+    private const FILE_IMPORT_MIME_TYPES = ['application/pdf'];
+
     public function __construct(
         private readonly IriConverterInterface $iriConverter,
         private readonly ResourceCreationOrUpdate $resourceCreationOrUpdate,
@@ -36,14 +40,20 @@ class CreateResourceController extends AbstractController
             return $this->json(['error' => 'No file uploaded'], Response::HTTP_BAD_REQUEST);
         }
 
+        // Validate file format
+        $fileValidationReponse = $this->validateFile($uploadedFile);
+        if ($fileValidationReponse !== null) {
+            return $fileValidationReponse;
+        }
+
         $originalFileName = $uploadedFile->getClientOriginalName();
         $filePath = $uploadedFile->getRealPath();
         $jsonData = json_decode($request->get('json'), true, 512, JSON_THROW_ON_ERROR);
 
-        //Validate data
-        $validationResponse = $this->validateData($jsonData);
-        if ($validationResponse !== null) {
-            return $validationResponse;
+        // Validate data
+        $dataValidationResponse = $this->validateData($jsonData);
+        if ($dataValidationResponse !== null) {
+            return $dataValidationResponse;
         }
 
         // TO DO : implement authentication to retrieve the current user. Temporary solution :
@@ -70,7 +80,7 @@ class CreateResourceController extends AbstractController
 
     private function validateData(array $jsonData): ?Response
     {
-        // As we use a custom controller, the asserts on the DTO are not read so we do it here
+        // As we use a custom controller, the asserts on the DTO are not read so we do it here to avoid 500
         $constraints = new Assert\Collection([
             'fields' => [
                 'title' => [
@@ -106,7 +116,32 @@ class CreateResourceController extends AbstractController
             foreach ($violations as $violation) {
                 $errors[$violation->getPropertyPath()][] = $violation->getMessage();
             }
+
             return $this->json(['violations' => $errors], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        return null;
+    }
+
+    private function validateFile(File $uploadedFile): ?Response
+    {
+        // As we use a custom controller, the asserts on the DTO are not read so we do it here to avoid 500
+        $fileConstraints =
+            new Assert\File([
+                'maxSize' => self::FILE_MAX_SIZE,
+                'mimeTypes' => self::FILE_IMPORT_MIME_TYPES,
+                'maxSizeMessage' => 'validation.resource.maxsize',
+                'mimeTypesMessage' => 'validation.resource.invalid.format',
+        ]);
+
+        $fileViolations = $this->validator->validate($uploadedFile, $fileConstraints);
+        if (count($fileViolations) > 0) {
+            $fileErrors = [];
+            foreach ($fileViolations as $violation) {
+                $fileErrors[] = $violation->getMessage();
+            }
+
+            return $this->json(['violations' => $fileErrors], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         return null;

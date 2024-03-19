@@ -11,7 +11,7 @@ class UserTest extends ApiTestCase
 {
     public function testGetCollectionSuccess(): void
     {
-        $response = static::createClient()->request('GET', 'http://localhost/api/users');
+        static::createClient()->request('GET', 'http://localhost/api/users');
 
         self::assertResponseIsSuccessful();
         self::assertResponseStatusCodeSame(Response::HTTP_OK);

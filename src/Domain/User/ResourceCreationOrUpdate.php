@@ -4,13 +4,12 @@ namespace App\Domain\User;
 
 use ApiPlatform\Api\IriConverterInterface;
 use ApiPlatform\Exception\ItemNotFoundException;
+use ApiPlatform\Exception\RuntimeException;
 use App\Entity\RelationType;
 use App\Entity\Resource;
 use App\Entity\ResourceMetadata;
 use App\Entity\UserData;
 use App\Storage\FileSystemAdaptor;
-use ApiPlatform\Exception\RuntimeException;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class ResourceCreationOrUpdate
@@ -40,6 +39,7 @@ class ResourceCreationOrUpdate
                 throw new BadRequestHttpException('RelationType not found');
             }
         }
+
         return $resource;
     }
 
@@ -59,7 +59,7 @@ class ResourceCreationOrUpdate
             $fileContent = file_get_contents($filePath);
             $this->fileSystemAdaptor->addFile($originalFileName, $fileContent);
         } catch (\Exception $exception) {
-            throw new RuntimeException(Response::HTTP_INTERNAL_SERVER_ERROR, $exception->getMessage());
+            throw new RuntimeException('Unable to save file');
         }
     }
 }
