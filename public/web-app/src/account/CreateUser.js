@@ -61,7 +61,7 @@ const CreateUser = () => {
                     <FieldError />
                 </TextField>
                 
-                <Button type="submit">Valider</Button>
+                <Button type="submit" onSubmit={handleSubmit} >Valider</Button>
             </Form>
 
             <Link to="/connecter" className='link-creer'>Se connecter</Link>
