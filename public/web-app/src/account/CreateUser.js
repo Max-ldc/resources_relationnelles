@@ -55,7 +55,7 @@ const CreateUser = () => {
                     <FieldError />
                 </TextField>
 
-                <TextField name="password" type="password" isRequired>
+                <TextField name="password_verif" type="password" isRequired>
                     <Label>Confirmez le mot de passe*</Label>
                     <Input />
                     <FieldError />
