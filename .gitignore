@@ -30,29 +30,5 @@
 ###< phpunit/phpunit ###
 
 
-
-
-# React
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/public/web-app/node_modules
-/public/web-app/.pnp
-/public/web-app/.pnp.js
-
-# testing
-/public/web-app/coverage
-
-# production
-/public/web-app/build
-
-# misc
-/public/web-app/.DS_Store
-/public/web-app/.env.local
-/public/web-app/.env.development.local
-/public/web-app/.env.test.local
-/public/web-app/.env.production.local
-
-/public/web-app/npm-debug.log*
-/public/web-app/yarn-debug.log*
-/public/web-app/yarn-error.log*
+/public/.DS_Store
+/public/web-app/package-lock.json
