@@ -91,3 +91,13 @@ h2 {
     color: #235B90;
 }
 
+
+
+.messageReussir{
+  color: green;
+  text-align: center;
+}
+.errorMessageExist{
+  color: red;
+  text-align: center;
+}
