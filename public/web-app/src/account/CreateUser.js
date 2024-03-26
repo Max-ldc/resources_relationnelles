@@ -8,7 +8,7 @@ const CreateUser = () => {
     const [username, setUsername] = useState('');
     const [email, setUserEmail] = useState('');
     const [errorEmail, setErrorEmail] = useState(false);
-    // const [password, setPassword] = useState('');
+    const [password, setPassword] = useState('');
     const [messageReussir, setMessageReussir] = useState('');
 
 
@@ -23,7 +23,7 @@ const CreateUser = () => {
             .then(response => {
                 console.log(response);
                 setErrorEmail('');
-                setMessageReussir('Vous avez creet votre user');
+                setMessageReussir('Vous avez créé votre user');
             })
             .catch(error => {
                 console.log('-----'+ error.response.data.detail)
@@ -37,8 +37,9 @@ const CreateUser = () => {
         //validation form
         let usernameErrors = [];
         let emailErrors = [];
-        // let passwordErrors = [];
+        let passwordErrors = [];
 
+        // username
         if (username.length < 3) {
           usernameErrors.push('Username moins de 3 caractères');
         }
@@ -49,17 +50,21 @@ const CreateUser = () => {
           usernameErrors.push('Username que lettres, chiffres et underscores');
         }
 
-// 422 -  "message": "Le nom d'utilisateur ne peut pas contenir moins de 3 caractères.",
-// 400 - Cet email est déjà utilisé
-
+        // email
         if (email.length < 2) {
-            emailErrors.push('Email min 3 characters');
+            emailErrors.push('Email moins de 3 caractères');
         }
         if ((email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i) ?? []).length < 1) {
             emailErrors.push('Le "@" et "." requise');
         }
       
-
+        // password
+        if (password.length <= 3) {
+            passwordErrors.push('password moins de 3 caractères');
+          }
+          if (password.length > 16) {
+            passwordErrors.push('password plus de 3 caractères');
+          }
 
 
 
@@ -111,7 +116,7 @@ const CreateUser = () => {
                     }
                 </TextField>
 
-{/* 
+
                 <TextField name="password" type="password" isInvalid={passwordErrors.length > 0}
                          value={password} onChange={setPassword} isRequired>
                   <Label>Mot de passe*</Label>
@@ -128,10 +133,13 @@ const CreateUser = () => {
                     <Label>Confirmez le mot de passe*</Label>
                     <Input />
                     <FieldError />
-                </TextField> */}
+                </TextField>
                 
-                <Button type="submit"  >Valider</Button>
-
+                { emailErrors.length==0 && usernameErrors.length==0 && passwordErrors.length==0 ? (
+                    <Button type="submit">Valider</Button>
+                  ):
+                  ( <Button className='inValidButton'>Valider</Button>)
+                }
         </Form>
 
 
