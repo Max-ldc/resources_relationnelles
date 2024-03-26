@@ -4,7 +4,7 @@ namespace Unit;
 
 use App\Storage\FileSystemAdaptor;
 use League\Flysystem\DirectoryListing;
-use League\Flysystem\FilesystemOperator;
+use League\Flysystem\Filesystem;
 use League\Flysystem\UnableToDeleteFile;
 use League\Flysystem\UnableToListContents;
 use League\Flysystem\UnableToReadFile;
@@ -15,7 +15,7 @@ use Psr\Log\LoggerInterface;
 
 class FileSystemAdaptorTest extends TestCase
 {
-    private FilesystemOperator|MockObject $filesystemOp;
+    private Filesystem|MockObject $filesystemOp;
     private LoggerInterface|MockObject $logger;
     private string $filename;
     private string $content;
@@ -24,7 +24,7 @@ class FileSystemAdaptorTest extends TestCase
     {
         parent::setUp();
 
-        $this->filesystemOp = $this->createMock(FilesystemOperator::class);
+        $this->filesystemOp = $this->createMock(Filesystem::class);
         $this->logger = $this->createMock(LoggerInterface::class);
         $this->filename = 'test.txt';
         $this->content = 'This is a test content.';

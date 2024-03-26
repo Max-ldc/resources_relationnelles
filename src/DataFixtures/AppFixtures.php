@@ -93,9 +93,11 @@ class AppFixtures extends Fixture
         }
 
         // Create Resources with their ResourceMetadata
-        $relationType = $this->relationTypeRepository->findOneByType('Soi');
+        $relationTypeSoi = $this->relationTypeRepository->findOneBy(['type' => 'Soi']);
+        $relationTypeCollegues = $this->relationTypeRepository->findOneBy(['type' => 'Collègues']);
+        $relationTypeAmis = $this->relationTypeRepository->findOneBy(['type' => 'Amis et communautés']);
 
-        if (null === $relationType) {
+        if (null === $relationTypeSoi || null === $relationTypeCollegues || null === $relationTypeAmis) {
             return;
         }
 
@@ -106,6 +108,7 @@ class AppFixtures extends Fixture
                 'type' => ResourceTypeEnum::RESOURCE_TYPE_COURS_PDF->value,
                 'author' => 'Etienne de La Boétie',
                 'title' => 'Discours de la servitude volontaire',
+                'relationTypes' => [$relationTypeSoi, $relationTypeCollegues],
             ],
             [
                 'fileName' => 'Manuel d\'Epictète.pdf',
@@ -113,11 +116,23 @@ class AppFixtures extends Fixture
                 'type' => ResourceTypeEnum::RESOURCE_TYPE_FICHE_LECTURE->value,
                 'author' => 'Epictète',
                 'title' => 'Manuel d\'Epictète',
+                'relationTypes' => [$relationTypeSoi],
+            ],
+            [
+                'fileName' => 'Le Loup des Steppes.pdf',
+                'category' => ResourceCategoryEnum::RESOURCE_CATEGORY_DEVELOPPEMENT_PERSO->value,
+                'type' => ResourceTypeEnum::RESOURCE_TYPE_FICHE_LECTURE->value,
+                'author' => 'Herman Hesse',
+                'title' => 'Le Loup des Steppes',
+                'relationTypes' => [$relationTypeSoi, $relationTypeAmis],
             ],
         ];
 
         foreach ($resourcesInfo as $info) {
-            $resource = $this->createResource($userData, $info['fileName'], $relationType, $info['category'], $info['type']);
+            $resource = $this->createResource($userData, $info['fileName'], $info['category'], $info['type']);
+            foreach ($info['relationTypes'] as $relationType) {
+                $resource->addResourceRelationType($relationType);
+            }
             $manager->persist($resource);
             $resourceMetaData = $this->createResourceMetadata($resource, $info['author'], $info['title']);
             $manager->persist($resourceMetaData);
@@ -149,7 +164,6 @@ class AppFixtures extends Fixture
     private function createResource(
         UserData $userData,
         string $fileName,
-        RelationType $relationType,
         string $category,
         string $type,
     ): Resource {
@@ -157,7 +171,6 @@ class AppFixtures extends Fixture
         $resource
             ->setUserData($userData)
             ->setFileName($fileName)
-            ->addResourceRelationType($relationType)
             ->setSharedStatus(ResourceSharedStatusEnum::RESOURCE_SHARED_STATUS_PUBLIC->value)
             ->setCategory($category)
             ->setType($type);
