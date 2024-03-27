@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React  from 'react';
+// import { useState } from 'react';
+
 import './search-css.css';
 import {Button, FieldError, Input, SearchField} from 'react-aria-components';
-import {useFilter} from 'react-aria';
+// import {useFilter} from 'react-aria';
 
 // const composers = [
 //   'Wolfgang Amadeus Mozart',
@@ -29,7 +31,6 @@ function Search() {
                 <Button  className='button' onSubmit={setValue}> Chercher </Button>
                 <FieldError />
               </SearchField>
-
 
                 {/* <p style={{ height: 300 }}>
                   {matchedComposers.map((composer, i) => <li key={i}>{composer}</li>)}
