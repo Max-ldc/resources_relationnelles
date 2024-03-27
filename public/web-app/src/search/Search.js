@@ -23,10 +23,10 @@ function Search() {
            <main>
               <section className='search-contanair'>
 
-              <SearchField label="Search" onClear={() => setValue('')} >
-                <Input  placeholder='search' type='search' onChange={(e) => setValue(e.target.value)}
+              <SearchField label="Effectuez une recherche" onClear={() => setValue('')} >
+              <Input  placeholder='Effectuez une recherche' type='search' onChange={(e) => setValue(e.target.value)}
                         value={value}  className='input-champ'/>
-                <Button  className='button' onSubmit={setValue}> Search </Button>
+                <Button  className='button' onSubmit={setValue}> Chercher </Button>
                 <FieldError />
               </SearchField>
 

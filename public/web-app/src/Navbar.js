@@ -38,7 +38,7 @@ function Navbar() {
           </li>
 
           <li>
-            <Link to="/connecter">Connecter-vous</Link>
+            <Link to="/connecter">Se connecter</Link>
           </li>
 
 

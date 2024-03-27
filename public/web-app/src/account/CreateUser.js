@@ -33,7 +33,7 @@ const CreateUser = () => {
                 <div><img src="logoRSR2.png" className="logo-for-account"alt="logoRSR" /></div>
 
                 <h2>Créer un compte</h2>
-                <div className='text-accedez'>Get started with an account</div>
+                <div className='text-accedez'>Ouvrez la porte à de nouvelles possibilités</div>
                 <div className='text-star'>* champ obligatoire</div>
 
 

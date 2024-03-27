@@ -30,8 +30,7 @@ const User = () => {
       <div className="block-utilisateur">
         <div className="utilisateur">
           <div>
-          <h2>Пользователь с ID: {id}</h2>
-            {/* тут отоброжаем данные из сервиса-allusers*/}
+          <h2>User ID: {id}</h2>
             <p>id-user: {userId.id}, name: {userId.username}</p>
           </div>
         </div>
