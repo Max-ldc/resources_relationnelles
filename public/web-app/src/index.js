@@ -5,16 +5,30 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Navbar from './Navbar'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import Service from './service/Service';
+import Ressource from './ressources/Ressource';
+import User from './user/User';
+import Connecter from './account/Connecter';
+import CreateUser from './account/CreateUser';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
     <Router>
+    <Navbar />
       <Routes>
-        <Route path="/" element={<Navbar />} />
+        <Route path="/" element={<App />} />
+        <Route path="/connecter" element={<Connecter />} />
+        <Route path="/creer-compte" element={<CreateUser />} />
+
+        <Route path="/service" element={<Service />} />
+        {/* <Route path="/createUser" element={<CreateUser />} /> */}
+        <Route path="/ressource/:ressourceId" element={<Ressource/>} />
+        <Route path="/user/:id" element={<User/>} />
+
       </Routes>
-      <App />
+
     </Router>
   </React.StrictMode>,
 );

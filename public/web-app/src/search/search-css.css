@@ -1,0 +1,41 @@
+.search-contanair{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    outline:none;
+    margin-top: 20px;
+}
+
+.react-aria-SearchField {
+  border-radius: 4px;
+  outline:none;
+  position: relative;
+  width: 390px;
+  font-size: 20px;
+  border: 3px solid  #235B90;
+  box-shadow: 5px 5px 5px 0px rgba(133, 131, 131, 0.5); 
+}
+
+.input-champ {
+  border-radius: 4px;
+  outline:none;
+  padding:10px 110px 10px 10px;
+  width: 100%;
+}
+
+.button {
+  box-sizing: border-box;
+  height: 100%;
+  position: absolute;
+  padding: 0 15px;
+  border: none;
+  right: 0;
+  color: #f2f2f2;
+  background-color: #235B90;
+  /* font-family: cursive; */
+  font-size: 24px;
+  cursor: pointer ;
+}
+
+
+
