@@ -13,15 +13,12 @@
   justify-content: center;
 } */
 
-
-
 /* .createuser {
    background-color: aquamarine;
 } */
 /* .react-aria-Input {
     max-width: 300px;
 } */
-
 
 /* .connecter,
 .createuser {
@@ -33,9 +30,6 @@
     align-items: center;
 } */
 
-
-
-
 /* ---------Connecter ------------*/
 .connecter-container {
   background-color: rgb(247, 247, 247);
@@ -46,10 +40,10 @@
   padding: 20px 0;
 }
 .connecter {
-    display: grid;
-    min-width: 400px;
-    min-height: 300px;
-    justify-content: center;
+  display: grid;
+  min-width: 400px;
+  min-height: 300px;
+  justify-content: center;
 }
 .logo-for-account {
   width: 100%;
@@ -57,50 +51,53 @@
   border-radius: 4px;
 }
 h2 {
-    text-align: center;
+  text-align: center;
 }
 .connecter-block {
-    display: grid;
-    justify-content: center;
-    padding: 10px;
-    text-align: right;
+  display: grid;
+  justify-content: center;
+  padding: 10px;
+  text-align: right;
 }
-.connecter-block button{
-    width: 100px;
-    margin: 10px auto;
+.connecter-block button {
+  width: 100px;
+  margin: 10px auto;
 }
 
 .text-star {
   font-size: 12px;
-  color: #235B90;
-  padding-left: 10px;  
+  color: #235b90;
+  padding-left: 10px;
 }
 .text-accedez {
-   font-size: 14px;
-   padding-left: 10px;  
+  font-size: 14px;
+  padding-left: 10px;
 }
-
-
 
 .link-creer {
   margin-top: 30px;
-    border: 1px solid #235B90;
-    padding: 5px 25px;
-    border-radius: 20px;
-    text-align: center;
-    color: #235B90;
+  border: 1px solid #235b90;
+  padding: 5px 25px;
+  border-radius: 20px;
+  text-align: center;
+  color: #235b90;
 }
 
-
-
-.messageReussir{
+.messageReussir {
   color: green;
   text-align: center;
 }
-.errorMessageExist{
+.errorMessageExist {
   color: red;
   text-align: center;
 }
-.inValidButton{
-  border:2px solid  gray;
+.inValidButton {
+  background-color: #cacdd1;
+  padding: 5px 25px;
+  color: white;
+  border-radius: 6px;
+  border: 0;
+    &[data-focused] {
+      outline: 0;
+    }
 }

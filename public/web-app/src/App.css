@@ -43,4 +43,5 @@ footer {
   grid-template-columns: repeat(auto-fit,minmax(100px,1fr));
   margin-top: 5px;
   color: rgb(153, 151, 151);
+  font-size: 1rem;
 }

@@ -1,5 +1,7 @@
 // import { Link } from "react-router-dom";
 
+
+// peut supprimer cette page !!!
 const AllUsers = ({id, username, accountEnabled, role })  => {
   //  const[allLogement, setAllBd]=useState([]); //заводим переменные
     return (
