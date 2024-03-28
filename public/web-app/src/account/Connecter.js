@@ -12,27 +12,29 @@
     //validation form
     let usernameErrors = [];
     let passwordErrors = [];
+    // username
     if (username.length < 3) {
-      usernameErrors.push('Username min 3 characters');
+      usernameErrors.push('Username moins de 3 caractères');
     }
     if (username.length > 16) {
-      usernameErrors.push('Username max 16 characters');
+      usernameErrors.push('Username plus de 3 caractères');
     }
-    if ((username.match(/[^a-z]/ig) ?? []).length < 1) {
-      usernameErrors.push('Username must include at least 1 symbols.');
+    if ((username.match(/^[a-zA-Z0-9_]*$/) ?? []).length < 1) {
+      usernameErrors.push('Username que lettres, chiffres et underscores');
+    }
     // if (username.match('/^[a-zA-Z0-9_]+$/')) {
     //   errors.push('Password must include at least 2 upper case letters');
     // }
     // if ((username.match(/[A-Z]/g) ?? []).length < 2) {
     //   errors.push('Password must include at least 2 upper case letters');
     // }
-    }
-
+    
+    // password
     if (password.length <= 3) {
-      passwordErrors.push('password min 3 characters');
+      passwordErrors.push('Password moins de 3 caractères');
     }
     if (password.length > 16) {
-      passwordErrors.push('password max 16 characters');
+      passwordErrors.push('Password plus de 3 caractères');
     }
 
 

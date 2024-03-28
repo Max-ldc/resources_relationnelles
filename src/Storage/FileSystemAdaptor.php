@@ -2,9 +2,8 @@
 
 namespace App\Storage;
 
-use Exception;
+use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemException;
-use League\Flysystem\FilesystemOperator;
 use League\Flysystem\UnableToDeleteFile;
 use League\Flysystem\UnableToListContents;
 use League\Flysystem\UnableToReadFile;
@@ -13,43 +12,41 @@ use Psr\Log\LoggerInterface;
 
 class FileSystemAdaptor
 {
-    public function __construct(
-        private FilesystemOperator $resourcesFilesystem,
-        private LoggerInterface $logger
-    ) {
+    private Filesystem $filesystem;
+    private LoggerInterface $logger;
+
+    public function __construct(Filesystem $resourceFilesystem, LoggerInterface $logger)
+    {
+        $this->filesystem = $resourceFilesystem;
+        $this->logger = $logger;
     }
 
     /**
      * Add a file inside the minIO filesystem
-     * Returns true if the file is correctly added
+     * Returns true if the file is correctly added.
      *
-     * @param string $filename
-     * @param string $content
-     * @return boolean
-     * @throws Exception
+     * @throws \Exception
      */
     public function addFile(string $filename, string $content): bool
     {
         try {
-            $this->resourcesFilesystem->write($filename, $content);
+            $this->filesystem->write($filename, $content);
+
             return true;
-        } catch (UnableToWriteFile | FilesystemException $exception) {
+        } catch (UnableToWriteFile|FilesystemException $exception) {
             $this->logger->error(sprintf('Error %s"', $exception->getMessage()));
             throw $exception;
         }
     }
 
     /**
-     * Retrieve a file inside the minIO file system
-     *
-     * @param string $filename
-     * @return string
+     * Retrieve a file inside the minIO file system.
      */
     public function getFileContent(string $filename): string
     {
         try {
-            return $this->resourcesFilesystem->read($filename);
-        } catch (UnableToReadFile | FilesystemException $exception) {
+            return $this->filesystem->read($filename);
+        } catch (UnableToReadFile|FilesystemException $exception) {
             $this->logger->error(sprintf('Error %s"', $exception->getMessage()));
             throw $exception;
         }
@@ -58,8 +55,8 @@ class FileSystemAdaptor
     public function getAllFiles(): array
     {
         try {
-            return $this->resourcesFilesystem->listContents('')->toArray();
-        } catch (UnableToListContents | FilesystemException $exception) {
+            return $this->filesystem->listContents('')->toArray();
+        } catch (UnableToListContents|FilesystemException $exception) {
             $this->logger->error(sprintf('Error %s"', $exception->getMessage()));
             throw $exception;
         }
@@ -68,9 +65,10 @@ class FileSystemAdaptor
     public function delete(string $filename): bool
     {
         try {
-            $this->resourcesFilesystem->delete($filename);
+            $this->filesystem->delete($filename);
+
             return true;
-        } catch (UnableToDeleteFile | FilesystemException $exception) {
+        } catch (UnableToDeleteFile|FilesystemException $exception) {
             $this->logger->error(sprintf('Error %s"', $exception->getMessage()));
             throw $exception;
         }

@@ -60,10 +60,10 @@ const CreateUser = () => {
       
         // password
         if (password.length <= 3) {
-            passwordErrors.push('password moins de 3 caractères');
+            passwordErrors.push('Password moins de 3 caractères');
           }
           if (password.length > 16) {
-            passwordErrors.push('password plus de 3 caractères');
+            passwordErrors.push('Password plus de 3 caractères');
           }
 
 
@@ -74,7 +74,7 @@ const CreateUser = () => {
                 <div><img src="logoRSR2.png" className="logo-for-account"alt="logoRSR" /></div>
 
                 <h2>Créer un compte</h2>
-                <div className='text-accedez'>Get started with an account</div>
+                <div className='text-accedez'>Ouvrez la porte à de nouvelles possibilités</div>
                 <div className='text-star'>* champ obligatoire</div>
 
                 <div>
@@ -116,7 +116,6 @@ const CreateUser = () => {
                     }
                 </TextField>
 
-
                 <TextField name="password" type="password" isInvalid={passwordErrors.length > 0}
                          value={password} onChange={setPassword} isRequired>
                   <Label>Mot de passe*</Label>
@@ -127,7 +126,8 @@ const CreateUser = () => {
                       </FieldError>
                         ) : ('')
                   }                   
-              </TextField>
+                </TextField>
+
 
                 <TextField name="password_verif" type="password" isRequired>
                     <Label>Confirmez le mot de passe*</Label>
@@ -135,7 +135,7 @@ const CreateUser = () => {
                     <FieldError />
                 </TextField>
                 
-                { emailErrors.length==0 && usernameErrors.length==0 && passwordErrors.length==0 ? (
+                { emailErrors.length===0 && usernameErrors.length===0 && passwordErrors.length===0 ? (
                     <Button type="submit">Valider</Button>
                   ):
                   ( <Button className='inValidButton'>Valider</Button>)

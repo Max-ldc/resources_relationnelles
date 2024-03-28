@@ -11,16 +11,14 @@ class UserTest extends ApiTestCase
 {
     public function testGetCollectionSuccess(): void
     {
-        $response = static::createClient()->request('GET', 'http://localhost/api/users');
-
-        var_dump($response);
+        static::createClient()->request('GET', 'http://localhost/api/users');
 
         self::assertResponseIsSuccessful();
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
 
         self::assertJsonContains([
             '@type' => 'hydra:Collection',
-            'hydra:totalItems' => 3,
+            'hydra:totalItems' => 5,
             'hydra:member' => [
                 [
                     '@type' => 'User',
@@ -146,7 +144,7 @@ class UserTest extends ApiTestCase
             'username' => 'Carlos',
             'email' => '',
         ];
-        yield 'Post fails - Duplicate email' => [$data, $expectedViolations];
+        yield 'Post fails - Empty email' => [$data, $expectedViolations];
 
         $expectedViolations = [
             [
@@ -157,7 +155,81 @@ class UserTest extends ApiTestCase
             'username' => '',
             'email' => 'carlos@example.com',
         ];
-        yield 'Post fails - Duplicate username' => [$data, $expectedViolations];
+        yield 'Post fails - Empty username' => [$data, $expectedViolations];
+    }
+
+    public function testPostUserWithPrivilegesSuccess(): void
+    {
+        $client = static::createClient();
+        $client->request('POST', 'http://localhost/api/users_privileged', [
+            'headers' => [
+                'Content-Type' => 'application/ld+json'],
+            'body' => json_encode([
+                'username' => 'Valentina',
+                'email' => 'valentina@example.com',
+                'role' => 'modérateur',
+            ], JSON_THROW_ON_ERROR),
+        ]);
+
+        self::assertResponseIsSuccessful();
+        self::assertResponseStatusCodeSame(Response::HTTP_CREATED);
+    }
+
+    /**
+     * @dataProvider PostUserWithPrivilegesNoMandatoryValueDataProvider
+     */
+    public function testPostUserWithPrivilegesFails($data, $expectedViolations): void
+    {
+        $client = static::createClient();
+        $client->request('POST', 'http://localhost/api/users_privileged', [
+            'headers' => [
+                'Content-Type' => 'application/ld+json'],
+            'json' => $data,
+        ]);
+
+        self::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
+        self::assertJsonContains([
+            'violations' => $expectedViolations,
+        ]);
+    }
+
+    public static function PostUserWithPrivilegesNoMandatoryValueDataProvider(): \Generator
+    {
+        $expectedViolations = [
+            [
+                'message' => 'L\'adresse mail ne peut pas être vide.',
+            ],
+        ];
+        $data = [
+            'username' => 'Carlos',
+            'email' => '',
+            'role' => 'administrateur',
+        ];
+        yield 'Post fails - Empty email' => [$data, $expectedViolations];
+
+        $expectedViolations = [
+            [
+                'message' => 'Le nom d\'utilisateur ne peut pas être vide.',
+            ],
+        ];
+        $data = [
+            'username' => '',
+            'email' => 'carlos@example.com',
+            'role' => 'administrateur',
+        ];
+        yield 'Post fails - Empty username' => [$data, $expectedViolations];
+
+        $expectedViolations = [
+            [
+                'message' => 'Le rôle ne peut pas être vide.',
+            ],
+        ];
+        $data = [
+            'username' => 'antonio',
+            'email' => 'antonio@example.com',
+            'role' => '',
+        ];
+        yield 'Post fails - Empty role' => [$data, $expectedViolations];
     }
 
     public function testDeleteUserByIdSuccess(): void

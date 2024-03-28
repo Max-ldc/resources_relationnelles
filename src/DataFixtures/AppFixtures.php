@@ -7,6 +7,7 @@ namespace App\DataFixtures;
 use App\Domain\Resource\ResourceCategoryEnum;
 use App\Domain\Resource\ResourceSharedStatusEnum;
 use App\Domain\Resource\ResourceTypeEnum;
+use App\Domain\Resource\UserRoleEnum;
 use App\Entity\RelationType;
 use App\Entity\Resource;
 use App\Entity\ResourceMetadata;
@@ -44,6 +45,28 @@ class AppFixtures extends Fixture
             $manager->persist($user);
         }
 
+        // Create 2 users with privileges
+        $usernames = ['Alberto', 'Sofia'];
+        $emailsEncrypted = [
+            '5JurgouueiTNMtRrbwHUZ6flH6gxiScOo8FeV/XEusncUbLtoDPYq8oNvzw48E0X',
+            'R80wH9Cka9KewU5+WIU2EnLFAbAqSFAz2+fshumzJifMLfIbkABuvK2quaViETG9',
+        ];
+
+        $userRoles = [
+            'Alberto' => UserRoleEnum::USER_ROLE_CATALOG_ADMIN->value,
+            'Sofia' => UserRoleEnum::USER_ROLE_SUPER_ADMIN->value,
+        ];
+
+        foreach ($usernames as $index => $username) {
+            $user = $this->createUser($username);
+            $userData = $this->createUserData($user, $emailsEncrypted[$index]);
+            $user->setUserData($userData);
+
+            $user->setRole($userRoles[$username]);
+
+            $manager->persist($user);
+        }
+
         // Create all relation types required by the customer
         $relationTypesData = [
             'Soi' => null,
@@ -69,24 +92,52 @@ class AppFixtures extends Fixture
             $manager->flush();
         }
 
-        // Create 1 Resource with 1 RelationType
-        $relationType = $this->relationTypeRepository->findOneByType('Soi');
+        // Create Resources with their ResourceMetadata
+        $relationTypeSoi = $this->relationTypeRepository->findOneBy(['type' => 'Soi']);
+        $relationTypeCollegues = $this->relationTypeRepository->findOneBy(['type' => 'Collègues']);
+        $relationTypeAmis = $this->relationTypeRepository->findOneBy(['type' => 'Amis et communautés']);
 
-        if (null === $relationType) {
+        if (null === $relationTypeSoi || null === $relationTypeCollegues || null === $relationTypeAmis) {
             return;
         }
 
-        $fileName = 'Extrait - La Boétie.pdf';
-        $resource = $this->createResource($userData, $fileName, $relationType);
-        $manager->persist($resource);
+        $resourcesInfo = [
+            [
+                'fileName' => 'Extrait - La Boétie.pdf',
+                'category' => ResourceCategoryEnum::RESOURCE_CATEGORY_RECHERCHE_SENS->value,
+                'type' => ResourceTypeEnum::RESOURCE_TYPE_COURS_PDF->value,
+                'author' => 'Etienne de La Boétie',
+                'title' => 'Discours de la servitude volontaire',
+                'relationTypes' => [$relationTypeSoi, $relationTypeCollegues],
+            ],
+            [
+                'fileName' => 'Manuel d\'Epictète.pdf',
+                'category' => ResourceCategoryEnum::RESOURCE_CATEGORY_DEVELOPPEMENT_PERSO->value,
+                'type' => ResourceTypeEnum::RESOURCE_TYPE_FICHE_LECTURE->value,
+                'author' => 'Epictète',
+                'title' => 'Manuel d\'Epictète',
+                'relationTypes' => [$relationTypeSoi],
+            ],
+            [
+                'fileName' => 'Le Loup des Steppes.pdf',
+                'category' => ResourceCategoryEnum::RESOURCE_CATEGORY_DEVELOPPEMENT_PERSO->value,
+                'type' => ResourceTypeEnum::RESOURCE_TYPE_FICHE_LECTURE->value,
+                'author' => 'Herman Hesse',
+                'title' => 'Le Loup des Steppes',
+                'relationTypes' => [$relationTypeSoi, $relationTypeAmis],
+            ],
+        ];
 
-        // Create 1 ResourceMetaData
-        $author = 'Etienne de La Boétie';
-        $title = 'Discours de la servitude volontaire';
-        $resourceMetaData = $this->createResourceMetadata($resource, $author, $title);
-        $manager->persist($resourceMetaData);
+        foreach ($resourcesInfo as $info) {
+            $resource = $this->createResource($userData, $info['fileName'], $info['category'], $info['type']);
+            foreach ($info['relationTypes'] as $relationType) {
+                $resource->addResourceRelationType($relationType);
+            }
+            $manager->persist($resource);
+            $resourceMetaData = $this->createResourceMetadata($resource, $info['author'], $info['title']);
+            $manager->persist($resourceMetaData);
+        }
 
-        // Flush
         $manager->flush();
     }
 
@@ -110,16 +161,19 @@ class AppFixtures extends Fixture
         return $userData;
     }
 
-    private function createResource(UserData $userData, string $fileName, RelationType $relationType): Resource
-    {
+    private function createResource(
+        UserData $userData,
+        string $fileName,
+        string $category,
+        string $type,
+    ): Resource {
         $resource = new Resource();
         $resource
             ->setUserData($userData)
             ->setFileName($fileName)
-            ->addResourceRelationType($relationType)
             ->setSharedStatus(ResourceSharedStatusEnum::RESOURCE_SHARED_STATUS_PUBLIC->value)
-            ->setCategory(ResourceCategoryEnum::RESOURCE_CATEGORY_RECHERCHE_SENS->value)
-            ->setType(ResourceTypeEnum::RESOURCE_TYPE_COURS_PDF->value);
+            ->setCategory($category)
+            ->setType($type);
 
         return $resource;
     }

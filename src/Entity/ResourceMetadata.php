@@ -2,11 +2,27 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Doctrine\Traits\TimestampTrait;
+use App\Repository\ResourceMetadataRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
-#[ORM\Entity]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection(),
+    ],
+    normalizationContext: [
+        'groups' => [
+            'read_user_data',
+        ],
+    ],
+)]
+#[ORM\Entity(repositoryClass: ResourceMetadataRepository::class)]
 #[ORM\Table(name: '`resource_metadata`')]
 class ResourceMetadata
 {
@@ -15,34 +31,35 @@ class ResourceMetadata
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
     #[ORM\Column(type: 'integer')]
+    #[ApiProperty(identifier: true)]
     private int $id;
 
     #[ORM\Column(type: 'string')]
-    #[Groups(['upload_audio', 'upload_video', 'upload_pdf'])]
+    #[Groups(['upload_audio', 'upload_video', 'upload_pdf', 'read_resource'])]
     private string $title;
 
     #[ORM\Column(type: 'integer', nullable: true)]
-    #[Groups(['upload_audio', 'upload_video'])]
+    #[Groups(['upload_audio', 'upload_video', 'read_resource'])]
     private ?int $duration = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
-    #[Groups(['upload_audio', 'upload_video', 'upload_pdf'])]
+    #[Groups(['upload_audio', 'upload_video', 'upload_pdf', 'read_resource'])]
     private ?string $format = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
-    #[Groups(['upload_audio', 'upload_video', 'upload_pdf'])]
+    #[Groups(['upload_audio', 'upload_video', 'upload_pdf', 'read_resource'])]
     private ?string $author = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
-    #[Groups(['upload_audio'])]
+    #[Groups(['upload_audio', 'read_resource'])]
     private ?string $album = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
-    #[Groups(['upload_audio', 'upload_video'])]
+    #[Groups(['upload_audio', 'upload_video', 'read_resource'])]
     private ?string $genre = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    #[Groups(['upload_audio', 'upload_video', 'upload_pdf'])]
+    #[Groups(['upload_audio', 'upload_video', 'upload_pdf', 'read_resource'])]
     private ?\DateTime $releaseDate = null;
 
     #[ORM\OneToOne(inversedBy: 'resourceMetadata', targetEntity: Resource::class)]

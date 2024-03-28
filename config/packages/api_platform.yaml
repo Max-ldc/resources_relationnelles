@@ -3,16 +3,21 @@ api_platform:
     version: 1.0.0
     description: 'This is the Ressources Relationnelles API'
     show_webby: false
-##    test
-#    mapping:
-#        paths: [ '%kernel.project_dir%/src/Entity', '%kernel.project_dir%/src/ApiResource' ]
-##        fin test
+    mapping:
+        paths: ['%kernel.project_dir%/src/Entity', '%kernel.project_dir%/src/DTO']
     formats:
         jsonld: ['application/ld+json']
+        json: ['application/json']
     docs_formats:
-        jsonld: ['application/ld+json']
-        jsonopenapi: ['application/vnd.openapi+json']
-        html: ['text/html']
+        html:
+            mime_types:
+                - text/html
+        json:
+            mime_types:
+                - application/json
+        jsonopenapi:
+            mime_types:
+                - application/vnd.openapi+json
     enable_swagger: true
     enable_swagger_ui: true
     defaults:
@@ -20,7 +25,7 @@ api_platform:
         cache_headers:
             vary: ['Content-Type', 'Authorization', 'Origin']
         extra_properties:
-            standard_put: true
+            standard_put: false
             rfc_7807_compliant_errors: true
-    event_listeners_backward_compatibility_layer: false
+    event_listeners_backward_compatibility_layer: true
     keep_legacy_inflector: false

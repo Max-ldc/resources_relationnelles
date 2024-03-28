@@ -2,13 +2,131 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use App\Controller\CreateResourceController;
 use App\Doctrine\Traits\TimestampTrait;
+use App\Repository\ResourceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Attribute\Groups;
 
-#[ORM\Entity]
+#[ApiResource(
+    shortName: 'Resource',
+    operations: [
+        new Get(),
+        new GetCollection(),
+        new Post(
+            inputFormats: [
+                'multipart' => [
+                    'multipart/form-data',
+                ],
+            ],
+            status: Response::HTTP_CREATED,
+            controller: CreateResourceController::class,
+            openapiContext: [
+                'summary' => 'Create a new resource',
+                'requestBody' => [
+                    'required' => true,
+                    'content' => [
+                        'multipart/form-data' => [
+                            'schema' => [
+                                'type' => 'object',
+                                'properties' => [
+                                    'json' => [
+                                        'type' => 'object',
+                                        'properties' => [
+                                            'sharedStatus' => [
+                                                'type' => 'string',
+                                                'required' => 'true',
+                                            ],
+                                            'category' => [
+                                                'type' => 'string',
+                                                'required' => 'true',
+                                            ],
+                                            'type' => [
+                                                'type' => 'string',
+                                                'required' => 'true',
+                                            ],
+                                            'title' => [
+                                                'type' => 'string',
+                                                'required' => 'true',
+                                            ],
+                                            'author' => [
+                                                'type' => 'string',
+                                                'required' => 'true',
+                                            ],
+                                            'userData' => [
+                                                'type' => 'string',
+                                                'required' => 'true',
+                                                'description' => 'IRI reference to userData',
+                                            ],
+                                            'relationTypes' => [
+                                                'type' => 'array',
+                                                'required' => 'true',
+                                                'items' => [
+                                                    'type' => 'string',
+                                                ],
+                                                'description' => 'Array of IRI references to relation types',
+                                            ],
+                                        ],
+                                    ],
+                                    'importFile' => [
+                                        'type' => 'string',
+                                        'format' => 'binary',
+                                    ],
+                                ],
+                            ],
+                            'encoding' => [
+                                'json' => [
+                                    'contentType' => 'application/json',
+                                ],
+                                'importFile' => [
+                                    'contentType' => 'multipart/form-data',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            normalizationContext: ['groups' => []],
+            denormalizationContext: ['groups' => ['create_resource']],
+            input: CreateResourceController::class,
+            deserialize: false,
+        ),
+        new Delete(
+            uriTemplate: '/resources/{id}',
+            openapiContext: [
+                'parameters' => [
+                    [
+                        'name' => 'id',
+                        'in' => 'path',
+                        'required' => true,
+                        'schema' => [
+                            'type' => 'integer',
+                        ],
+                        'description' => 'Resource identifier',
+                    ],
+                ],
+                'summary' => 'Removes a Resource item.',
+                'description' => 'Removes a Resource item by ID.',
+            ],
+        ),
+    ],
+    normalizationContext: [
+        'groups' => [
+            'read_resource',
+        ],
+    ],
+)]
+#[ORM\Entity(repositoryClass: ResourceRepository::class)]
 #[ORM\Table(name: '`resource`')]
 class Resource
 {
@@ -17,25 +135,33 @@ class Resource
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
     #[ORM\Column(type: 'integer')]
+    #[ApiProperty(identifier: true)]
+    #[Groups(['read_resource'])]
     private int $id;
 
     #[ORM\Column(type: 'string')]
+    #[Groups(['read_resource'])]
     private string $fileName;
 
     #[ORM\Column(type: 'resourceSharedStatusType')]
+    #[Groups(['read_resource'])]
     private string $sharedStatus;
 
     #[ORM\ManyToOne(targetEntity: UserData::class)]
     #[JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    #[Groups(['read_resource'])]
     private UserData $userData;
 
-    #[ORM\OneToOne(mappedBy: 'resource', targetEntity: ResourceMetadata::class, cascade: ['remove'])]
+    #[ORM\OneToOne(mappedBy: 'resource', targetEntity: ResourceMetadata::class, cascade: ['persist', 'remove'])]
+    #[Groups(['read_resource'])]
     private ?ResourceMetadata $resourceMetadata = null;
 
     #[ORM\Column(type: 'resourceCategoryType')]
+    #[Groups(['read_resource'])]
     private string $category;
 
     #[ORM\Column(type: 'resourceTypeType')]
+    #[Groups(['read_resource'])]
     private string $type;
 
     #[ORM\ManyToMany(targetEntity: RelationType::class, inversedBy: 'resources')]
@@ -103,6 +229,8 @@ class Resource
     public function setResourceMetadata(?ResourceMetadata $resourceMetadata): self
     {
         $this->resourceMetadata = $resourceMetadata;
+
+        $resourceMetadata?->setResource($this);
 
         return $this;
     }
