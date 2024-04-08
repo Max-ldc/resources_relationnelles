@@ -1,3 +1,5 @@
+//npx cypress open  
+
 // test connecte client
 describe('template spec', () => {
   it('passes', () => {
