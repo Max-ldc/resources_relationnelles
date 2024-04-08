@@ -31,7 +31,7 @@ const User = () => {
         <div className="utilisateur">
           <div>
           <h2>Utilisateur par ID: {id}</h2>
-            {/* тут отоброжаем данные из сервиса-allusers*/}
+            {/* affiche des donnes de service-allusers*/}
             <h3>id-user: {userId.id}</h3>
             <h3>name: {userId.username}</h3>
             <h3>role: {userId.role}</h3>

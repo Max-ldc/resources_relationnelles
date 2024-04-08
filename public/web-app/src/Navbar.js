@@ -27,7 +27,7 @@ function Navbar() {
             <Link to="/">Accueil</Link>
           </li>
           <li>
-            <Link to="/ressources">Ressources</Link>
+            <Link to="/resources">Resources</Link>
           </li>
           <li>
             <Link to="/uploader">Uploader</Link>

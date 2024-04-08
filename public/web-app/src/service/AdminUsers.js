@@ -1,7 +1,7 @@
+//change nom de page - listUsers or allUsers
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-// import AllUsers from '../user/allUsers/AllUsers';
 import {
   Button,
   Cell,
@@ -80,7 +80,7 @@ const Service = () => {
                     </Cell>
                     <Cell className='btn_cell'>
                       <Link key={user.id} to={`/user/${user.id}`}>
-                        <Button>regarder</Button>
+                        <Button className="btn_regarder">regarder</Button>
                       </Link>
                     </Cell>
                     
