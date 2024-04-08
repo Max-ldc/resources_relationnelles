@@ -55,13 +55,13 @@ const CreateUser = () => {
                     <FieldError />
                 </TextField>
 
-                <TextField name="password" type="password" isRequired>
+                <TextField name="password_verif" type="password" isRequired>
                     <Label>Confirmez le mot de passe*</Label>
                     <Input />
                     <FieldError />
                 </TextField>
                 
-                <Button type="submit">Valider</Button>
+                <Button type="submit" onSubmit={handleSubmit} >Valider</Button>
             </Form>
 
             <Link to="/connecter" className='link-creer'>Se connecter</Link>
