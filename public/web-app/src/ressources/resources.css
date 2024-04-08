@@ -1,32 +1,6 @@
-.section-search {
-   display: grid;
-   justify-content: center;
-   margin: 30px auto;
-}
-
-.buttons-block {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  justify-items: center;
-  justify-content: center;
-  align-items: center;
+.container_resources{
   margin-top: 50px;
 }
-.button-orange {
-  background-color: #fc7100;
-  padding: 5px 12px;
-  color: black;
-  border-radius: 4px;
-  box-shadow: 5px 5px 5px 0px rgba(133, 131, 131, 0.5); 
-
-}
-
-.ligne-block {
-    margin: 80px 90px 40px 90px;
-    border-top: 1px solid #235B90;
-    font-size: 20px;
-}
-
 /* ******************************* */
 /* ----------------------------- */
 .main-contanair {
@@ -38,11 +12,17 @@
   justify-content: space-evenly;
   color: white;
 }
+.loadingLogo{
+  text-align: center;
+}
 .video{
   border-radius: 4px;
   border: 1px solid  #282c34;
   padding-bottom:5px;
   box-shadow: 0px 5px 10px 0px gray; 
+  text-align: center;
+  /* height: 270px; */
+  /* background: url(../public/logo192.png) no-repeat; */
   background-color: rgb(29, 28, 28) ;
   background-position: center;
   margin: 10px 0;
@@ -64,6 +44,8 @@
     font-size: 1.2em;
     right: 9%;
     width: 240px;
+    background-color: #282c3498;
+    
   }
   
   .article-img {
@@ -97,12 +79,12 @@
       display: flex;
       justify-content: space-between; 
       padding: 2px 5px;
-      font-size: 0.9em;
+      font-size: 0.8em;
 
         .relation {
           font-style: italic;
           color: #fc7100;          
-          width: 150px;
+          width: 130px;
           text-align: right;
           white-space: nowrap; /* Текст не переносится */
           overflow: hidden; /* Обрезаем всё за пределами блока */
@@ -116,29 +98,22 @@
       display: flex;
       justify-content: space-between; 
       padding: 2px 5px;
-      font-size: 0.9em;
+      font-size: 0.8em;
 
         .resource-category {
           font-style: italic;
           color: #fc7100;
+          width: 130px;
+          text-align: right;
+          white-space: nowrap; /* Текст не переносится */
+          overflow: hidden; /* Обрезаем всё за пределами блока */
+          text-overflow: ellipsis; /* Добавляем многоточие */
         }
     }
 
-    /* .resource-type-block {
-      display: flex;
-      justify-content: space-between; 
-      padding: 2px 5px;
-      font-size: 0.9em;
-
-        .resource-type {
-          font-style: italic;
-          color: red;
-          padding-right: 5px;
-        }
-    } */
 
     .button-right {
-      margin: 5px auto;
+      margin: 20px auto 5px auto;
       display: grid;
       justify-self: center;
       background-color: #235B90;

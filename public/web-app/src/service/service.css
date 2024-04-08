@@ -4,7 +4,6 @@
     align-items: center;
     gap: 20px;
     padding: 20px;
-    min-height: 100vh;
 }
 
 .container_createuser {
@@ -63,46 +62,47 @@
     min-height: 100px;
     align-self: start;
     max-width: 100%;
-    margin: auto;
-    width: 100%;
-}
-
-.react-aria-Row {
-    --radius-top: 6px;
-    --radius-bottom: 6px;
-    --radius: var(--radius-top) var(--radius-top) var(--radius-bottom) var(--radius-bottom);
-    border-radius: var(--radius);
-    clip-path: inset(0 round var(--radius)); /* firefox */
-    outline: none;
-    cursor: default;
-    color: var(--text-color);
-    font-size: 1rem;
-    position: relative;
-    transform: scale(1);
-
+    /* word-break: break-word; */
+  
+  
+    .react-aria-Row {
+      --radius-top: 6px;
+      --radius-bottom: 6px;
+      --radius: var(--radius-top) var(--radius-top) var(--radius-bottom) var(--radius-bottom);
+      border-radius: var(--radius);
+      clip-path: inset(0 round var(--radius)); /* firefox */
+      outline: none;
+      cursor: default;
+      color: var(--text-color);
+      font-size: 1rem;
+      position: relative;
+      transform: scale(1);
+      
           .btn_cell {
             visibility: hidden;
             width: 130px;
             text-align: center;
             }
-                &[data-selected] {
-                box-sizing: border-box;
-                background: #85bef0;
-                color: var(--highlight-foreground);
-                --focus-ring-color: var(--highlight-foreground);
-                .btn_cell {
-                visibility: visible;
-            }
-        }
+          &[data-selected] {
+            background: #85bef0;
+            color: var(--highlight-foreground);
+            --focus-ring-color: var(--highlight-foreground);
+            .btn_cell {
+              visibility: visible;
+              }
+          }
     }
-
+  
     .react-aria-Cell,
     .react-aria-Column {
       padding: 4px 20px;
       text-align: left;
       outline: none;
-      text-align: center;
+      text-align: center;      
     }
+
+  }
+
 
   .btn_modif{
     padding: 5px 20px;

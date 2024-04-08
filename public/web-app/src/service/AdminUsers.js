@@ -3,7 +3,6 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import ConfirmationModal from "../component/ConfirmationModal";
 import CreateUserModal from "../component/CreateUserModal";
-
 import {
     Button,
     Cell,
@@ -17,13 +16,14 @@ import "./service.css";
 import MyCheckbox from "./MyCheckbox";
 // https://levelup.gitconnected.com/how-to-make-an-api-call-with-all-crud-operations-in-react-ed6e6b94c363
 
+
 const UserRoleEnum = {
     USER_ROLE_MODERATOR: "modérateur",
     USER_ROLE_CATALOG_ADMIN: "administrateur",
     USER_ROLE_SUPER_ADMIN: "super administrateur",
-};
+}
 
-const Service = () => {
+const AdminUsers = () => {
     const [users, setAllUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -230,4 +230,4 @@ const Service = () => {
     );
 };
 
-export default Service;
+export default AdminUsers;
