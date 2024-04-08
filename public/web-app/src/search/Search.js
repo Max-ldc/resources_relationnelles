@@ -1,15 +1,6 @@
 import React  from 'react';
-// import { useState } from 'react';
-
 import './search-css.css';
 import {Button, FieldError, Input, SearchField} from 'react-aria-components';
-// import {useFilter} from 'react-aria';
-
-// const composers = [
-//   'Wolfgang Amadeus Mozart',
-//   'Johann Sebastian Bach',
-//   'Ludwig van Beethoven',
-// ];
 
 function Search() {
 
@@ -39,8 +30,6 @@ function Search() {
             </main>
       </div>
     );
-  
-
 }
    
 export default Search;

@@ -9,7 +9,9 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use App\Domain\Resource\UserRoleEnum;
 use App\DTO\CreateUser;
 use App\Processor\UserPrivilegedProcessor;
@@ -112,6 +114,15 @@ use Symfony\Component\Serializer\Attribute\Groups;
                 'description' => 'Removes a User resource by ID.',
             ],
         ),
+        new Patch(
+            uriTemplate: '/users/{id}',
+            openapiContext: [
+                'summary' => 'Update an existing user',
+                'description' => 'Enables or disables an existing user'
+                ],
+            denormalizationContext: ['groups' => ['update_user']],
+            validationContext: ['groups' => ['update_user']],
+        ),
     ],
     normalizationContext: [
         'groups' => [
@@ -133,7 +144,7 @@ class User
     private string $username;
 
     #[ORM\Column(type: 'boolean', options: ['default' => true])]
-    #[Groups(['read_user'])]
+    #[Groups(['read_user', 'update_user'])]
     private bool $accountEnabled = true;
 
     #[ORM\OneToOne(mappedBy: 'user', targetEntity: UserData::class, cascade: ['persist', 'remove'], orphanRemoval: true)]

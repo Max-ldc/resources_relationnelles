@@ -23,7 +23,7 @@ const CreateUser = () => {
             .then(response => {
                 console.log(response);
                 setErrorEmail('');
-                setMessageReussir('Vous avez créé votre user');
+                setMessageReussir('Votre compte a bien été créé !');
             })
             .catch(error => {
                 console.log('-----'+ error.response.data.detail)
@@ -31,42 +31,33 @@ const CreateUser = () => {
             })
     };
 
+    //validation form
+    let usernameErrors = [];
+    let emailErrors = [];
+    let passwordErrors = [];
 
+    // username
+    if (username.length < 6) {
+        usernameErrors.push('Le nom d utilisateur doit faire au moins 6 caractères');
+    }
+    if (username.length > 16) {
+        usernameErrors.push('Le nom d utilisateur dépasse la limite de 16 caractères');
+    }
+    if ((username.match(/^[a-zA-Z0-9_]*$/) ?? []).length < 1) {
+        usernameErrors.push('Le nom d utilisateur ne peut contenir que des chiffres, lettres et underscores');
+    }
 
+    if ((email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i) ?? []).length < 1) {
+        emailErrors.push('Le "@" et "." requise');
+    }
 
-        //validation form
-        let usernameErrors = [];
-        let emailErrors = [];
-        let passwordErrors = [];
-
-        // username
-        if (username.length < 3) {
-          usernameErrors.push('Username moins de 3 caractères');
-        }
-        if (username.length > 16) {
-          usernameErrors.push('Username plus de 3 caractères');
-        }
-        if ((username.match(/^[a-zA-Z0-9_]*$/) ?? []).length < 1) {
-          usernameErrors.push('Username que lettres, chiffres et underscores');
-        }
-
-        // email
-        if (email.length < 2) {
-            emailErrors.push('Email moins de 3 caractères');
-        }
-        if ((email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i) ?? []).length < 1) {
-            emailErrors.push('Le "@" et "." requise');
-        }
-      
-        // password
-        if (password.length <= 3) {
-            passwordErrors.push('Password moins de 3 caractères');
-          }
-          if (password.length > 16) {
-            passwordErrors.push('Password plus de 3 caractères');
-          }
-
-
+    // password
+    if (password.length <= 7) {
+        passwordErrors.push('Le mot de passe doit faire au moins 7 caractères');
+    }
+    if (password.length > 32) {
+        passwordErrors.push('Le mot de passe ne peut pas faire plus de 7 caractères');
+    }
 
     return (
         <div className='connecter-container'>
@@ -87,7 +78,6 @@ const CreateUser = () => {
                                   ) : ('')
                     }
                 </div>
-
 
         <Form className='connecter-block' onSubmit={creatUser}>
 
@@ -141,17 +131,9 @@ const CreateUser = () => {
                   ( <Button className='inValidButton'>Valider</Button>)
                 }
         </Form>
-
-
-
-
-
             <Link to="/connecter" className='link-creer'>Se connecter</Link>
-
         </div>
     </div>
-
-
     );
 };
 

@@ -4,7 +4,6 @@
    margin: 30px auto;
 }
 
-
 .buttons-block {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -22,14 +21,11 @@
 
 }
 
-
 .ligne-block {
     margin: 80px 90px 40px 90px;
     border-top: 1px solid #235B90;
     font-size: 20px;
 }
-
-
 
 /* ******************************* */
 /* ----------------------------- */

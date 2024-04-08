@@ -31,9 +31,9 @@ const Uploader = () => {
   return (
     <div className="uploader-container">
         <form onSubmit={handleSubmit}>
-          <h1>File Upload</h1>
+          <h1>Charger une ressource</h1>
             <input type="file" onChange={handleChange}/>
-            <Button type="submit">Upload</Button>
+            <Button type="submit">Valider l'envoi</Button>
         </form>
         {uploadedFileURL && <img src={uploadedFileURL} alt="Uploaded content"/>}
     </div>
