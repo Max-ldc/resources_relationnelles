@@ -24,6 +24,6 @@ describe('Tests de créer un compte utilisateur avec une erreur de validation', 
     cy.get('input[name="password"]').type('pass1')
     cy.get('input[name="password_verif"]').type('pass1')
 
-    cy.contains('Valider').click()
+    cy.contains('aaaa').click()
   })
 })
