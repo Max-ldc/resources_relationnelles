@@ -30,8 +30,12 @@ const User = () => {
       <div className="block-utilisateur">
         <div className="utilisateur">
           <div>
-          <h2>User ID: {id}</h2>
-            <p>id-user: {userId.id}, name: {userId.username}</p>
+          <h2>Utilisateur par ID: {id}</h2>
+            {/* тут отоброжаем данные из сервиса-allusers*/}
+            <h3>id-user: {userId.id}</h3>
+            <h3>name: {userId.username}</h3>
+            <h3>role: {userId.role}</h3>
+            <h3>account(enabled): {userId.accountEnabled}</h3>
           </div>
         </div>
       </div>

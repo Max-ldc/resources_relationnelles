@@ -6,6 +6,38 @@
 
   const Connecter = () => {
     const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+
+    //validation form
+    let usernameErrors = [];
+    let passwordErrors = [];
+    // username
+    if (username.length < 3) {
+      usernameErrors.push('Username moins de 3 caractères');
+    }
+    if (username.length > 16) {
+      usernameErrors.push('Username plus de 3 caractères');
+    }
+    if ((username.match(/^[a-zA-Z0-9_]*$/) ?? []).length < 1) {
+      usernameErrors.push('Username que lettres, chiffres et underscores');
+    }
+    // if (username.match('/^[a-zA-Z0-9_]+$/')) {
+    //   errors.push('Password must include at least 2 upper case letters');
+    // }
+    // if ((username.match(/[A-Z]/g) ?? []).length < 2) {
+    //   errors.push('Password must include at least 2 upper case letters');
+    // }
+    
+    // password
+    if (password.length <= 3) {
+      passwordErrors.push('Password moins de 3 caractères');
+    }
+    if (password.length > 16) {
+      passwordErrors.push('Password plus de 3 caractères');
+    }
+
+
 
 
     return (
@@ -17,28 +49,40 @@
               <div className='text-accedez'>Accèdez à votre compte</div>
               <div className='text-star'>* champ obligatoire</div>
 
+          <Form className='connecter-block'>
 
-
-              <Form className='connecter-block'>
-              <TextField name="username" type="text" isRequired>
+              <TextField name="username" type="text"  isInvalid={usernameErrors.length > 0}
+                         value={username} onChange={setUsername} isRequired>
                   <Label>Nom d’utilisateur*</Label>
                   <Input value={username}  onChange={(e) => setUsername(e.target.value)}/>
-                  <FieldError />
+                  {username ? (
+                      <FieldError>
+                          <div><ul>{usernameErrors.map((error, i) => <li key={i}>{error}</li>)}</ul></div>
+                      </FieldError>
+                    ) : ('')
+                    }                       
               </TextField>
 
-              <TextField name="password" type="password" isRequired>
+
+              <TextField name="password" type="password" isInvalid={passwordErrors.length > 0}
+                         value={password} onChange={setPassword} isRequired>
                   <Label>Mot de passe*</Label>
-                  <Input />
-                  <FieldError />
+                  <Input  onChange={(e) => setPassword(e.target.value)} />
+                  {password ? (
+                      <FieldError>
+                          <ul>{passwordErrors.map((error, i) => <li key={i}>{error}</li>)}</ul>
+                      </FieldError>
+                        ) : ('')
+                  }                   
               </TextField>
-              
+
+
+
               <Button type="submit">Valider</Button>
           </Form>
 
+
           <Link to="/creer-compte" className='link-creer'>Créer un compte</Link>
-
-
-
       </div>
     </div>
 
