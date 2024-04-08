@@ -1,8 +1,6 @@
-//npx cypress open  
 
-// test connecte client
-describe('template spec', () => {
-  it('passes', () => {
+describe('Tests de connexion de l’utilisateur', () => {
+  it('devrait permettre à un utilisateur de se connecter via le menu', () => {
     cy.visit('http://localhost:3000/')
     cy.get('.icon-menu-open').click() //via menu
     cy.contains('Se connecter').click()

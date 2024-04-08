@@ -34,25 +34,6 @@ const Service = () => {
   }, []);
 
 
-  // return (
-  //   <div>
-  //       <h1>List Users</h1>
-  //       { loading ? ( <p>Loading...</p>) : (
-  //         <div>
-  //         {users['hydra:member']?.map(user => (
-  //           <Link key={user.id} to={`/user/${user.id}`}>
-  //             <AllUsers key={user.id}
-  //               id={user.id}
-  //               username={user.username}
-  //               accountEnabled={user.accountEnabled}
-  //               role={user.role}
-  //             />
-  //           </Link>
-  //         ))}
-  //        </div>
-  //         )}
-  //   </div>
-  // );
 
   //Test
   return (
