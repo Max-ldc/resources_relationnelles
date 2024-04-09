@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import "./homepage.css";
 import Search from "../search/Search";
 import { Button } from "react-aria-components";
-import Resources from "../ressources/Resource";
+import Resources from "../ressources/Resources";
 
 function HomePage() {
   return (
@@ -28,49 +28,7 @@ function HomePage() {
         </div>
 
         {/* resource */}
-    
         <Resources></Resources>
-
-        {/* <article className="video">
-            <Link to={`/ressource/1`} className="article-link">
-            <div className="title-article">The Great Gatsby</div>
-              <div>
-                <img
-                  className="article-img"
-                  src="/imgs/dicaprio1.jpeg"
-                  alt="dicaprio1"
-                />
-              </div>
-            </Link>
-
-            <div className="like-block">
-              <div>Nombre de vues</div>
-              <div className="like">
-                <div>
-                  <img
-                    className="likeDislike-img"
-                    src="./eye-plus.svg"
-                    alt="like"
-                  ></img>
-                </div>
-                <div className="like-number">17</div>
-              </div>
-            </div>
-
-            <div className="relation-block">
-              <div>Type relation:</div>
-              <div className="relation">famille, professionnel</div>
-            </div>
-
-            <div className="resource-category-block">
-              <div>Catégorie:</div>
-              <div className="resource-category">
-                <div>loisirs</div>
-              </div>
-            </div>
-
-            <Button className="button-right">Voir</Button>
-          </article> */}
 
       </main>
     </div>
