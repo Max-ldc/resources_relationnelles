@@ -13,7 +13,7 @@ function Navbar() {
       
       <div className="logo-block">
       <Link to="/">
-          <div><img src="logo-4.png" className="site-logo" alt="logo" /></div>
+          <div><img src="../logo-4.png" className="site-logo" alt="logo" /></div>
           <div className="title-site">Sources Relationnelles</div>
           <div className="logo-little-text">La plateforme pour améliorer vos relations</div>
       </Link> 
@@ -47,7 +47,7 @@ function Navbar() {
       <Button onClick={()=> setOpenMenu(!isOpen)} className="icon-menu-open">
       <img
                     className="likeDislike-img"
-                    src="./menu-close.svg"
+                    src="../menu-close.svg"
                     alt="like"
                   ></img>
       </Button>

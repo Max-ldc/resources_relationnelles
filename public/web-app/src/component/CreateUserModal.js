@@ -71,15 +71,15 @@ function CreateUserModal({ isOpen, onClose, onSubmit, roles }) {
             <div className="modal">
                 <form onSubmit={handleSubmit}>
                     <label>Nom d’utilisateur*</label>
-                    <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+                    <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} className="input"/>
                     {usernameErrors.map((error, index) => <div key={index} className="field-error">{error}</div>)}
 
                     <label>Adresse email*</label>
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}  className="input"/>
                     {emailErrors.map((error, index) => <div key={index} className="field-error">{error}</div>)}
 
                     <label>Rôle</label>
-                    <select value={role} onChange={(e) => setRole(e.target.value)}>
+                    <select value={role} onChange={(e) => setRole(e.target.value)} className="select">
                         {Object.entries(roles).map(([key, value]) => (
                             <option key={key} value={value}>{value}</option>
                         ))}
@@ -90,8 +90,8 @@ function CreateUserModal({ isOpen, onClose, onSubmit, roles }) {
                         <input type="checkbox" checked={accountEnabled} onChange={(e) => setAccountEnabled(e.target.checked)} />
                     </label>
 
-                    <button type="submit">Créer</button>
-                    <button type="button" onClick={handleCancel}>Annuler</button>
+                    <button className="btn" type="submit">Créer</button>
+                    <button className="btn" type="button" onClick={handleCancel}>Annuler</button>
                 </form>
             </div>
         </div>
