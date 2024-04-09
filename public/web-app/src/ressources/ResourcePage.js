@@ -6,8 +6,7 @@ const ResourcePage = () => {
     const [pdfFileUrl, setPdfFileUrl] = useState('');
 
     useEffect(() => {
-        // TODO : utiliser un ID dynamique
-        const url = `http://localhost/api/resources/1/read`;
+        const url = `http://localhost/api/resources/${resourceId}/read`;
         setPdfFileUrl(url);
     }, [resourceId]);
 

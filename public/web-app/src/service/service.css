@@ -40,13 +40,13 @@
     color: white;
     border-radius: 6px;
     cursor: pointer;
-    background-color: #007bff;
+    background-color: #8C7D74;
     border: none;
     transition: background-color 0.2s;
 }
 
 .create-user-btn:hover {
-    background-color: #0056b3;
+    background-color: #8C7D74;
 }
 
 .container_userlist h1 {

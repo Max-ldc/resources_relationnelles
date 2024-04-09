@@ -35,23 +35,23 @@ function HomePage() {
 
           <article className="video">
             <Link to={`/ressource/1`} className="article-link">
-            <div className="title-article">The Great Gatsby</div>
+            <div className="title-article">Discours sur la servitude volontaire</div>
               <div>
                 <img
                   className="article-img"
-                  src="/imgs/dicaprio1.jpeg"
-                  alt="dicaprio1"
+                  src="/imgs/lesson.png"
+                  alt="article-a-lire"
                 />
               </div>
             </Link>
 
             <div className="like-block">
-              <div>Nombre de vues</div>
+              <div>Nombre de vues :</div>
               <div className="like">
                 <div>
                   <img
                     className="likeDislike-img"
-                    src="./eye-plus.svg"
+                    src="./eye.png"
                     alt="like"
                   ></img>
                 </div>
@@ -60,141 +60,100 @@ function HomePage() {
             </div>
 
             <div className="relation-block">
-              <div>Type relation:</div>
-              <div className="relation">famille, professionnel</div>
+              <div>Type de relation :</div>
+              <div className="relation">Soi, Collègues</div>
             </div>
 
             <div className="resource-category-block">
-              <div>Catégorie:</div>
+              <div>Catégorie :</div>
               <div className="resource-category">
-                <div>loisirs</div>
+                <div>Recherche de sens</div>
               </div>
             </div>
 
-            <Button className="button-right">Voir</Button>
+            <Link to={`/ressource/1`} className="button-right">Voir</Link>
           </article>
 
           <article className="video">
-            <Link to={`/ressource/1`} className="article-link">
-            <div className="title-article">The Great Gatsby</div>
+            <Link to={`/ressource/2`} className="article-link">
+            <div className="title-article">Manuel d'Epictète</div>
               <div>
                 <img
-                  className="article-img"
-                  src="/imgs/dicaprio1.jpeg"
-                  alt="dicaprio1"
+                    className="article-img"
+                    src="/imgs/book.png"
+                    alt="article-a-lire"
                 />
               </div>
             </Link>
 
             <div className="like-block">
-              <div>Nombre de vues</div>
+              <div>Nombre de vues :</div>
               <div className="like">
                 <div>
                   <img
                     className="likeDislike-img"
-                    src="./eye-plus.svg"
+                    src="./eye.png"
                     alt="like"
                   ></img>
                 </div>
-                <div className="like-number">17</div>
+                <div className="like-number">29</div>
               </div>
             </div>
 
             <div className="relation-block">
-              <div>Type relation:</div>
-              <div className="relation">famille</div>
+              <div>Type de relation :</div>
+              <div className="relation">Soi</div>
             </div>
 
             <div className="resource-category-block">
-              <div>Catégorie:</div>
+              <div>Catégorie :</div>
               <div className="resource-category">
-                <div>loisirs</div>
+                <div>Développement personnel</div>
               </div>
             </div>
 
-            <Button className="button-right">Voir</Button>
+            <Link to={`/ressource/2`} className="button-right">Voir</Link>
           </article>
 
           <article className="video">
-            <Link to={`/ressource/1`} className="article-link">
-            <div className="title-article">The Great Gatsby</div>
+            <Link to={`/ressource/3`} className="article-link">
+            <div className="title-article">Le Loup Des Steppes</div>
               <div>
                 <img
-                  className="article-img"
-                  src="/imgs/dicaprio1.jpeg"
-                  alt="dicaprio1"
+                    className="article-img"
+                    src="/imgs/book.png"
+                    alt="article-a-lire"
                 />
               </div>
             </Link>
 
             <div className="like-block">
-              <div>Nombre de vues</div>
+              <div>Nombre de vues :</div>
               <div className="like">
                 <div>
                   <img
                     className="likeDislike-img"
-                    src="./eye-plus.svg"
+                    src="./eye.png"
                     alt="like"
                   ></img>
                 </div>
-                <div className="like-number">17</div>
+                <div className="like-number">45</div>
               </div>
             </div>
 
             <div className="relation-block">
-              <div>Type relation:</div>
-              <div className="relation">famille, professionnel</div>
+              <div>Type de relation :</div>
+              <div className="relation">Soi, Amis et Communautés</div>
             </div>
 
             <div className="resource-category-block">
-              <div>Catégorie:</div>
+              <div>Catégorie :</div>
               <div className="resource-category">
-                <div>loisirs</div>
+                <div>Développement personnel</div>
               </div>
             </div>
 
-            <Button className="button-right">Voir</Button>
-          </article>
-
-          <article className="video">
-            <Link to={`/ressource/1`} className="article-link">
-            <div className="title-article">The Great Gatsby</div>
-              <div>
-                <img
-                  className="article-img"
-                  src="/imgs/dicaprio1.jpeg"
-                  alt="dicaprio1"
-                />
-              </div>
-            </Link>
-
-            <div className="like-block">
-              <div>Nombre de vues</div>
-              <div className="like">
-                <div>
-                  <img
-                    className="likeDislike-img"
-                    src="./eye-plus.svg"
-                    alt="like"
-                  ></img>
-                </div>
-                <div className="like-number">17</div>
-              </div>
-            </div>
-
-            <div className="relation-block">
-              <div>Type relation:</div>
-              <div className="relation">famille, professionnel</div>
-            </div>
-
-            <div className="resource-category-block">
-              <div>Catégorie:</div>
-              <div className="resource-category">
-                <div>loisirs</div>
-              </div>
-            </div>
-
-            <Button className="button-right">Voir</Button>
+            <Link to={`/ressource/3`} className="button-right">Voir</Link>
           </article>
 
         </section>

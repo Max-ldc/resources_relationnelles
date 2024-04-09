@@ -158,7 +158,7 @@ const Service = () => {
             <div className="container_userlist">
                 <h1>Liste des utilisateurs</h1>
                 {loading ? (
-                    <p>Loading...</p>
+                    <p>Chargement...</p>
                 ) : (
                     <>
                         <Table aria-label="Files" selectionMode="multiple">

@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import Navbar from './Navbar'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Service from './service/Service';
-// import Ressource from './ressources/Ressource';
+import Ressource from './ressources/Ressource';
 import ResourcePage from './ressources/ResourcePage';
 import User from './user/User';
 import Connecter from './account/Connecter';
@@ -25,7 +25,8 @@ root.render(
             <Route path="/connecter" element={<Connecter />} />
             <Route path="/creer-compte" element={<CreateUser />} />
             <Route path="/service" element={<Service />} />
-            <Route path="/ressource/:ressourceId" element={<ResourcePage />} />
+            <Route path="/ressources" element={<Ressource />} />
+            <Route path="/ressource/:resourceId" element={<ResourcePage />} />
             <Route path="/user/:id" element={<User/>} />
             <Route path="/uploader" element={<Uploader/>} />
           </Routes>
