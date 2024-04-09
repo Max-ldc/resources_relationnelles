@@ -15,7 +15,7 @@ import "./service.css";
 import MyCheckbox from "./MyCheckbox";
 // https://levelup.gitconnected.com/how-to-make-an-api-call-with-all-crud-operations-in-react-ed6e6b94c363
 
-const Service = () => {
+const AdminUser = () => {
   const [users, setAllUsers] = useState([]);
   // const [userId, setUserId] = useState({});
   const [loading, setLoading] = useState(true);
@@ -94,4 +94,4 @@ const Service = () => {
   );
 };
 
-export default Service;
+export default AdminUser;
