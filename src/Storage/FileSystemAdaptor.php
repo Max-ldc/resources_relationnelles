@@ -27,6 +27,19 @@ class FileSystemAdaptor
      *
      * @throws \Exception
      */
+
+    public function checkFile(string $filename): bool
+    {
+        try {
+            $this->filesystem->fileExists($filename);
+
+            return true;
+        } catch (UnableToWriteFile|FilesystemException $exception) {
+            $this->logger->error(sprintf('Error %s"', $exception->getMessage()));
+            throw $exception;
+        }
+    }
+
     public function addFile(string $filename, string $content): bool
     {
         try {
@@ -46,6 +59,16 @@ class FileSystemAdaptor
     {
         try {
             return $this->filesystem->read($filename);
+        } catch (UnableToReadFile|FilesystemException $exception) {
+            $this->logger->error(sprintf('Error %s"', $exception->getMessage()));
+            throw $exception;
+        }
+    }
+
+    public function streamFileContent(string $filename): mixed
+    {
+        try {
+            return $this->filesystem->readStream($filename);
         } catch (UnableToReadFile|FilesystemException $exception) {
             $this->logger->error(sprintf('Error %s"', $exception->getMessage()));
             throw $exception;

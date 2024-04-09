@@ -32,7 +32,6 @@ root.render(
             {/* <Route path="/resource/:ressourceId" element={<Ressource/>} /> */}
             <Route path="/user/:id" element={<User/>} />
             <Route path="/uploader" element={<Uploader/>} />
-
           </Routes>
       <MyFooter/>
     </Router>
