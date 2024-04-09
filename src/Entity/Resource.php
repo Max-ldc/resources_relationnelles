@@ -9,6 +9,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use App\Controller\CreateResourceController;
+use App\Controller\ReadResourceController;
 use App\Doctrine\Traits\TimestampTrait;
 use App\Repository\ResourceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -23,6 +24,33 @@ use Symfony\Component\Serializer\Attribute\Groups;
     operations: [
         new Get(),
         new GetCollection(),
+        new Get(
+            uriTemplate: '/resources/{id}/read',
+            formats: ['pdf' => ['application/pdf']],
+            controller: ReadResourceController::class,
+            openapiContext: [
+                'summary' => 'Read the resource PDF',
+                'description' => 'Streams the PDF file for the resource.',
+                'responses' => [
+                    '200' => [
+                        'description' => 'PDF file streamed successfully',
+                        'content' => [
+                            'application/pdf' => [
+                                'schema' => [
+                                    'type' => 'string',
+                                    'format' => 'binary',
+                                ]
+                            ]
+                        ]
+                    ],
+                    '404' => [
+                        'description' => 'Resource not found'
+                    ]
+                ]
+            ],
+            output: false,
+            read: false,
+        ),
         new Post(
             inputFormats: [
                 'multipart' => [
