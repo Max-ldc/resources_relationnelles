@@ -53,10 +53,10 @@ const CreateUser = () => {
 
     // password
     if (password.length <= 7) {
-        passwordErrors.push('Le mot de passe doit faire au moins 7 caractères');
+        passwordErrors.push('Le mot de passe doit faire au moins 8 caractères');
     }
     if (password.length > 32) {
-        passwordErrors.push('Le mot de passe ne peut pas faire plus de 7 caractères');
+        passwordErrors.push('Le mot de passe ne peut pas faire plus de 32 caractères');
     }
 
     return (
