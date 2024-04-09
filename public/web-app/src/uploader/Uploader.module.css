@@ -14,17 +14,25 @@
 }
 
 .formTitle {
-  color: #1E88E5;
+  color: #2E608C;
   margin-bottom: 20px;
   font-weight: bold;
   font-size: 24px;
   text-align: center;
 }
 
+.formSubtitle {
+  color: #2E608C;
+  margin-bottom: 15px;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+}
+
 .fileInput,
 .textInput,
 .selectInput {
-  border: 2px solid #1E88E5;
+  border: 2px solid #2E608C;
   background-color: #f9f9f9;
   padding: 12px;
   margin-bottom: 20px;
@@ -37,14 +45,27 @@
 .fileInput:hover,
 .textInput:hover,
 .selectInput:hover {
-  border-color: #1565C0;
+  border-color: #2E608C;
 }
 
 .fileInput:focus,
 .textInput:focus,
 .selectInput:focus {
-  border-color: #0D47A1;
+  border-color: #2E608C;
   outline: none;
+}
+
+.relationTypeSelection {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px 0;
+}
+
+.checkboxContainer {
+  flex-basis: calc(33.333% - 20px);
+  display: flex;
+  align-items: center;
 }
 
 /* Responsive adjustments */

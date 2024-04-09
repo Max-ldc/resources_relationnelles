@@ -26,6 +26,10 @@ Executer l'installation
 
     make install
 
+Executer la commande pour création des ressource sur MinIO en env de dev :
+
+    make minio-fixtures-dev
+
 # Mettre à jour son environnement
 
 Il est généralement nécessaire de mettre à jour son environnement Docker pour prendre en compte les modifications sur :

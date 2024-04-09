@@ -1,0 +1,66 @@
+/* Styles de base pour le tableau */
+.container_resource {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 90%; /* Réduit la largeur maximale à 90% de la largeur de l'écran */
+    margin: auto; /* Centre le conteneur sur la page */
+    overflow-x: auto; /* Assure la responsivité sur petits écrans */
+}
+
+.container_resource .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Stylisation des en-têtes de colonnes */
+.container_resource .table th {
+    background-color: #2E608C;
+    color: white;
+    font-weight: bold;
+    padding: 15px;
+    text-align: left;
+}
+
+/* Stylisation des cellules */
+.container_resource .table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #eaeaea;
+}
+
+/* Alternance des couleurs pour les lignes */
+.container_resource .table tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+.container_resource .table tr:nth-child(even) {
+    background-color: #e9e9e9;
+}
+
+/* Titre de la page */
+.page-title {
+    color: #2E608C;
+    font-weight: bold;
+    font-size: 2rem;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+    .container_resource, .table {
+        max-width: 100%; /* Utilise la pleine largeur sur les petits écrans */
+        margin-left: 10px; /* Petite marge pour ne pas toucher les bords de l'écran */
+        margin-right: 10px;
+    }
+
+    .column, .cell {
+        padding: 10px; /* Réduit l'espace pour les petits écrans */
+        font-size: 14px; /* Taille de texte ajustée pour les petits écrans */
+    }
+}

@@ -62,6 +62,11 @@ env-dev:
 	@-$(EXEC_PHP) bash -c 'grep APP_ENV= .env.local 1>/dev/null 2>&1 || echo -e "\nAPP_ENV=dev" >> .env.local'
 	@-$(EXEC_PHP) sed -i 's/APP_ENV=.*/APP_ENV=dev/g' .env.local
 
+MinIO:
+
+minio-fixtures-dev: env-dev
+	$(EXEC_SYMFONY) app:upload-files
+
 #################################
 Database:
 
