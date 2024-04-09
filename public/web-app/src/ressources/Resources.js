@@ -30,7 +30,7 @@ const Resources = () => {
     <div className="container_resources">
       <main>
       {loading ? (
-         <p className="loadingLogo">Loading...</p>
+         <p className="loadingLogo">Chargement...</p>
         ) : (
       <section className="main-contanair">
         { resources["hydra:member"]?.map((resources) => (
@@ -90,65 +90,3 @@ const Resources = () => {
 };
 
 export default Resources;
-
-
- 
-
-
-
-  // return (
-  //   <div className="container_listuser">
-  //     <h1>List Users</h1>
-  //     {loading ? (
-  //       <p>Loading...</p>
-  //     ) : (
-  //       <Table aria-label="Files" selectionMode="multiple">
-  //         <TableHeader>
-  //           <Column>
-  //             <MyCheckbox slot="selection"  />
-  //           </Column>
-  //           <Column isRowHeader>ID</Column>
-  //           <Column>Username</Column>
-  //           <Column>Role</Column>
-  //           <Column>Account</Column>
-  //           <Column className='btn_cell'></Column>
-  //           <Column className='btn_cell'></Column>
-  //           <Column className='btn_cell'></Column>
-  //         </TableHeader>
-
-  //         <TableBody>
-  //           {users["hydra:member"]?.map((user) => (
-  //             <Row key={user.id}>
-  //               <Cell>
-  //                 <MyCheckbox slot="selection" />
-  //               </Cell>
-  //               <Cell>{user.id}</Cell>
-  //               <Cell>{user.username}</Cell>
-  //               <Cell>{user.role}</Cell>
-  //               <Cell>{user.accountEnabled}</Cell>
-
-              
-  //                   <Cell className='btn_cell'>
-  //                     <Link key={user.id} to={`/user/${user.id}`}>
-  //                       <Button className="btn_modif">moddifier</Button>
-  //                     </Link>
-  //                   </Cell>
-  //                   <Cell className='btn_cell'>
-  //                     <Link key={user.id} to={`/user/${user.id}`}>
-  //                       <Button className="btn_supprimer">supprimer</Button>
-  //                     </Link>
-  //                   </Cell>
-  //                   <Cell className='btn_cell'>
-  //                     <Link key={user.id} to={`/user/${user.id}`}>
-  //                       <Button>regarder</Button>
-  //                     </Link>
-  //                   </Cell>
-                    
-
-  //             </Row>
-  //           ))}
-  //         </TableBody>
-  //       </Table>
-  //     )}
-  //   </div>
-  // );
