@@ -33,12 +33,14 @@ const User = () => {
     const accountStatus = user.accountEnabled ? 'Activé' : 'Désactivé';
 
     return (
-        <div className="user-details">
-            <h2>Détails de l'utilisateur</h2>
-            <h3><strong>ID:</strong> {user.id}</h3>
-            <h3><strong>Nom d'utilisateur:</strong> {user.username}</h3>
-            <h3><strong>Rôle:</strong> {user.role}</h3>
-            <h3><strong>État du compte:</strong> {user.accountEnabled ? 'Activé' : 'Désactivé'}</h3>
+        <div className='page-size '>
+            <div className="user-details">
+                <h2>Détails de l'utilisateur</h2>
+                <h3><strong>ID:</strong> {user.id}</h3>
+                <h3><strong>Nom d'utilisateur:</strong> {user.username}</h3>
+                <h3><strong>Rôle:</strong> {user.role}</h3>
+                <h3><strong>État du compte:</strong> {user.accountEnabled ? 'Activé' : 'Désactivé'}</h3>
+            </div>
         </div>
     );
 };

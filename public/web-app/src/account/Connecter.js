@@ -77,8 +77,12 @@
               </TextField>
 
 
-
-              <Button type="submit">Valider</Button>
+              { usernameErrors.length===0 && passwordErrors.length===0 ? (
+                    <Button type="submit">Valider</Button>
+                  ):
+                  ( <Button className='inValidButton'>Valider</Button>)
+                }
+              {/* <Button type="submit">Valider</Button> */}
           </Form>
 
 
@@ -86,21 +90,6 @@
       </div>
     </div>
 
-
-      // <div className='connecter-block'>
-      //   <h2>Page Connecter si Déjà client ?!</h2>
-      //   <form  c>
-      //     <div className='form-container'>
-      //       {/* <label>Username</label> */}
-      //       <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder='username' />
-      //     </div>
-      //     {/* <div>
-      //       <label>Email:</label>
-      //       <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      //     </div> */}
-      //     <button type="submit">Se connecter</button>
-      //   </form>
-      // </div>
     );
 };
   

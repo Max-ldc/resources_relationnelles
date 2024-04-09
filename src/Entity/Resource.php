@@ -194,6 +194,7 @@ class Resource
 
     #[ORM\ManyToMany(targetEntity: RelationType::class, inversedBy: 'resources')]
     #[ORM\JoinTable(name: 'resource_relation_type')]
+    #[Groups(['read_resource'])]
     private Collection $resourceRelationTypes;
 
     public function __construct()

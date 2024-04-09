@@ -6,13 +6,13 @@ import reportWebVitals from './reportWebVitals';
 import Navbar from './Navbar'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Service from './service/Service';
-// import Ressource from './ressources/Ressource';
 import ResourcePage from './ressources/ResourcePage';
 import User from './user/User';
 import Connecter from './account/Connecter';
 import CreateUser from './account/CreateUser';
 import MyFooter from './MyFooter'
 import Uploader from './uploader/Uploader';
+import Resources from './ressources/Resources';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -25,6 +25,8 @@ root.render(
             <Route path="/connecter" element={<Connecter />} />
             <Route path="/creer-compte" element={<CreateUser />} />
             <Route path="/service" element={<Service />} />
+            <Route path="/ressources/" element={<Resources />} />
+
             <Route path="/ressource/:ressourceId" element={<ResourcePage />} />
             <Route path="/user/:id" element={<User/>} />
             <Route path="/uploader" element={<Uploader/>} />

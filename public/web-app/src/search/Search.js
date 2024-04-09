@@ -4,11 +4,7 @@ import {Button, FieldError, Input, SearchField} from 'react-aria-components';
 
 function Search() {
 
-  // let { contains } = useFilter({ sensitivity: 'base' });
   let [value, setValue] = React.useState('');
-  // let matchedComposers = composers.filter((composer) =>
-  //   contains(composer, value)
-  // );
 
   
     return (
@@ -22,10 +18,6 @@ function Search() {
                 <Button  className='button' onSubmit={setValue}> Chercher </Button>
                 <FieldError />
               </SearchField>
-
-                {/* <p style={{ height: 300 }}>
-                  {matchedComposers.map((composer, i) => <li key={i}>{composer}</li>)}
-                </p>             */}
                           </section>
             </main>
       </div>

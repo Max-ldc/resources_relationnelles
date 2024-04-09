@@ -1,3 +1,7 @@
+.page-size {
+    height: 100vh;
+
+}
 /* User.css */
 .user-details {
     max-width: 600px;
@@ -21,46 +25,8 @@
 
 
 .loading, .not-found {
+    height: 100vh;
     text-align: center;
     margin-top: 50px;
     color: #235B90;
-}
-
-@media screen and (max-width: 640px) {
-    .user-details {
-        padding: 10px;
-        margin: 10px;
-    }
-
-    body {
-        font-size: 16px;
-    }
-}
-
-a:focus,
-button:focus,
-input:focus,
-select:focus,
-textarea:focus {
-    outline: 2px solid #235B90;
-    outline-offset: 2px;
-}
-
-a:hover,
-button:hover {
-    text-decoration: underline;
-}
-
-input,
-select,
-textarea {
-    border: 1px solid #bbbec0;
-    border-radius: 4px;
-    padding: 0 10px;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-    border-color: #235B90;
 }
