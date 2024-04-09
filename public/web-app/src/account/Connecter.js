@@ -13,14 +13,14 @@
     let usernameErrors = [];
     let passwordErrors = [];
     // username
-    if (username.length < 3) {
-      usernameErrors.push('Username moins de 3 caractères');
+    if (username.length < 6) {
+      usernameErrors.push('Le nom d utilisateur doit faire au moins 6 caractères');
     }
     if (username.length > 16) {
-      usernameErrors.push('Username plus de 3 caractères');
+      usernameErrors.push('Le nom d utilisateur dépasse la limite de 16 caractères');
     }
     if ((username.match(/^[a-zA-Z0-9_]*$/) ?? []).length < 1) {
-      usernameErrors.push('Username que lettres, chiffres et underscores');
+      usernameErrors.push('Le nom d utilisateur ne peut contenir que des chiffres, lettres et underscores');
     }
     // if (username.match('/^[a-zA-Z0-9_]+$/')) {
     //   errors.push('Password must include at least 2 upper case letters');
@@ -30,11 +30,11 @@
     // }
     
     // password
-    if (password.length <= 3) {
-      passwordErrors.push('Password moins de 3 caractères');
+    if (password.length <= 7) {
+      passwordErrors.push('Le mot de passe doit faire au moins 8 caractères');
     }
-    if (password.length > 16) {
-      passwordErrors.push('Password plus de 3 caractères');
+    if (password.length > 32) {
+      passwordErrors.push('Le mot de passe ne peut pas faire plus de 32 caractères');
     }
 
 
